@@ -133,6 +133,175 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-12-30T20:46:33.000Z">2019-12-30</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 minutes read (About 593 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2019/12/30/Fly%20me%20to%20the%20Alpha%20Centauri/">Centauri</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="Python-백준1011번-풀이"><a href="#Python-백준1011번-풀이" class="headerlink" title="[Python] 백준1011번 풀이"></a>[Python] 백준1011번 풀이</h1><h3 id="Fly-me-to-the-Alpha-Centauri"><a href="#Fly-me-to-the-Alpha-Centauri" class="headerlink" title="Fly me to the Alpha Centauri"></a>Fly me to the Alpha Centauri</h3><p>1.거리에 따른 이동 규칙을 찾는 문제였다. 마지막 거리1을 제외한 나머지 거리를 역으로 탐색하는 방법을 생각했지만 규칙성을 찾아서 해결하는 문제에 옳지 못한 방법이었다.<br>&nbsp;&nbsp;&nbsp;타 게시판에서 힌트를 찾을 수 있었는데, 일정 거리를 지속적으로 늘려가다가 결국 마지막 1광년을 가기 위해 어느 시점부터 다시 지속적으로 움직이는 거리를 줄여야 한다는것이다.</p>
+<p>2.그렇다면 어느 시점부터 다시 움직이는 거리를 줄이는 것일까?<br>&nbsp;&nbsp;&nbsp;이에 대한 해답은 총 이동거리에 따라서 어떻게 움직여야하는지 표를 그려 파악할 수 있었다.</p>
+<table>
+<thead>
+<tr>
+<th align="center">거리</th>
+<th align="left">이동경로</th>
+<th align="center">움직인 횟수</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1</td>
+<td align="left">1</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="left">1 1</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="left">1 1 1</td>
+<td align="center">3</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="left">1 <strong>2</strong> 1</td>
+<td align="center">3</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="left">1 2 1 1</td>
+<td align="center">4</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td align="left">1 2 2 1</td>
+<td align="center">4</td>
+</tr>
+<tr>
+<td align="center">7</td>
+<td align="left">1 2 2 1 1</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td align="center">8</td>
+<td align="left">1 2 2 2 1</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td align="center">9</td>
+<td align="left">1 2 <strong>3</strong> 2 1</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td align="center">10</td>
+<td align="left">1 2 3 2 1 1</td>
+<td align="center">6</td>
+</tr>
+<tr>
+<td align="center">11</td>
+<td align="left">1 2 3 2 2 1</td>
+<td align="center">6</td>
+</tr>
+<tr>
+<td align="center">12</td>
+<td align="left">1 2 3 3 2 1</td>
+<td align="center">6</td>
+</tr>
+<tr>
+<td align="center">13</td>
+<td align="left">1 2 3 3 2 1 1</td>
+<td align="center">7</td>
+</tr>
+<tr>
+<td align="center">14</td>
+<td align="left">1 2 3 3 2 2 1</td>
+<td align="center">7</td>
+</tr>
+<tr>
+<td align="center">15</td>
+<td align="left">1 2 3 3 3 2 1</td>
+<td align="center">7</td>
+</tr>
+<tr>
+<td align="center">16</td>
+<td align="left">1 2 3 <strong>4</strong> 3 2 1</td>
+<td align="center">7</td>
+</tr>
+<tr>
+<td align="center">17</td>
+<td align="left">1 2 3 4 3 2 1 1</td>
+<td align="center">8</td>
+</tr>
+<tr>
+<td align="center">18</td>
+<td align="left">1 2 3 4 3 2 2 1</td>
+<td align="center">8</td>
+</tr>
+<tr>
+<td align="center">19</td>
+<td align="left">1 2 3 4 3 3 2 1</td>
+<td align="center">8</td>
+</tr>
+<tr>
+<td align="center">20</td>
+<td align="left">1 2 3 4 3 3 2 1</td>
+<td align="center">8</td>
+</tr>
+<tr>
+<td align="center">21</td>
+<td align="left">1 2 3 4 4 3 2 1 1</td>
+<td align="center">9</td>
+</tr>
+</tbody></table>
+<p>3.위의 표를 살펴보면 제곱수가 되는 X(볼드체가 표시되어 있는 2,3,4….) 를 기준으로 움직인 회수가 바뀌는것을 확인할 수 있다.<br>&nbsp;&nbsp;&nbsp;다시말해, 우리가 움직여야하는 거리가 주어졌을 때 가장 가까운 제곱수로 나타낼 수 있는 값 K를 찾아야한다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x, y = map(int, input().split())</span><br><span class="line">stand = <span class="number">0</span></span><br><span class="line"><span class="keyword">if</span> math.sqrt(y-x) - math.floor(math.sqrt(y-x)) &lt; <span class="number">0.5</span>:</span><br><span class="line">	stand = math.floor(math.sqrt(y-x))</span><br><span class="line"><span class="keyword">else</span>: stand = math.ceil(math.sqrt(y-x))</span><br></pre></td></tr></table></figure>
+
+<p>총 움직여야하는 거리 y-x 에 대해<br>&nbsp;&nbsp;&nbsp;sqrt값과 sqrt의 floor값 차이를 구해 이 값이 0.5 보다 작다면 기준이 되는 K값(위의 코드에서는 stand값)은 sqrt의 floor값이라고 할 수 있다.<br>반대로, 0.5보다 크다면 K값은 sqrt의 ceil값이 될 것이다.</p>
+<p>4.기준이 되는 값 K를 구했다면 K와 움직인 횟수와의 관계를 살펴봐야 한다.<br>&nbsp;&nbsp;&nbsp;우리가 움직인 거리와 K의 제곱값을 비교하면 알 수 있다.<br>&nbsp;&nbsp;&nbsp;만약, y-x가 K의 제곱보다 크다면 움직인 횟수는 K<em>2이며<br>&nbsp;&nbsp;&nbsp;y-x가 k의 제곱보다 작거나 같다면 움직인 횟수는 k</em>2-1의 규칙을 따르는 것을 확인할 수 있다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> y-x &gt; stand**<span class="number">2</span>:</span><br><span class="line">	print(stand*<span class="number">2</span>)</span><br><span class="line"><span class="keyword">elif</span> y-x &lt;= stand**<span class="number">2</span>:</span><br><span class="line">	print(stand*<span class="number">2</span><span class="number">-1</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="Full-code"><a href="#Full-code" class="headerlink" title="Full code"></a>Full code</h1><p><a href="https://github.com/Already-Ready/baekjoon/blob/master/1011.py">Full code</a></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2019-12-27T15:33:22.000Z">2019-12-27</time>
                 
                 <div class="level-item">
@@ -343,7 +512,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            3
+                            4
                         </p>
                     </a>
                 </div>
@@ -475,7 +644,7 @@
                 <span class="level-item">baekjoon</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/baekjoon/python/">
@@ -483,7 +652,7 @@
                 <span class="level-item">python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li></ul></li>
             </ul>
@@ -511,6 +680,25 @@
         
         <article class="media">
             
+            <a href="/2019/12/30/Fly%20me%20to%20the%20Alpha%20Centauri/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Centauri">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-30T20:46:33.000Z">2019-12-30</time></div>
+                    <a href="/2019/12/30/Fly%20me%20to%20the%20Alpha%20Centauri/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Centauri</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a> / <a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2019/12/27/%EC%A3%BC%EC%82%AC%EC%9C%84%EA%B5%B4%EB%A6%AC%EA%B8%B0-14499%EB%B2%88/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="주사위굴리기_14499번">
@@ -583,7 +771,7 @@
                     <span class="level-item">December 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">3</span>
+                    <span class="level-item tag">4</span>
                 </span>
             </a>
         </li>
@@ -604,14 +792,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/baekjoon/">
                         <span class="tag">baekjoon</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -639,6 +827,25 @@
         
         <article class="media">
             
+            <a href="/2019/12/30/Fly%20me%20to%20the%20Alpha%20Centauri/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Centauri">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-30T20:46:33.000Z">2019-12-30</time></div>
+                    <a href="/2019/12/30/Fly%20me%20to%20the%20Alpha%20Centauri/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Centauri</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a> / <a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2019/12/27/%EC%A3%BC%EC%82%AC%EC%9C%84%EA%B5%B4%EB%A6%AC%EA%B8%B0-14499%EB%B2%88/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="주사위굴리기_14499번">
@@ -711,7 +918,7 @@
                     <span class="level-item">December 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">3</span>
+                    <span class="level-item tag">4</span>
                 </span>
             </a>
         </li>
@@ -732,14 +939,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/baekjoon/">
                         <span class="tag">baekjoon</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
