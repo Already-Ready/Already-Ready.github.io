@@ -282,7 +282,7 @@
 <td align="center">9</td>
 </tr>
 </tbody></table>
-<p>3.위의 표를 살펴보면 제곱수가 되는 X(볼드체가 표시되어 있는 2,3,4….) 를 기준으로 움직인 회수가 바뀌는것을 확인할 수 있다.<br>&nbsp;&nbsp;&nbsp;다시말해, 우리가 움직여야하는 거리가 주어졌을 때 가장 가까운 제곱수로 나타낼 수 있는 값 K를 찾아야한다.</p>
+<p>3.위의 표를 살펴보면 제곱수가 되는 K(볼드체가 표시되어 있는 2,3,4….) 를 기준으로 움직인 회수가 바뀌는것을 확인할 수 있다.<br>&nbsp;&nbsp;&nbsp;다시말해, 우리가 움직여야하는 거리가 주어졌을 때 가장 가까운 제곱수로 나타낼 수 있는 값 K를 찾아야한다.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x, y = map(int, input().split())</span><br><span class="line">stand = <span class="number">0</span></span><br><span class="line"><span class="keyword">if</span> math.sqrt(y-x) - math.floor(math.sqrt(y-x)) &lt; <span class="number">0.5</span>:</span><br><span class="line">	stand = math.floor(math.sqrt(y-x))</span><br><span class="line"><span class="keyword">else</span>: stand = math.ceil(math.sqrt(y-x))</span><br></pre></td></tr></table></figure>
 
 <p>총 움직여야하는 거리 y-x 에 대해<br>&nbsp;&nbsp;&nbsp;sqrt값과 sqrt의 floor값 차이를 구해 이 값이 0.5 보다 작다면 기준이 되는 K값(위의 코드에서는 stand값)은 sqrt의 floor값이라고 할 수 있다.<br>반대로, 0.5보다 크다면 K값은 sqrt의 ceil값이 될 것이다.</p>
