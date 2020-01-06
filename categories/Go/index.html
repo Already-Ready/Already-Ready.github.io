@@ -7,22 +7,16 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>Centauri - Hexo</title>
+<title>Category: Go - Hexo</title>
 
 
-    <meta name="description" content="[Python] 백준1011번 풀이Fly me to the Alpha Centauri1.거리에 따른 이동 규칙을 찾는 문제였다. 마지막 거리1을 제외한 나머지 거리를 역으로 탐색하는 방법을 생각했지만 규칙성을 찾아서 해결하는 문제에 옳지 못한 방법이었다.&amp;nbsp;&amp;nbsp;&amp;nbsp;타 게시판에서 힌트를 찾을 수 있었는데, 일정 거리를 지속적으로 늘려가다">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Centauri">
-<meta property="og:url" content="http://yoursite.com/2019/12/30/Fly%20me%20to%20the%20Alpha%20Centauri/index.html">
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/categories/Go/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="[Python] 백준1011번 풀이Fly me to the Alpha Centauri1.거리에 따른 이동 규칙을 찾는 문제였다. 마지막 거리1을 제외한 나머지 거리를 역으로 탐색하는 방법을 생각했지만 규칙성을 찾아서 해결하는 문제에 옳지 못한 방법이었다.&amp;nbsp;&amp;nbsp;&amp;nbsp;타 게시판에서 힌트를 찾을 수 있었는데, 일정 거리를 지속적으로 늘려가다">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="article:published_time" content="2019-12-30T20:46:33.000Z">
-<meta property="article:modified_time" content="2019-12-30T11:49:55.605Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="Python">
-<meta property="article:tag" content="baekjoon">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
 
@@ -82,7 +76,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="Centauri" height="28">
+                <img src="/images/logo.svg" alt="Hexo" height="28">
             
             </a>
         </div>
@@ -131,24 +125,36 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    <div class="card-content">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a href="/categories">Categories</a></li>
+            
+            <li class="is-active"><a href="#" aria-current="page">Go</a></li>
+        </ul>
+        </nav>
+    </div>
+</div>
+
+    
 <div class="card">
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-12-30T20:46:33.000Z">2019-12-30</time>
+                <time class="level-item has-text-grey" datetime="2020-01-06T12:34:54.000Z">2020-01-06</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
+                <a class="has-link-grey -link" href="/categories/Go/">Go</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Go/tutorial/">tutorial</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    4 minutes read (About 593 words)
+                    5 minutes read (About 678 words)
                 </span>
                 
                 
@@ -157,144 +163,96 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                Centauri
+                <a class="has-link-black-ter" href="/2020/01/06/Golang-%EC%A0%95%EB%A6%AC%ED%95%98%EA%B8%B0-1/">Golang_정리하기-1</a>
             
         </h1>
         <div class="content">
-            <h1 id="Python-백준1011번-풀이"><a href="#Python-백준1011번-풀이" class="headerlink" title="[Python] 백준1011번 풀이"></a>[Python] 백준1011번 풀이</h1><h3 id="Fly-me-to-the-Alpha-Centauri"><a href="#Fly-me-to-the-Alpha-Centauri" class="headerlink" title="Fly me to the Alpha Centauri"></a>Fly me to the Alpha Centauri</h3><p>1.거리에 따른 이동 규칙을 찾는 문제였다. 마지막 거리1을 제외한 나머지 거리를 역으로 탐색하는 방법을 생각했지만 규칙성을 찾아서 해결하는 문제에 옳지 못한 방법이었다.<br>&nbsp;&nbsp;&nbsp;타 게시판에서 힌트를 찾을 수 있었는데, 일정 거리를 지속적으로 늘려가다가 결국 마지막 1광년을 가기 위해 어느 시점부터 다시 지속적으로 움직이는 거리를 줄여야 한다는것이다.</p>
-<p>2.그렇다면 어느 시점부터 다시 움직이는 거리를 줄이는 것일까?<br>&nbsp;&nbsp;&nbsp;이에 대한 해답은 총 이동거리에 따라서 어떻게 움직여야하는지 표를 그려 파악할 수 있었다.</p>
-<table>
-<thead>
-<tr>
-<th align="center">거리</th>
-<th align="left">이동경로</th>
-<th align="center">움직인 횟수</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">1</td>
-<td align="left">1</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center">2</td>
-<td align="left">1 1</td>
-<td align="center">2</td>
-</tr>
-<tr>
-<td align="center">3</td>
-<td align="left">1 1 1</td>
-<td align="center">3</td>
-</tr>
-<tr>
-<td align="center">4</td>
-<td align="left">1 <strong>2</strong> 1</td>
-<td align="center">3</td>
-</tr>
-<tr>
-<td align="center">5</td>
-<td align="left">1 2 1 1</td>
-<td align="center">4</td>
-</tr>
-<tr>
-<td align="center">6</td>
-<td align="left">1 2 2 1</td>
-<td align="center">4</td>
-</tr>
-<tr>
-<td align="center">7</td>
-<td align="left">1 2 2 1 1</td>
-<td align="center">5</td>
-</tr>
-<tr>
-<td align="center">8</td>
-<td align="left">1 2 2 2 1</td>
-<td align="center">5</td>
-</tr>
-<tr>
-<td align="center">9</td>
-<td align="left">1 2 <strong>3</strong> 2 1</td>
-<td align="center">5</td>
-</tr>
-<tr>
-<td align="center">10</td>
-<td align="left">1 2 3 2 1 1</td>
-<td align="center">6</td>
-</tr>
-<tr>
-<td align="center">11</td>
-<td align="left">1 2 3 2 2 1</td>
-<td align="center">6</td>
-</tr>
-<tr>
-<td align="center">12</td>
-<td align="left">1 2 3 3 2 1</td>
-<td align="center">6</td>
-</tr>
-<tr>
-<td align="center">13</td>
-<td align="left">1 2 3 3 2 1 1</td>
-<td align="center">7</td>
-</tr>
-<tr>
-<td align="center">14</td>
-<td align="left">1 2 3 3 2 2 1</td>
-<td align="center">7</td>
-</tr>
-<tr>
-<td align="center">15</td>
-<td align="left">1 2 3 3 3 2 1</td>
-<td align="center">7</td>
-</tr>
-<tr>
-<td align="center">16</td>
-<td align="left">1 2 3 <strong>4</strong> 3 2 1</td>
-<td align="center">7</td>
-</tr>
-<tr>
-<td align="center">17</td>
-<td align="left">1 2 3 4 3 2 1 1</td>
-<td align="center">8</td>
-</tr>
-<tr>
-<td align="center">18</td>
-<td align="left">1 2 3 4 3 2 2 1</td>
-<td align="center">8</td>
-</tr>
-<tr>
-<td align="center">19</td>
-<td align="left">1 2 3 4 3 3 2 1</td>
-<td align="center">8</td>
-</tr>
-<tr>
-<td align="center">20</td>
-<td align="left">1 2 3 4 3 3 2 1</td>
-<td align="center">8</td>
-</tr>
-<tr>
-<td align="center">21</td>
-<td align="left">1 2 3 4 4 3 2 1 1</td>
-<td align="center">9</td>
-</tr>
-</tbody></table>
-<p>3.위의 표를 살펴보면 제곱수가 되는 K(볼드체가 표시되어 있는 2,3,4….) 를 기준으로 움직인 회수가 바뀌는것을 확인할 수 있다.<br>&nbsp;&nbsp;&nbsp;다시말해, 우리가 움직여야하는 거리가 주어졌을 때 가장 가까운 제곱수로 나타낼 수 있는 값 K를 찾아야한다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x, y = map(int, input().split())</span><br><span class="line">stand = <span class="number">0</span></span><br><span class="line"><span class="keyword">if</span> math.sqrt(y-x) - math.floor(math.sqrt(y-x)) &lt; <span class="number">0.5</span>:</span><br><span class="line">	stand = math.floor(math.sqrt(y-x))</span><br><span class="line"><span class="keyword">else</span>: stand = math.ceil(math.sqrt(y-x))</span><br></pre></td></tr></table></figure>
+            <h1 id="Go-tutorial-Go-정리하기-1"><a href="#Go-tutorial-Go-정리하기-1" class="headerlink" title="[Go tutorial] Go 정리하기 - 1"></a>[Go tutorial] Go 정리하기 - 1</h1><h3 id="Go-tour-참조"><a href="#Go-tour-참조" class="headerlink" title="Go-tour 참조"></a><a href="https://go-tour-kr.appspot.com/#1">Go-tour 참조</a></h3><ul>
+<li><p>익스포트</p>
+<ul>
+<li>Go 에서는 첫 문자가 대문자로 시작하면 특정 패키지를 사용하는 곳에서 접근할 수 있는 exported name이 됨</li>
+</ul>
+</li>
+<li><p>함수</p>
+<ul>
+<li><p>Go 는 코드를 왼쪽부터 자연스럽게 읽기 위해 매개변수 타입은 변수명 <strong>뒤에</strong> 명시.</p>
+</li>
+<li><p>두 개 이상의 매개변수가 같은 타입일 때, 같은 타입을 취하는 마지막 매개변수에만 타입을 지정할 수 있음.</p>
+  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x <span class="keyword">int</span>, y <span class="keyword">int</span></span><br><span class="line"></span><br><span class="line">#를 아래와 같이도 사용 가능</span><br><span class="line"></span><br><span class="line">x, y <span class="keyword">int</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>하나의 함수는 여러 개의 결과를 반환할 수 있음.</p>
+  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">swap</span><span class="params">(x, y <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">string</span>, <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> y, x</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>총 움직여야하는 거리 y-x 에 대해<br>&nbsp;&nbsp;&nbsp;sqrt값과 sqrt의 floor값 차이를 구해 이 값이 0.5 보다 작다면 기준이 되는 K값(위의 코드에서는 stand값)은 sqrt의 floor값이라고 할 수 있다.<br>반대로, 0.5보다 크다면 K값은 sqrt의 ceil값이 될 것이다.</p>
-<p>4.기준이 되는 값 K를 구했다면 K와 움직인 횟수와의 관계를 살펴봐야 한다.<br>&nbsp;&nbsp;&nbsp;우리가 움직인 거리와 K의 제곱값을 비교하면 알 수 있다.<br>&nbsp;&nbsp;&nbsp;만약, y-x가 K의 제곱보다 크다면 움직인 횟수는 K<em>2이며<br>&nbsp;&nbsp;&nbsp;y-x가 k의 제곱보다 작거나 같다면 움직인 횟수는 k</em>2-1의 규칙을 따르는 것을 확인할 수 있다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> y-x &gt; stand**<span class="number">2</span>:</span><br><span class="line">	print(stand*<span class="number">2</span>)</span><br><span class="line"><span class="keyword">elif</span> y-x &lt;= stand**<span class="number">2</span>:</span><br><span class="line">	print(stand*<span class="number">2</span><span class="number">-1</span>)</span><br></pre></td></tr></table></figure>
 
-<h1 id="Full-code"><a href="#Full-code" class="headerlink" title="Full code"></a>Full code</h1><p><a href="https://github.com/Already-Ready/baekjoon/blob/master/1011.py">Full code</a></p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>변수</p>
+<ul>
+<li><p>var 을 통해 변수를 선언.  </p>
+</li>
+<li><p>변수 선언과 함꼐 초기화 가능, 초기화를 하는 경우 타입 생략 가능. 이 경우, 초기화하고자 하는 값에 따라 타입이 결정됨.  </p>
+  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a, b, c <span class="keyword">int</span> = <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>함수 내에서</strong> := 을 사용하면 var와 명시적인 타입을 생략할 수 있음.</p>
+</li>
+</ul>
+</li>
+<li><p>상수</p>
+<ul>
+<li><p>const 키워드와 함께 변수처럼 선언.  </p>
+</li>
+<li><p>상수는 <strong>문자, 문자열, boolean, 숫자 타입</strong> 중의 하나가 될 수 있음  </p>
+</li>
+<li><p>숫자형 상수는 정밀한 값을 표현할 수 있음. Go-tour 사이트에서 제공하는 예제를 이해하기 위해서는 Go의 &lt;&lt; 와 &gt;&gt; 연산자의 이해가 필요하다.</p>
+</li>
+<li><p>&lt;&lt;, &gt;&gt; 연산자에 대해</p>
+<ul>
+<li>&lt;&lt; 와 &gt;&gt; 연산자는 비트 이동 연산자로 Left shift, Right shift 라고 함.  </li>
+<li>Left shift 는 현재 값의 비트를 주어진 값만큼 왼쪽으로 Right shift는 현재 값의 비트를 주어진 값만큼 오른쪽으로 옮깁니다.<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> (</span><br><span class="line">a = <span class="number">1</span></span><br><span class="line">b = a &lt;&lt; <span class="number">1</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(a)				### <span class="number">1</span> 출력</span><br><span class="line">	fmt.Printf(<span class="string">"%08b\n"</span>, a)		### <span class="number">00000001</span> 출력</span><br><span class="line">	fmt.Println(b)				### <span class="number">2</span> 출력</span><br><span class="line">	fmt.Printf(<span class="string">"%08b"</span>, b)		### <span class="number">00000010</span> 출력</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-        </div>
-        
-        <div class="level is-size-7 is-uppercase">
-            <div class="level-start">
-                <div class="level-item">
-                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/Python/" rel="tag">Python</a>, <a class="has-link-grey -link" href="/tags/baekjoon/" rel="tag">baekjoon</a>
-                </div>
-            </div>
+
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>반복문 for</p>
+<ul>
+<li><p>Go 에는 반복문으로 for 하나만 존재.</p>
+</li>
+<li><p>조건문만 표현해서 루프를 표현 가능.</p>
+  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">   	sum := <span class="number">1</span></span><br><span class="line">   	<span class="keyword">for</span> sum &lt; <span class="number">1000</span> &#123;</span><br><span class="line">       sum += sum</span><br><span class="line">   	&#125;</span><br><span class="line">   	fmt.Println(sum)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>위와 같이 표현하면 while을 사용하듯 for을 사용할 수 있다.</p>
+</li>
+<li><p>조건문을 생략하는것으로 무한 루프를 만들 수 있다.</p>
+  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">   	<span class="keyword">for</span> &#123;</span><br><span class="line">   	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>조건문 if </p>
+<ul>
+<li><p>반복문과 마찬가지로 실행문을 위한  { } 만 필요.</p>
+</li>
+<li><p>for 처럼 조건문 앞에 문장을 실행할 수 있음.</p>
+  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">pow</span><span class="params">(x, n, lim <span class="keyword">float64</span>)</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">   	<span class="keyword">if</span> v := math.Pow(x, n); v &lt; lim &#123;</span><br><span class="line">       <span class="keyword">return</span> v</span><br><span class="line">	&#125;</span><br><span class="line">   <span class="keyword">return</span> lim</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>위의 예를 보면, v &lt; lim 을 통한 조건문 앞에 v := math.Pow(x,n) 을 실행했다.</p>
+</li>
+<li><p>이렇게 선언된 변수(위에서는 v)는 if 안쪽 범위에서만(else 블럭 안에서도 가능) 사용할 수 있다.</p>
+</li>
+</ul>
+</li>
+</ul>
+
         </div>
         
         
@@ -304,88 +262,11 @@
 
 
 
-<div class="card">
-    <div class="card-content">
-        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
-        <div class="buttons is-centered">
-            
-                
-<div class="notification is-danger">
-    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
-</div>
-
-                
-                
-<div class="notification is-danger">
-    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
-</div>
-
-                
-                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
-
-<div class="notification is-danger">
-    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
-</div>
-
-                
-                
-<div class="notification is-danger">
-    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
-</div>
-
-                
-        </div>
-    </div>
-</div>
 
 
 
-<div class="card card-transparent">
-    <div class="level post-navigation is-flex-wrap is-mobile">
-        
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/01/01/%EB%B6%80%EB%85%80%ED%9A%8C%EC%9E%A5%EC%9D%B4%EB%90%A0%ED%85%8C%EC%95%BC-2775%EB%B2%88/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">부녀회장이될테야_2775번</span>
-            </a>
-        </div>
-        
-        
-        <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2019/12/27/%EC%A3%BC%EC%82%AC%EC%9C%84%EA%B5%B4%EB%A6%AC%EA%B8%B0-14499%EB%B2%88/">
-                <span class="level-item">주사위굴리기_14499번</span>
-                <i class="level-item fas fa-chevron-right"></i>
-            </a>
-        </div>
-        
-    </div>
-</div>
 
 
-
-<div class="card">
-    <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
-        
-<script>
-    var disqus_config = function () {
-        this.page.url = 'http://yoursite.com/2019/12/30/Fly%20me%20to%20the%20Alpha%20Centauri/';
-        this.page.identifier = '2019/12/30/Fly me to the Alpha Centauri/';
-    };
-    (function() {
-        var d = document, s = d.createElement('script');  
-        s.src = '//' + 'already-ready' + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-
-<div id="disqus_thread">
-    
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-    </div>
-</div>
 </div>
                 
 
@@ -1012,7 +893,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="Centauri" height="28">
+                    <img src="/images/logo.svg" alt="Hexo" height="28">
                 
                 </a>
                 <p class="is-size-7">
