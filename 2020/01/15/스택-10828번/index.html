@@ -7,16 +7,23 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>Hexo</title>
+<title>스택_10828번 - Hexo</title>
 
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+    <meta name="description" content="[Python, Go] 백준 10828번 풀이스택 주어지는 명령에 따라 스택을 처리하는 문제이다. 파이썬은 큐나 스택을 지원하는 라이브러리가 있지만 사용하지 않고 리스트를 통해 구현했으며, Go는 슬라이스를 통해 구현했다.   스택을 초기화할 필요가 있는 문제가 아니었으므로 하나의 파이썬의 경우 하나의 for문안에서 처리하고 Go는 각각의 명령에 따른 함수">
+<meta property="og:type" content="article">
+<meta property="og:title" content="스택_10828번">
+<meta property="og:url" content="http://yoursite.com/2020/01/15/%EC%8A%A4%ED%83%9D-10828%EB%B2%88/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="[Python, Go] 백준 10828번 풀이스택 주어지는 명령에 따라 스택을 처리하는 문제이다. 파이썬은 큐나 스택을 지원하는 라이브러리가 있지만 사용하지 않고 리스트를 통해 구현했으며, Go는 슬라이스를 통해 구현했다.   스택을 초기화할 필요가 있는 문제가 아니었으므로 하나의 파이썬의 경우 하나의 for문안에서 처리하고 Go는 각각의 명령에 따른 함수">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2020-01-15T10:55:25.000Z">
+<meta property="article:modified_time" content="2020-01-15T01:55:32.331Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="baekjoon">
+<meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
 
@@ -76,7 +83,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="Hexo" height="28">
+                <img src="/images/logo.svg" alt="스택_10828번" height="28">
             
             </a>
         </div>
@@ -126,24 +133,23 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
-    
 <div class="card">
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-12-30T20:46:33.000Z">2019-12-30</time>
+                <time class="level-item has-text-grey" datetime="2020-01-15T10:55:25.000Z">2020-01-15</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
+                <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/Go/">Go</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    4 minutes read (About 593 words)
+                    4 minutes read (About 575 words)
                 </span>
                 
                 
@@ -152,205 +158,49 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2019/12/30/Fly%20me%20to%20the%20Alpha%20Centauri/">Centauri</a>
+                스택_10828번
             
         </h1>
         <div class="content">
-            <h1 id="Python-백준1011번-풀이"><a href="#Python-백준1011번-풀이" class="headerlink" title="[Python] 백준1011번 풀이"></a>[Python] 백준1011번 풀이</h1><h3 id="Fly-me-to-the-Alpha-Centauri"><a href="#Fly-me-to-the-Alpha-Centauri" class="headerlink" title="Fly me to the Alpha Centauri"></a>Fly me to the Alpha Centauri</h3><p>1.거리에 따른 이동 규칙을 찾는 문제였다. 마지막 거리1을 제외한 나머지 거리를 역으로 탐색하는 방법을 생각했지만 규칙성을 찾아서 해결하는 문제에 옳지 못한 방법이었다.<br>&nbsp;&nbsp;&nbsp;타 게시판에서 힌트를 찾을 수 있었는데, 일정 거리를 지속적으로 늘려가다가 결국 마지막 1광년을 가기 위해 어느 시점부터 다시 지속적으로 움직이는 거리를 줄여야 한다는것이다.</p>
-<p>2.그렇다면 어느 시점부터 다시 움직이는 거리를 줄이는 것일까?<br>&nbsp;&nbsp;&nbsp;이에 대한 해답은 총 이동거리에 따라서 어떻게 움직여야하는지 표를 그려 파악할 수 있었다.</p>
-<table>
-<thead>
-<tr>
-<th align="center">거리</th>
-<th align="left">이동경로</th>
-<th align="center">움직인 횟수</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">1</td>
-<td align="left">1</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center">2</td>
-<td align="left">1 1</td>
-<td align="center">2</td>
-</tr>
-<tr>
-<td align="center">3</td>
-<td align="left">1 1 1</td>
-<td align="center">3</td>
-</tr>
-<tr>
-<td align="center">4</td>
-<td align="left">1 <strong>2</strong> 1</td>
-<td align="center">3</td>
-</tr>
-<tr>
-<td align="center">5</td>
-<td align="left">1 2 1 1</td>
-<td align="center">4</td>
-</tr>
-<tr>
-<td align="center">6</td>
-<td align="left">1 2 2 1</td>
-<td align="center">4</td>
-</tr>
-<tr>
-<td align="center">7</td>
-<td align="left">1 2 2 1 1</td>
-<td align="center">5</td>
-</tr>
-<tr>
-<td align="center">8</td>
-<td align="left">1 2 2 2 1</td>
-<td align="center">5</td>
-</tr>
-<tr>
-<td align="center">9</td>
-<td align="left">1 2 <strong>3</strong> 2 1</td>
-<td align="center">5</td>
-</tr>
-<tr>
-<td align="center">10</td>
-<td align="left">1 2 3 2 1 1</td>
-<td align="center">6</td>
-</tr>
-<tr>
-<td align="center">11</td>
-<td align="left">1 2 3 2 2 1</td>
-<td align="center">6</td>
-</tr>
-<tr>
-<td align="center">12</td>
-<td align="left">1 2 3 3 2 1</td>
-<td align="center">6</td>
-</tr>
-<tr>
-<td align="center">13</td>
-<td align="left">1 2 3 3 2 1 1</td>
-<td align="center">7</td>
-</tr>
-<tr>
-<td align="center">14</td>
-<td align="left">1 2 3 3 2 2 1</td>
-<td align="center">7</td>
-</tr>
-<tr>
-<td align="center">15</td>
-<td align="left">1 2 3 3 3 2 1</td>
-<td align="center">7</td>
-</tr>
-<tr>
-<td align="center">16</td>
-<td align="left">1 2 3 <strong>4</strong> 3 2 1</td>
-<td align="center">7</td>
-</tr>
-<tr>
-<td align="center">17</td>
-<td align="left">1 2 3 4 3 2 1 1</td>
-<td align="center">8</td>
-</tr>
-<tr>
-<td align="center">18</td>
-<td align="left">1 2 3 4 3 2 2 1</td>
-<td align="center">8</td>
-</tr>
-<tr>
-<td align="center">19</td>
-<td align="left">1 2 3 4 3 3 2 1</td>
-<td align="center">8</td>
-</tr>
-<tr>
-<td align="center">20</td>
-<td align="left">1 2 3 4 3 3 2 1</td>
-<td align="center">8</td>
-</tr>
-<tr>
-<td align="center">21</td>
-<td align="left">1 2 3 4 4 3 2 1 1</td>
-<td align="center">9</td>
-</tr>
-</tbody></table>
-<p>3.위의 표를 살펴보면 제곱수가 되는 K(볼드체가 표시되어 있는 2,3,4….) 를 기준으로 움직인 회수가 바뀌는것을 확인할 수 있다.<br>&nbsp;&nbsp;&nbsp;다시말해, 우리가 움직여야하는 거리가 주어졌을 때 가장 가까운 제곱수로 나타낼 수 있는 값 K를 찾아야한다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x, y = map(int, input().split())</span><br><span class="line">stand = <span class="number">0</span></span><br><span class="line"><span class="keyword">if</span> math.sqrt(y-x) - math.floor(math.sqrt(y-x)) &lt; <span class="number">0.5</span>:</span><br><span class="line">	stand = math.floor(math.sqrt(y-x))</span><br><span class="line"><span class="keyword">else</span>: stand = math.ceil(math.sqrt(y-x))</span><br></pre></td></tr></table></figure>
+            <h1 id="Python-Go-백준-10828번-풀이"><a href="#Python-Go-백준-10828번-풀이" class="headerlink" title="[Python, Go] 백준 10828번 풀이"></a>[Python, Go] 백준 10828번 풀이</h1><h3 id="스택"><a href="#스택" class="headerlink" title="스택"></a>스택</h3><ul>
+<li>주어지는 명령에 따라 스택을 처리하는 문제이다. 파이썬은 큐나 스택을 지원하는 라이브러리가 있지만 사용하지 않고 리스트를 통해 구현했으며, Go는 슬라이스를 통해 구현했다.</li>
+</ul>
+<ul>
+<li><p>스택을 초기화할 필요가 있는 문제가 아니었으므로 하나의 파이썬의 경우 하나의 for문안에서 처리하고 Go는 각각의 명령에 따른 함수를 만들어 사용했다.  </p>
+</li>
+<li><p>Python 풀이</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">n = int(sys.stdin.readline())</span><br><span class="line"></span><br><span class="line">stack = []</span><br><span class="line"></span><br><span class="line"><span class="comment"># n = int(input())</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line"></span><br><span class="line">    order = sys.stdin.readline().rstrip()</span><br><span class="line">    <span class="comment"># print(order)</span></span><br><span class="line">    <span class="keyword">if</span> len(order.split()) == <span class="number">2</span>:</span><br><span class="line">        stack.insert(<span class="number">0</span>,int(order.split()[<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">if</span> order == <span class="string">"pop"</span>:</span><br><span class="line">            <span class="keyword">if</span> stack == []:</span><br><span class="line">                print(<span class="number">-1</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                print(stack[<span class="number">0</span>])</span><br><span class="line">                stack.pop(<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">elif</span> order == <span class="string">"size"</span>:</span><br><span class="line">            print(len(stack))</span><br><span class="line">        <span class="keyword">elif</span> order == <span class="string">"empty"</span>:</span><br><span class="line">            <span class="keyword">if</span> stack == []:</span><br><span class="line">                print(<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                print(<span class="number">0</span>)</span><br><span class="line">        <span class="comment"># top</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> stack == []:</span><br><span class="line">                print(stack[<span class="number">0</span>])</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                print(<span class="number">-1</span>)</span><br></pre></td></tr></table></figure>
 
-<p>총 움직여야하는 거리 y-x 에 대해<br>&nbsp;&nbsp;&nbsp;sqrt값과 sqrt의 floor값 차이를 구해 이 값이 0.5 보다 작다면 기준이 되는 K값(위의 코드에서는 stand값)은 sqrt의 floor값이라고 할 수 있다.<br>반대로, 0.5보다 크다면 K값은 sqrt의 ceil값이 될 것이다.</p>
-<p>4.기준이 되는 값 K를 구했다면 K와 움직인 횟수와의 관계를 살펴봐야 한다.<br>&nbsp;&nbsp;&nbsp;우리가 움직인 거리와 K의 제곱값을 비교하면 알 수 있다.<br>&nbsp;&nbsp;&nbsp;만약, y-x가 K의 제곱보다 크다면 움직인 횟수는 K<em>2이며<br>&nbsp;&nbsp;&nbsp;y-x가 k의 제곱보다 작거나 같다면 움직인 횟수는 k</em>2-1의 규칙을 따르는 것을 확인할 수 있다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> y-x &gt; stand**<span class="number">2</span>:</span><br><span class="line">	print(stand*<span class="number">2</span>)</span><br><span class="line"><span class="keyword">elif</span> y-x &lt;= stand**<span class="number">2</span>:</span><br><span class="line">	print(stand*<span class="number">2</span><span class="number">-1</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>Go를 통해 슬라이스를 다룰때 파이썬의 pop과 같은 내장함수가 없다.</p>
+<ul>
+<li><p>따라서, 슬라이스에서 하나를 제거할 때 슬라이스의 길이가 1인경우와 1이 아닌경우를 나눠서 생각했다.</p>
+</li>
+<li><p>슬라이스의 길이가 1인경우, 남아있는 하나를 제거하고 empty slice를 만들기 위해 nil 처리</p>
+</li>
+<li><p>슬라이스의 길이가 1이 아닌 경우, 슬라이스의 가장 끝의 하나를 제거하면 되므로 슬라이스의 길이 L 을 구하고 L-1 까지의 슬라이스만을 가져간다.</p>
+</li>
+</ul>
+</li>
+<li><p>Go 풀이</p>
+</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"bufio"</span></span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"os"</span></span><br><span class="line">	<span class="string">"strconv"</span></span><br><span class="line">	<span class="string">"strings"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> s []<span class="keyword">int</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">s_push</span><span class="params">(x <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	s = <span class="built_in">append</span>(s, x)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">s_pop</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> s == <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"%d\n"</span>, <span class="number">-1</span>)</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> <span class="built_in">len</span>(s) == <span class="number">1</span> &#123;</span><br><span class="line">		top := s[<span class="number">0</span>]</span><br><span class="line">		fmt.Printf(<span class="string">"%d\n"</span>, top)</span><br><span class="line">		s = <span class="literal">nil</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		l := <span class="built_in">len</span>(s)</span><br><span class="line">		top := s[l<span class="number">-1</span>]</span><br><span class="line">		fmt.Printf(<span class="string">"%d\n"</span>, top)</span><br><span class="line">		s = s[:l<span class="number">-1</span>]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">s_size</span><span class="params">()</span></span> &#123;</span><br><span class="line">	l := <span class="built_in">len</span>(s)</span><br><span class="line">	fmt.Printf(<span class="string">"%d\n"</span>, l)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">s_empty</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> s == <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"%d\n"</span>, <span class="number">1</span>)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"%d\n"</span>, <span class="number">0</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">s_top</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> s == <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"%d\n"</span>, <span class="number">-1</span>)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		l := <span class="built_in">len</span>(s)</span><br><span class="line">		top := s[l<span class="number">-1</span>]</span><br><span class="line">		fmt.Printf(<span class="string">"%d\n"</span>, top)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> n <span class="keyword">int</span></span><br><span class="line">	inputReader := bufio.NewReader(os.Stdin)</span><br><span class="line">	fmt.Scanf(<span class="string">"%d"</span>, &amp;n)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; n+<span class="number">1</span>; i++ &#123;</span><br><span class="line">		input, _ := inputReader.ReadString(<span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line">		order := strings.Split(input, <span class="string">" "</span>)</span><br><span class="line"></span><br><span class="line">		action := strings.TrimSpace(order[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> <span class="built_in">len</span>(order) == <span class="number">2</span> &#123;</span><br><span class="line">			n := strings.TrimSpace(order[<span class="number">1</span>])</span><br><span class="line">			num, _ := strconv.Atoi(n)</span><br><span class="line">			s_push(num)</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">switch</span> action &#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">"pop"</span>:</span><br><span class="line">				s_pop()</span><br><span class="line">			<span class="keyword">case</span> <span class="string">"size"</span>:</span><br><span class="line">				s_size()</span><br><span class="line">			<span class="keyword">case</span> <span class="string">"empty"</span>:</span><br><span class="line">				s_empty()</span><br><span class="line">			<span class="keyword">case</span> <span class="string">"top"</span>:</span><br><span class="line">				s_top()</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h1 id="Full-code"><a href="#Full-code" class="headerlink" title="Full code"></a>Full code</h1><p><a href="https://github.com/Already-Ready/baekjoon/blob/master/1011.py">Full code</a></p>
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/baekjoon/blob/master/10828.py">Full Code - Python</a>  </p>
+<p><a href="https://github.com/Already-Ready/baekjoon/blob/master/Go_solutions/10828.go">Full Code - Go</a> </p>
 
         </div>
         
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-12-27T15:33:22.000Z">2019-12-27</time>
-                
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Go/" rel="tag">Go</a>, <a class="has-link-grey -link" href="/tags/Python/" rel="tag">Python</a>, <a class="has-link-grey -link" href="/tags/baekjoon/" rel="tag">baekjoon</a>
                 </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 minutes read (About 558 words)
-                </span>
-                
-                
             </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2019/12/27/%EC%A3%BC%EC%82%AC%EC%9C%84%EA%B5%B4%EB%A6%AC%EA%B8%B0-14499%EB%B2%88/">주사위굴리기_14499번</a>
-            
-        </h1>
-        <div class="content">
-            <h2 id="14499번-문제-풀이"><a href="#14499번-문제-풀이" class="headerlink" title="14499번 문제 풀이"></a>14499번 문제 풀이</h2><br/>
-
-<p>주사위가 좌표면을 움직일때마다 윗면에 쓰여있는 숫자를 출력하는 문제이다.</p>
-<p>1.규칙에 따라 주사위와 좌표면의 숫자들이 바뀌므로 바뀌는 주사위 면의 숫자들을 저장하고자 했다.  </p>
-<p>&nbsp;&nbsp;&nbsp;따라서, 아래와 같이 dice라는 리스트를 주사위값 저장에 사용했다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dice = [<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>] <span class="comment">#위0 아래1 동2 서3 남4 북5 순서로 값</span></span><br></pre></td></tr></table></figure>
-
-<p>2.주사위가 움직이는 지도가 어떻게 생겼는지를 알아야했다.</p>
-<p>&nbsp;&nbsp;&nbsp;따라서, 아래와 같이 입력받은 크기에 맞는 지도를 생성했다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">field = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> range(rows):</span><br><span class="line">    li = list(map(int, input().split()))</span><br><span class="line">    field.append(li)</span><br></pre></td></tr></table></figure>
-
-
-<p>3.주어지는 움직임대로 주사위를 움직이고 그에따라 지도의 값과 dice의 값을 바꿔주어야한다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(moves)):</span><br><span class="line">    temp = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> moves[i] == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">if</span> position_y + <span class="number">1</span> &lt; columns:</span><br><span class="line">            position_y += <span class="number">1</span></span><br><span class="line">            temp = dice[<span class="number">2</span>]</span><br><span class="line">            field_num = field[position_x][position_y]</span><br><span class="line">            <span class="keyword">if</span> field_num == <span class="number">0</span>:</span><br><span class="line">                dice[<span class="number">2</span>] = dice[<span class="number">0</span>]</span><br><span class="line">                dice[<span class="number">0</span>] = dice[<span class="number">3</span>]</span><br><span class="line">                dice[<span class="number">3</span>] = dice[<span class="number">1</span>]</span><br><span class="line">                dice[<span class="number">1</span>] = temp</span><br><span class="line">                field[position_x][position_y] = temp</span><br><span class="line"></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                dice[<span class="number">2</span>] = dice[<span class="number">0</span>]</span><br><span class="line">                dice[<span class="number">0</span>] = dice[<span class="number">3</span>]</span><br><span class="line">                dice[<span class="number">3</span>] = dice[<span class="number">1</span>]</span><br><span class="line">                dice[<span class="number">1</span>] = field[position_x][position_y]</span><br><span class="line">                field[position_x][position_y] = <span class="number">0</span></span><br><span class="line">        <span class="keyword">else</span> : <span class="keyword">continue</span></span><br></pre></td></tr></table></figure>
-
-<p>주사위가 특정 방향으로 움직이기전에, temp값에 바닥을 향할 주사위 값을 미리 저장해주었다.</p>
-<p>그리고 주사위가 움직일때, 현재 좌표값들을 변경시켜준다.</p>
-<p>이때 주의할점은 우리는 문제에서 값을 입력받을때 세로크기를 먼저받고 그 다음으로 가로 크기를 받는다는 점이다.</p>
-<p>즉 동쪽으로 움직이면 y좌표가 늘어난다.</p>
-<p>주사위가 굴렀다면, dice 리스트에 값들을 바꿔줘야한다.</p>
-<p>위와같이 동쪽으로 굴렀다면, 위를 바라보던 주사위 면은 동쪽을 바라보게 될테고</p>
-<p>서쪽을 바라보던 주사위면은 위를 바라보게 될 것이다.</p>
-<p>이와 같이 주사위 면의 값들을 dice에 바꿔서 입력한다.</p>
-<p>이 과정을 동,서,남,북에 나눠서 처리하고 그때마다 주사위 윗면의 값을 프린트해주면 된다.</p>
-<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/baekjoon/blob/master/14499.py">Full Code</a></p>
-
         </div>
         
         
@@ -360,131 +210,80 @@
 
 
 
-
-
-
-
-
-    
 <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-12-24T06:37:42.000Z">2019-12-24</time>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    a few seconds read (About 38 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
             
-                <a class="has-link-black-ter" href="/2019/12/24/%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94hexo/">안녕하세요hexo</a>
-            
-        </h1>
-        <div class="content">
-            <h3 id="테스트-제목"><a href="#테스트-제목" class="headerlink" title="테스트 제목"></a>테스트 제목</h3><p>안녕하세요 hexo</p>
-<ol>
-<li>새글을 쓴다</li>
-<li>터미널에서 “hexo generate”</li>
-<li>터미널에서 “hexo deploy”</li>
-<li>블로그를 확인한다!</li>
-</ol>
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
 
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
         </div>
-        
-        
-        
     </div>
 </div>
 
 
 
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-12-24T05:47:48.560Z">2019-12-24</time>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    a minute read (About 123 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2019/12/24/hello-world/">Hello World</a>
-            
-        </h1>
-        <div class="content">
-            <p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    
 <div class="card card-transparent">
-    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-        <div class="pagination-previous">
-            <a class="is-flex-grow has-text-black-ter" href="/">Previous</a>
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/01/09/Golang-%EC%A0%95%EB%A6%AC%ED%95%98%EA%B8%B0-4/">
+                <span class="level-item">Golang_정리하기_4</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
         </div>
-        <div class="pagination-next is-invisible is-hidden-mobile">
-            <a class="is-flex-grow has-text-black-ter" href="/page/3/">Next</a>
-        </div>
-        <ul class="pagination-list is-hidden-mobile">
-            
-            <li><a class="pagination-link has-text-black-ter" href="/">1</a></li>
-            
-            <li><a class="pagination-link is-current" href="/page/2/">2</a></li>
-            
-        </ul>
-    </nav>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2020/01/15/%EC%8A%A4%ED%83%9D-10828%EB%B2%88/';
+        this.page.identifier = '2020/01/15/스택-10828번/';
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'already-ready' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </div>
 </div>
 </div>
                 
@@ -1120,7 +919,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="Hexo" height="28">
+                    <img src="/images/logo.svg" alt="스택_10828번" height="28">
                 
                 </a>
                 <p class="is-size-7">
