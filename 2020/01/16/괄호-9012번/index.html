@@ -7,16 +7,23 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>Archives: 2019 - Hexo</title>
+<title>괄호_9012번 - Hexo</title>
 
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2019/index.html">
+    <meta name="description" content="[Python, Go] 백준 9012번 풀이괄호 괄호의 쌍이 맞게 이루어져있는지 찾아내는 문제이다.  “(“괄호와 “)” 괄호의 개수를 세는것에서 끝나면 안된다.  스택에 “(“ 가 들어왔을때 저장하고 “)” 와 만나면 스택에서 하나를 제거하는 방법으로 쌍을 맞춰주었다.  가장 먼저 들어오는 문자열이  “)” 이라면 쌍이 맞을 수 없으므로 NO 를 리턴하며">
+<meta property="og:type" content="article">
+<meta property="og:title" content="괄호_9012번">
+<meta property="og:url" content="http://yoursite.com/2020/01/16/%EA%B4%84%ED%98%B8-9012%EB%B2%88/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="[Python, Go] 백준 9012번 풀이괄호 괄호의 쌍이 맞게 이루어져있는지 찾아내는 문제이다.  “(“괄호와 “)” 괄호의 개수를 세는것에서 끝나면 안된다.  스택에 “(“ 가 들어왔을때 저장하고 “)” 와 만나면 스택에서 하나를 제거하는 방법으로 쌍을 맞춰주었다.  가장 먼저 들어오는 문자열이  “)” 이라면 쌍이 맞을 수 없으므로 NO 를 리턴하며">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2020-01-16T22:15:45.000Z">
+<meta property="article:modified_time" content="2020-01-16T13:16:26.779Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="baekjoon">
+<meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
 
@@ -76,7 +83,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="Hexo" height="28">
+                <img src="/images/logo.svg" alt="괄호_9012번" height="28">
             
             </a>
         </div>
@@ -126,87 +133,181 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-01-16T22:15:45.000Z">2020-01-16</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/Go/">Go</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 minutes read (About 349 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                괄호_9012번
+            
+        </h1>
+        <div class="content">
+            <h1 id="Python-Go-백준-9012번-풀이"><a href="#Python-Go-백준-9012번-풀이" class="headerlink" title="[Python, Go] 백준 9012번 풀이"></a>[Python, Go] 백준 9012번 풀이</h1><h3 id="괄호"><a href="#괄호" class="headerlink" title="괄호"></a>괄호</h3><ul>
+<li><p>괄호의 쌍이 맞게 이루어져있는지 찾아내는 문제이다.</p>
+</li>
+<li><p>“(“괄호와 “)” 괄호의 개수를 세는것에서 끝나면 안된다.</p>
+</li>
+<li><p>스택에 “(“ 가 들어왔을때 저장하고 “)” 와 만나면 스택에서 하나를 제거하는 방법으로 쌍을 맞춰주었다.</p>
+</li>
+<li><p>가장 먼저 들어오는 문자열이  “)” 이라면 쌍이 맞을 수 없으므로 NO 를 리턴하며, 문자열 모두를 파악한 후 stack이 비어있다면 YES 그렇지 않다면 NO 이다</p>
+</li>
+<li><p>Python 풀이</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">n = int(sys.stdin.readline())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">vps</span><span class="params">(li)</span>:</span></span><br><span class="line">    stack = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> li[<span class="number">0</span>] == <span class="string">")"</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"NO"</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">for</span> s <span class="keyword">in</span> li:</span><br><span class="line">            <span class="keyword">if</span> s == <span class="string">"("</span>:</span><br><span class="line">                stack.append(s)</span><br><span class="line">            <span class="keyword">elif</span> s == <span class="string">")"</span> <span class="keyword">and</span> stack != []:</span><br><span class="line">                stack.pop()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="string">"NO"</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> stack == []:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"YES"</span></span><br><span class="line">        <span class="keyword">else</span>: <span class="keyword">return</span> <span class="string">"NO"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    order = list(sys.stdin.readline().rstrip())</span><br><span class="line">    print(vps(order))</span><br></pre></td></tr></table></figure>
 
-<div class="card widget">
+
+<ul>
+<li><p>Go 풀이</p>
+<ul>
+<li>Go 를 사용할때는 파이썬의 pop과같은 내장함수가 없으므로 “)”를 만났을때 슬라이스의 길이가 1인 경우와 그렇지 않은 경우를 나눠서 판단했다.</li>
+</ul>
+</li>
+</ul>
+<pre><code class="Go"><span class="function"><span class="keyword">func</span> <span class="title">vps</span><span class="params">(x <span class="keyword">string</span>)</span> <span class="title">string</span></span> {
+    <span class="keyword">var</span> stack []<span class="keyword">string</span>
+
+    <span class="keyword">for</span> idx, ch := <span class="keyword">range</span> x {
+        s := <span class="keyword">string</span>(ch)
+        <span class="keyword">if</span> idx == <span class="number">0</span> &amp;&amp; s == <span class="string">")"</span> {
+            <span class="keyword">return</span> <span class="string">"NO"</span>
+        } <span class="keyword">else</span> {
+            <span class="keyword">if</span> s == <span class="string">"("</span> {
+                stack = <span class="built_in">append</span>(stack, s)
+            } <span class="keyword">else</span> <span class="keyword">if</span> s == <span class="string">")"</span> &amp;&amp; stack != <span class="literal">nil</span> {
+                length := <span class="built_in">len</span>(stack)
+                <span class="keyword">if</span> length == <span class="number">1</span> {
+                    stack = <span class="literal">nil</span>
+                } <span class="keyword">else</span> {
+                    stack = stack[:length<span class="number">-1</span>]
+                }
+            } <span class="keyword">else</span> {
+                <span class="keyword">return</span> <span class="string">"NO"</span>
+            }
+        }
+    }
+    <span class="keyword">if</span> stack == <span class="literal">nil</span> {
+        <span class="keyword">return</span> <span class="string">"YES"</span>
+    } <span class="keyword">else</span> {
+        <span class="keyword">return</span> <span class="string">"NO"</span>
+    }
+}</code></pre>
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/baekjoon/blob/master/9012.py">Full Code - Python</a>  </p>
+<p><a href="https://github.com/Already-Ready/baekjoon/blob/master/Go_solutions/9012.go">Full Code - Go</a>  </p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Go/" rel="tag">Go</a>, <a class="has-link-grey -link" href="/tags/Python/" rel="tag">Python</a>, <a class="has-link-grey -link" href="/tags/baekjoon/" rel="tag">baekjoon</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
     <div class="card-content">
-        <h3 class="tag is-link">
-        2019
-        </h3>
-        <div class="timeline">
-        
-            <article class="media">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
                 
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-12-30T20:46:33.000Z">2019-12-30</time>
-                        <a href="/2019/12/30/Fly%20me%20to%20the%20Alpha%20Centauri/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Centauri</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a> / <a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
                 
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-12-27T15:33:22.000Z">2019-12-27</time>
-                        <a href="/2019/12/27/%EC%A3%BC%EC%82%AC%EC%9C%84%EA%B5%B4%EB%A6%AC%EA%B8%B0-14499%EB%B2%88/" class="title has-link-black-ter is-size-6 has-text-weight-normal">주사위굴리기_14499번</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a> / <a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
                 
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-12-24T06:37:42.000Z">2019-12-24</time>
-                        <a href="/2019/12/24/%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94hexo/" class="title has-link-black-ter is-size-6 has-text-weight-normal">안녕하세요hexo</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
                 
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2019-12-24T05:47:48.560Z">2019-12-24</time>
-                        <a href="/2019/12/24/hello-world/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Hello World</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
         </div>
     </div>
 </div>
 
 
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/01/15/%EC%98%81%ED%99%94%EA%B0%90%EB%8F%85-%EC%88%8C-1436%EB%B2%88/">
+                <span class="level-item">영화감독_숌_1436번</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2020/01/16/%EA%B4%84%ED%98%B8-9012%EB%B2%88/';
+        this.page.identifier = '2020/01/16/괄호-9012번/';
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'already-ready' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </div>
+</div>
 </div>
                 
 
@@ -849,7 +950,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="Hexo" height="28">
+                    <img src="/images/logo.svg" alt="괄호_9012번" height="28">
                 
                 </a>
                 <p class="is-size-7">
