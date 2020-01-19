@@ -143,6 +143,82 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-01-19T19:27:01.000Z">2020-01-19</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/Go/">Go</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 minutes read (About 475 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/01/19/%EA%B7%A0%ED%98%95%EC%9E%A1%ED%9E%8C-%EC%84%B8%EC%83%81-4949%EB%B2%88/">균형잡힌_세상_4949번</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="Python-Go-백준-4949번-풀이"><a href="#Python-Go-백준-4949번-풀이" class="headerlink" title="[Python, Go] 백준 4949번 풀이"></a>[Python, Go] 백준 4949번 풀이</h1><h3 id="균형잡힌-세상"><a href="#균형잡힌-세상" class="headerlink" title="균형잡힌 세상"></a>균형잡힌 세상</h3><ul>
+<li><p><a href="https://already-ready.github.io/2020/01/16/%EA%B4%84%ED%98%B8-9012%EB%B2%88/">괄호문제</a> 의 연장이다.</p>
+</li>
+<li><p>소괄호뿐만 아니라 대괄호까지 포함해 문장에서 괄호가 올바르게 되어져있는지 확인해야한다.</p>
+</li>
+<li><p>괄호안에 있는 괄호의 짝도 맞아야 yes를 출력할 수 있다. 예를들어 ( [ ) ] 와 같은 경우 하나의 괄호 안에 올바른 짝의 괄호가 들어가지 못했으므로 no 를 출력해야 한다.</p>
+</li>
+<li><p>정규표현식을 사용해 따라가야될 괄호들을 뺀 문자들은 pass 시켜주는 방법을 사용했다.</p>
+</li>
+<li><p>이외에는 괄호문제와같이 스텍에 ( 와 [ 를 담아서 사용했다.</p>
+<ul>
+<li>단 ) 와 ] 를 만났을 때, 스텍의 마지막 요소가 짝이되는 괄호인지를 판별해줘야 한다.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Python 풀이</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">vps</span><span class="params">(line)</span>:</span></span><br><span class="line">    stack = []</span><br><span class="line">    <span class="keyword">if</span> line[<span class="number">0</span>] == <span class="string">")"</span> <span class="keyword">or</span> line[<span class="number">0</span>] == <span class="string">"]"</span>:</span><br><span class="line">        <span class="comment"># print("1")</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">    <span class="keyword">else</span>: <span class="keyword">pass</span></span><br><span class="line">    <span class="keyword">for</span> s <span class="keyword">in</span> line:</span><br><span class="line">        <span class="keyword">if</span> bool(com.match(s)) == <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">elif</span> s == <span class="string">" "</span> <span class="keyword">or</span> s == <span class="string">"."</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">elif</span> s == <span class="string">"("</span> <span class="keyword">or</span> s == <span class="string">"["</span>:</span><br><span class="line">            stack.append(s)</span><br><span class="line">            <span class="comment"># print(stack)</span></span><br><span class="line">        <span class="keyword">elif</span> s == <span class="string">")"</span> <span class="keyword">and</span> stack != []:</span><br><span class="line">            <span class="keyword">if</span> stack[<span class="number">-1</span>] == <span class="string">"("</span>:</span><br><span class="line">                stack.pop()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># print("2")</span></span><br><span class="line">                <span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">        <span class="keyword">elif</span> s == <span class="string">"]"</span> <span class="keyword">and</span> stack != []:</span><br><span class="line">            <span class="keyword">if</span> stack[<span class="number">-1</span>] == <span class="string">"["</span>:</span><br><span class="line">                stack.pop()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># print("3")</span></span><br><span class="line">                <span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># print("4")</span></span><br><span class="line">            <span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">    <span class="keyword">if</span> stack == []:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"yes"</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># print("5")</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"no"</span></span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li>Go 풀이</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">vps</span><span class="params">(x <span class="keyword">string</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> stack []<span class="keyword">string</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// fmt.Println(string(x[0]))</span></span><br><span class="line">	<span class="comment">// return x</span></span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">string</span>(x[<span class="number">0</span>]) == <span class="string">")"</span> || <span class="keyword">string</span>(x[<span class="number">0</span>]) == <span class="string">"]"</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> _, ch := <span class="keyword">range</span> x &#123;</span><br><span class="line">		s := <span class="keyword">string</span>(ch)</span><br><span class="line">		match, _ := regexp.MatchString(<span class="string">"[a-zA-Z]"</span>, s)</span><br><span class="line">		<span class="keyword">if</span> match == <span class="literal">true</span> &#123;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> s == <span class="string">" "</span> || s == <span class="string">"."</span> &#123;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> s == <span class="string">"("</span> || s == <span class="string">"["</span> &#123;</span><br><span class="line">			stack = <span class="built_in">append</span>(stack, s)</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> s == <span class="string">")"</span> &amp;&amp; stack != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> stack[<span class="built_in">len</span>(stack)<span class="number">-1</span>] == <span class="string">"("</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> <span class="built_in">len</span>(stack) == <span class="number">1</span> &#123;</span><br><span class="line">					stack = <span class="literal">nil</span></span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					stack = stack[:<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> s == <span class="string">"]"</span> &amp;&amp; stack != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> stack[<span class="built_in">len</span>(stack)<span class="number">-1</span>] == <span class="string">"["</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> <span class="built_in">len</span>(stack) == <span class="number">1</span> &#123;</span><br><span class="line">					stack = <span class="literal">nil</span></span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					stack = stack[:<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> stack == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"yes"</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Go로 풀이할때, 조건이 많을때는 switch가 더 좋기때문에 switch를 사용했다면 더 좋았을것같다.  </li>
+</ul>
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/baekjoon/blob/master/4949.py">Full Code - Python</a>  </p>
+<p><a href="https://github.com/Already-Ready/baekjoon/blob/master/Go_solutions/4949.go">Full Code - Go</a>      </p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-01-16T22:15:45.000Z">2020-01-16</time>
                 
                 <div class="level-item">
@@ -1050,7 +1126,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            17
+                            18
                         </p>
                     </a>
                 </div>
@@ -1206,7 +1282,7 @@
                 <span class="level-item">baekjoon</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">9</span>
+                <span class="level-item tag">10</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/baekjoon/Go/">
@@ -1214,7 +1290,7 @@
                 <span class="level-item">Go</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">5</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/python/">
@@ -1222,7 +1298,7 @@
                 <span class="level-item">python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">9</span>
+                <span class="level-item tag">10</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/github-io/">
@@ -1255,6 +1331,25 @@
         <h3 class="menu-label">
             Recent
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/01/19/%EA%B7%A0%ED%98%95%EC%9E%A1%ED%9E%8C-%EC%84%B8%EC%83%81-4949%EB%B2%88/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="균형잡힌_세상_4949번">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-19T19:27:01.000Z">2020-01-19</time></div>
+                    <a href="/2020/01/19/%EA%B7%A0%ED%98%95%EC%9E%A1%ED%9E%8C-%EC%84%B8%EC%83%81-4949%EB%B2%88/" class="title has-link-black-ter is-size-6 has-text-weight-normal">균형잡힌_세상_4949번</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a> / <a class="has-link-grey -link" href="/categories/baekjoon/Go/">Go</a> / <a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1332,25 +1427,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/01/09/Golang-%EC%A0%95%EB%A6%AC%ED%95%98%EA%B8%B0-4/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Golang_정리하기_4">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-09T14:04:08.000Z">2020-01-09</time></div>
-                    <a href="/2020/01/09/Golang-%EC%A0%95%EB%A6%AC%ED%95%98%EA%B8%B0-4/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Golang_정리하기_4</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Go/">Go</a> / <a class="has-link-grey -link" href="/categories/Go/tutorial/">tutorial</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1368,7 +1444,7 @@
                     <span class="level-item">January 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">13</span>
+                    <span class="level-item tag">14</span>
                 </span>
             </a>
         </li>
@@ -1400,21 +1476,21 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Go/">
                         <span class="tag">Go</span>
-                        <span class="tag is-grey">9</span>
+                        <span class="tag is-grey">10</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">7</span>
+                        <span class="tag is-grey">8</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/baekjoon/">
                         <span class="tag">baekjoon</span>
-                        <span class="tag is-grey">8</span>
+                        <span class="tag is-grey">9</span>
                     </a>
                 </div>
                 
@@ -1456,6 +1532,25 @@
         
         <article class="media">
             
+            <a href="/2020/01/19/%EA%B7%A0%ED%98%95%EC%9E%A1%ED%9E%8C-%EC%84%B8%EC%83%81-4949%EB%B2%88/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="균형잡힌_세상_4949번">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-19T19:27:01.000Z">2020-01-19</time></div>
+                    <a href="/2020/01/19/%EA%B7%A0%ED%98%95%EC%9E%A1%ED%9E%8C-%EC%84%B8%EC%83%81-4949%EB%B2%88/" class="title has-link-black-ter is-size-6 has-text-weight-normal">균형잡힌_세상_4949번</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a> / <a class="has-link-grey -link" href="/categories/baekjoon/Go/">Go</a> / <a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/01/16/%EA%B4%84%ED%98%B8-9012%EB%B2%88/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="괄호_9012번">
@@ -1530,25 +1625,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/01/09/Golang-%EC%A0%95%EB%A6%AC%ED%95%98%EA%B8%B0-4/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Golang_정리하기_4">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-09T14:04:08.000Z">2020-01-09</time></div>
-                    <a href="/2020/01/09/Golang-%EC%A0%95%EB%A6%AC%ED%95%98%EA%B8%B0-4/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Golang_정리하기_4</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Go/">Go</a> / <a class="has-link-grey -link" href="/categories/Go/tutorial/">tutorial</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1566,7 +1642,7 @@
                     <span class="level-item">January 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">13</span>
+                    <span class="level-item tag">14</span>
                 </span>
             </a>
         </li>
@@ -1598,21 +1674,21 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Go/">
                         <span class="tag">Go</span>
-                        <span class="tag is-grey">9</span>
+                        <span class="tag is-grey">10</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">7</span>
+                        <span class="tag is-grey">8</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/baekjoon/">
                         <span class="tag">baekjoon</span>
-                        <span class="tag is-grey">8</span>
+                        <span class="tag is-grey">9</span>
                     </a>
                 </div>
                 
