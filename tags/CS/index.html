@@ -143,6 +143,90 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-01-30T15:24:13.000Z">2020-01-30</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/CS-basic/">CS basic</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/CS-basic/CtCI/">CtCI</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 minutes read (About 570 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/01/30/CtCI-Ch1-%EB%B0%B0%EC%97%B4%EA%B3%BC-%EB%AC%B8%EC%9E%90%EC%97%B4/">CtCI_Ch1_배열과_문자열</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="Ch1-배열과-문자열"><a href="#Ch1-배열과-문자열" class="headerlink" title="Ch1. 배열과 문자열"></a>Ch1. 배열과 문자열</h1><h3 id="코딩-인터뷰-완전-분석-저-게일-라크만-맥도웰-참조"><a href="#코딩-인터뷰-완전-분석-저-게일-라크만-맥도웰-참조" class="headerlink" title="코딩 인터뷰 완전 분석(저 : 게일 라크만 맥도웰) 참조"></a><a href="https://www.google.com/search?sxsrf=ACYBGNSEu2Z1xUz3cvyO7UGKy9e6sPD-Vg%3A1579746820188&source=hp&ei=BAYpXqSdCdP7wAOsrIHwBg&q=%EC%BD%94%EB%94%A9+%EC%9D%B8%ED%84%B0%EB%B7%B0+%EC%99%84%EC%A0%84+%EB%B6%84%EC%84%9D&oq=%EC%BD%94%EB%94%A9+%EC%9D%B8%ED%84%B0%EB%B7%B0&gs_l=psy-ab.3.0.0l10.411.2315..3295...3.0..2.169.1521.0j13......0....1..gws-wiz.......35i39j0i131.182vM3XJZPY">코딩 인터뷰 완전 분석(저 : 게일 라크만 맥도웰) 참조</a></h3><ul>
+<li><p>해시테이블</p>
+<ul>
+<li><p>해시테이블(파이썬의 dict)은 키와 값으로 대응되는 자료구조이다.</p>
+</li>
+<li><p>해시코드 충돌로 인해 최악의 수행 시간은 O(N)이지만, 일반적으로 탐색 시간은 O(1)이다.</p>
+</li>
+<li><p><a href="https://wiki.python.org/moin/TimeComplexity">python dict time complexity</a>에서 시간 복잡도를 확인할 수 있다.</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>리스트</p>
+<ul>
+<li><p>가변 크기의 자료구조를 원할 때는 리스트(배열)을 사용하게 된다.</p>
+</li>
+<li><p>리스트는 O(1)의 접근 시간을 유지한다.</p>
+</li>
+<li><p>리스트의 크기를 두배로 늘리는 시간은 O(n)이지만, 자주 발생하는 일이 아니라서 상환 입력 시간은 O(1)이 된다.  </p>
+<ul>
+<li>Go 를 생각해보자. 슬라이스에 아이템을 하나씩 append 하다가 처음에 정의한 슬라이스의 크기보다 더 들어가야 된다면 그때, 슬라이스의 크기가 두배 늘어나는 상황이다.</li>
+</ul>
+</li>
+<li><p>상환 입력 시간이 O(1)인 이유</p>
+<ul>
+<li><p>크기가 N인 배열을 생각해보자. N개의 원소를 삽입하기 위해 얼마나 많은 원소를 복사해야 하는지 역으로 계산할 수 있다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">마지막 배열 크기 증가 : n&#x2F;2 개의 원소 복사</span><br><span class="line">이전 배열 크기 증가 : n&#x2F;4 개의 원소 복사</span><br><span class="line">이전 배열 크기 증가 : n&#x2F;8 개의 원소 복사</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">두 번쨰 배열 크기 증가 : 2 개의 원소 복사</span><br><span class="line">첫 번째 배열 크기 증가 : 1 개의 원소 복사</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>즉, N개의 원소를 삽입하기 위해 복사해야 하는 원소의 총 개수는 1+2+…N/8+N/4+N/2 이며 이는 N보다 작다.</p>
+</li>
+<li><p>따라서, O(N)이 소요되는 삽입 연산도 존재하기는 하지만 평균적으로 삽입 연산은 O(1)이 소요된다.</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Ch1-연습문제-코드"><a href="#Ch1-연습문제-코드" class="headerlink" title="Ch1. 연습문제 코드"></a>Ch1. 연습문제 코드</h2><p><a href="https://github.com/Already-Ready/CtCI_Python/tree/master/Ch_1">CtCI_Ch1_Python</a></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-01-23T15:03:44.000Z">2020-01-23</time>
                 
                 <div class="level-item">
@@ -347,7 +431,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            20
+                            21
                         </p>
                     </a>
                 </div>
@@ -359,7 +443,7 @@
                     </p>
                     <a href="/categories">
                         <p class="title has-text-weight-normal">
-                            8
+                            9
                         </p>
                     </a>
                 </div>
@@ -371,7 +455,7 @@
                     </p>
                     <a href="/tags">
                         <p class="title has-text-weight-normal">
-                            6
+                            7
                         </p>
                     </a>
                 </div>
@@ -479,9 +563,17 @@
                 <span class="level-item">CS basic</span>
             </span>
             <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/CS-basic/CtCI/">
+            <span class="level-start">
+                <span class="level-item">CtCI</span>
+            </span>
+            <span class="level-end">
                 <span class="level-item tag">1</span>
             </span>
-        </a></li><li>
+        </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/Go/">
             <span class="level-start">
                 <span class="level-item">Go</span>
@@ -548,7 +640,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/CS/" style="font-size: 10px;">CS</a> <a href="/tags/Go/" style="font-size: 20px;">Go</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/baekjoon/" style="font-size: 20px;">baekjoon</a> <a href="/tags/github-io/" style="font-size: 10px;">github.io</a> <a href="/tags/%EB%B8%94%EB%A1%9C%EA%B7%B8/" style="font-size: 10px;">블로그</a>
+        <a href="/tags/CS/" style="font-size: 13.33px;">CS</a> <a href="/tags/CtCI/" style="font-size: 10px;">CtCI</a> <a href="/tags/Go/" style="font-size: 20px;">Go</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/baekjoon/" style="font-size: 20px;">baekjoon</a> <a href="/tags/github-io/" style="font-size: 10px;">github.io</a> <a href="/tags/%EB%B8%94%EB%A1%9C%EA%B7%B8/" style="font-size: 10px;">블로그</a>
     </div>
 </div>
     
@@ -560,6 +652,25 @@
         <h3 class="menu-label">
             Recent
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/01/30/CtCI-Ch1-%EB%B0%B0%EC%97%B4%EA%B3%BC-%EB%AC%B8%EC%9E%90%EC%97%B4/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="CtCI_Ch1_배열과_문자열">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-30T15:24:13.000Z">2020-01-30</time></div>
+                    <a href="/2020/01/30/CtCI-Ch1-%EB%B0%B0%EC%97%B4%EA%B3%BC-%EB%AC%B8%EC%9E%90%EC%97%B4/" class="title has-link-black-ter is-size-6 has-text-weight-normal">CtCI_Ch1_배열과_문자열</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/CS-basic/">CS basic</a> / <a class="has-link-grey -link" href="/categories/CS-basic/CtCI/">CtCI</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -637,25 +748,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/01/15/%EC%98%81%ED%99%94%EA%B0%90%EB%8F%85-%EC%88%8C-1436%EB%B2%88/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="영화감독_숌_1436번">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-15T13:55:53.000Z">2020-01-15</time></div>
-                    <a href="/2020/01/15/%EC%98%81%ED%99%94%EA%B0%90%EB%8F%85-%EC%88%8C-1436%EB%B2%88/" class="title has-link-black-ter is-size-6 has-text-weight-normal">영화감독_숌_1436번</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a> / <a class="has-link-grey -link" href="/categories/baekjoon/Go/">Go</a> / <a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -673,7 +765,7 @@
                     <span class="level-item">January 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">16</span>
+                    <span class="level-item tag">17</span>
                 </span>
             </a>
         </li>
@@ -705,6 +797,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/CS/">
                         <span class="tag">CS</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/CtCI/">
+                        <span class="tag">CtCI</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -768,6 +867,25 @@
         
         <article class="media">
             
+            <a href="/2020/01/30/CtCI-Ch1-%EB%B0%B0%EC%97%B4%EA%B3%BC-%EB%AC%B8%EC%9E%90%EC%97%B4/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="CtCI_Ch1_배열과_문자열">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-30T15:24:13.000Z">2020-01-30</time></div>
+                    <a href="/2020/01/30/CtCI-Ch1-%EB%B0%B0%EC%97%B4%EA%B3%BC-%EB%AC%B8%EC%9E%90%EC%97%B4/" class="title has-link-black-ter is-size-6 has-text-weight-normal">CtCI_Ch1_배열과_문자열</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/CS-basic/">CS basic</a> / <a class="has-link-grey -link" href="/categories/CS-basic/CtCI/">CtCI</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/01/25/%ED%83%91-2493%EB%B2%88/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="탑_2493번">
@@ -842,25 +960,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/01/15/%EC%98%81%ED%99%94%EA%B0%90%EB%8F%85-%EC%88%8C-1436%EB%B2%88/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="영화감독_숌_1436번">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-15T13:55:53.000Z">2020-01-15</time></div>
-                    <a href="/2020/01/15/%EC%98%81%ED%99%94%EA%B0%90%EB%8F%85-%EC%88%8C-1436%EB%B2%88/" class="title has-link-black-ter is-size-6 has-text-weight-normal">영화감독_숌_1436번</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a> / <a class="has-link-grey -link" href="/categories/baekjoon/Go/">Go</a> / <a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -878,7 +977,7 @@
                     <span class="level-item">January 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">16</span>
+                    <span class="level-item tag">17</span>
                 </span>
             </a>
         </li>
@@ -910,6 +1009,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/CS/">
                         <span class="tag">CS</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/CtCI/">
+                        <span class="tag">CtCI</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
