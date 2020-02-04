@@ -7,16 +7,22 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>Category: python - Hexo</title>
+<title>CtCI_Ch3_스택과큐 - Hexo</title>
 
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/categories/baekjoon/python/page/2/index.html">
+    <meta name="description" content="Ch3. 스택과 큐코딩 인터뷰 완전 분석(저 : 게일 라크만 맥도웰) 참조 스택 구현하기  스택은 데이터를 쌓아올리는 자료구조이다. 스택은 LIFO(Last-In-First-Out)에 따라 자료를 배열한다.  즉, 가장 최근에 스택에 추가한 항목이 가장 먼저 제거될 항목이 된다.  스택에는 다음과 같은 연산이 존재한다.  pop(): 스택에서 가장 위에 있">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CtCI_Ch3_스택과큐">
+<meta property="og:url" content="http://yoursite.com/2020/02/04/CtCI-Ch3-%EC%8A%A4%ED%83%9D%EA%B3%BC%ED%81%90/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Ch3. 스택과 큐코딩 인터뷰 완전 분석(저 : 게일 라크만 맥도웰) 참조 스택 구현하기  스택은 데이터를 쌓아올리는 자료구조이다. 스택은 LIFO(Last-In-First-Out)에 따라 자료를 배열한다.  즉, 가장 최근에 스택에 추가한 항목이 가장 먼저 제거될 항목이 된다.  스택에는 다음과 같은 연산이 존재한다.  pop(): 스택에서 가장 위에 있">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2020-02-04T20:17:20.000Z">
+<meta property="article:modified_time" content="2020-02-04T11:17:24.766Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="CS">
+<meta property="article:tag" content="CtCI">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
 
@@ -76,7 +82,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="Hexo" height="28">
+                <img src="/images/logo.svg" alt="CtCI_Ch3_스택과큐" height="28">
             
             </a>
         </div>
@@ -125,38 +131,24 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/categories">Categories</a></li>
-            
-            <li><a href="/categories/baekjoon/">baekjoon</a></li>
-            
-            <li class="is-active"><a href="#" aria-current="page">python</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
-
-    
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
 <div class="card">
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-12-27T15:33:22.000Z">2019-12-27</time>
+                <time class="level-item has-text-grey" datetime="2020-02-04T20:17:20.000Z">2020-02-04</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
+                <a class="has-link-grey -link" href="/categories/CS-basic/">CS basic</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/CS-basic/CtCI/">CtCI</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    4 minutes read (About 558 words)
+                    4 minutes read (About 553 words)
                 </span>
                 
                 
@@ -165,36 +157,71 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2019/12/27/%EC%A3%BC%EC%82%AC%EC%9C%84%EA%B5%B4%EB%A6%AC%EA%B8%B0-14499%EB%B2%88/">주사위굴리기_14499번</a>
+                CtCI_Ch3_스택과큐
             
         </h1>
         <div class="content">
-            <h2 id="14499번-문제-풀이"><a href="#14499번-문제-풀이" class="headerlink" title="14499번 문제 풀이"></a>14499번 문제 풀이</h2><br/>
+            <h1 id="Ch3-스택과-큐"><a href="#Ch3-스택과-큐" class="headerlink" title="Ch3. 스택과 큐"></a>Ch3. 스택과 큐</h1><h3 id="코딩-인터뷰-완전-분석-저-게일-라크만-맥도웰-참조"><a href="#코딩-인터뷰-완전-분석-저-게일-라크만-맥도웰-참조" class="headerlink" title="코딩 인터뷰 완전 분석(저 : 게일 라크만 맥도웰) 참조"></a><a href="https://www.google.com/search?sxsrf=ACYBGNSEu2Z1xUz3cvyO7UGKy9e6sPD-Vg%3A1579746820188&source=hp&ei=BAYpXqSdCdP7wAOsrIHwBg&q=%EC%BD%94%EB%94%A9+%EC%9D%B8%ED%84%B0%EB%B7%B0+%EC%99%84%EC%A0%84+%EB%B6%84%EC%84%9D&oq=%EC%BD%94%EB%94%A9+%EC%9D%B8%ED%84%B0%EB%B7%B0&gs_l=psy-ab.3.0.0l10.411.2315..3295...3.0..2.169.1521.0j13......0....1..gws-wiz.......35i39j0i131.182vM3XJZPY">코딩 인터뷰 완전 분석(저 : 게일 라크만 맥도웰) 참조</a></h3><ul>
+<li><p>스택 구현하기</p>
+<ul>
+<li><p>스택은 데이터를 쌓아올리는 자료구조이다. 스택은 LIFO(Last-In-First-Out)에 따라 자료를 배열한다.</p>
+</li>
+<li><p>즉, 가장 최근에 스택에 추가한 항목이 가장 먼저 제거될 항목이 된다.</p>
+</li>
+<li><p>스택에는 다음과 같은 연산이 존재한다.</p>
+<ul>
+<li><p>pop(): 스택에서 가장 위에 있는 항목을 제거한다.</p>
+</li>
+<li><p>push(item): item을 스택의 가장 위에 추가한다.</p>
+</li>
+<li><p>peek(): 스택의 가장 위에 있는 항목을 반환한다.</p>
+</li>
+<li><p>isEmpty(): 스택이 비어있을 때에 True를 반환한다.</p>
+</li>
+</ul>
+</li>
+<li><p>파이썬을 통해 스택을 아래와 같이 구현할 수 있다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stack</span><span class="params">()</span>:</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">		self.stack = []</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__len__</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">return</span> len(self.stack)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">isempty</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">if</span> self.stack:</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">push</span><span class="params">(self, num)</span>:</span></span><br><span class="line">		self.stack.append(num)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">pop</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">if</span> self.stack:</span><br><span class="line">			<span class="keyword">return</span> self.stack.pop()</span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			<span class="keyword">raise</span> Exception(<span class="string">"stack is empty"</span>)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">peek</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">if</span> self.stack:</span><br><span class="line">			<span class="keyword">return</span> self.stack[<span class="number">-1</span>]</span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			<span class="keyword">raise</span> Exception(<span class="string">"stack is empty"</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>큐 구현하기</p>
+<ul>
+<li><p>큐는 FIFO(First-In-First-Out)에 따라 자료를 배열한다.</p>
+</li>
+<li><p>즉, 큐에 저장되는 항목들은 추가되는 순서대로 제거된다.</p>
+</li>
+<li><p>큐에는 다음과 같은 연산이 존재한다.</p>
+<ul>
+<li><p>add(item): item을 리스트의 끝부분에 추가한다.</p>
+</li>
+<li><p>remove(item): 리스트의 첫 번쨰 항목을 제거한다.</p>
+</li>
+<li><p>peek(): 큐에서 가장 위에 있는 항목을 반환한다.</p>
+</li>
+<li><p>isEmpty(): 큐가 비어있을 때 True를 반환한다.</p>
+</li>
+</ul>
+</li>
+<li><p>파이썬을 통해 아래와 같이 큐를 구현할 수 있다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Queue</span><span class="params">()</span>:</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">		self.queue = []</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">push</span><span class="params">(self, num)</span>:</span></span><br><span class="line">		self.queue.append(num)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">pop</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">if</span> self.queue:</span><br><span class="line">			item = self.queue[<span class="number">0</span>]</span><br><span class="line">			self.queue = self.queue[<span class="number">1</span>:]</span><br><span class="line">			<span class="keyword">return</span> item</span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			<span class="keyword">raise</span> Exception(<span class="string">"Queue is empty"</span>)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">peek</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">if</span> self.queue:</span><br><span class="line">			<span class="keyword">return</span> self.queue[<span class="number">0</span>]</span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			<span class="keyword">raise</span> Exception(<span class="string">"Queue is empty"</span>)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">isEmpty</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">if</span> <span class="keyword">not</span> self.queue:</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
 
-<p>주사위가 좌표면을 움직일때마다 윗면에 쓰여있는 숫자를 출력하는 문제이다.</p>
-<p>1.규칙에 따라 주사위와 좌표면의 숫자들이 바뀌므로 바뀌는 주사위 면의 숫자들을 저장하고자 했다.  </p>
-<p>&nbsp;&nbsp;&nbsp;따라서, 아래와 같이 dice라는 리스트를 주사위값 저장에 사용했다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dice = [<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>] <span class="comment">#위0 아래1 동2 서3 남4 북5 순서로 값</span></span><br></pre></td></tr></table></figure>
 
-<p>2.주사위가 움직이는 지도가 어떻게 생겼는지를 알아야했다.</p>
-<p>&nbsp;&nbsp;&nbsp;따라서, 아래와 같이 입력받은 크기에 맞는 지도를 생성했다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">field = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> range(rows):</span><br><span class="line">    li = list(map(int, input().split()))</span><br><span class="line">    field.append(li)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Ch3-연습문제-코드"><a href="#Ch3-연습문제-코드" class="headerlink" title="Ch3. 연습문제 코드"></a>Ch3. 연습문제 코드</h2><p><a href="https://github.com/Already-Ready/CtCI_Python/tree/master/Ch_3">CtCI_Ch3_Python</a></p>
 
-
-<p>3.주어지는 움직임대로 주사위를 움직이고 그에따라 지도의 값과 dice의 값을 바꿔주어야한다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(moves)):</span><br><span class="line">    temp = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> moves[i] == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">if</span> position_y + <span class="number">1</span> &lt; columns:</span><br><span class="line">            position_y += <span class="number">1</span></span><br><span class="line">            temp = dice[<span class="number">2</span>]</span><br><span class="line">            field_num = field[position_x][position_y]</span><br><span class="line">            <span class="keyword">if</span> field_num == <span class="number">0</span>:</span><br><span class="line">                dice[<span class="number">2</span>] = dice[<span class="number">0</span>]</span><br><span class="line">                dice[<span class="number">0</span>] = dice[<span class="number">3</span>]</span><br><span class="line">                dice[<span class="number">3</span>] = dice[<span class="number">1</span>]</span><br><span class="line">                dice[<span class="number">1</span>] = temp</span><br><span class="line">                field[position_x][position_y] = temp</span><br><span class="line"></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                dice[<span class="number">2</span>] = dice[<span class="number">0</span>]</span><br><span class="line">                dice[<span class="number">0</span>] = dice[<span class="number">3</span>]</span><br><span class="line">                dice[<span class="number">3</span>] = dice[<span class="number">1</span>]</span><br><span class="line">                dice[<span class="number">1</span>] = field[position_x][position_y]</span><br><span class="line">                field[position_x][position_y] = <span class="number">0</span></span><br><span class="line">        <span class="keyword">else</span> : <span class="keyword">continue</span></span><br></pre></td></tr></table></figure>
-
-<p>주사위가 특정 방향으로 움직이기전에, temp값에 바닥을 향할 주사위 값을 미리 저장해주었다.</p>
-<p>그리고 주사위가 움직일때, 현재 좌표값들을 변경시켜준다.</p>
-<p>이때 주의할점은 우리는 문제에서 값을 입력받을때 세로크기를 먼저받고 그 다음으로 가로 크기를 받는다는 점이다.</p>
-<p>즉 동쪽으로 움직이면 y좌표가 늘어난다.</p>
-<p>주사위가 굴렀다면, dice 리스트에 값들을 바꿔줘야한다.</p>
-<p>위와같이 동쪽으로 굴렀다면, 위를 바라보던 주사위 면은 동쪽을 바라보게 될테고</p>
-<p>서쪽을 바라보던 주사위면은 위를 바라보게 될 것이다.</p>
-<p>이와 같이 주사위 면의 값들을 dice에 바꿔서 입력한다.</p>
-<p>이 과정을 동,서,남,북에 나눠서 처리하고 그때마다 주사위 윗면의 값을 프린트해주면 된다.</p>
-<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/baekjoon/blob/master/14499.py">Full Code</a></p>
-
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/CS/" rel="tag">CS</a>, <a class="has-link-grey -link" href="/tags/CtCI/" rel="tag">CtCI</a>
+                </div>
+            </div>
         </div>
         
         
@@ -204,29 +231,80 @@
 
 
 
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
 
 
 
-
-
-
-    
 <div class="card card-transparent">
-    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-        <div class="pagination-previous">
-            <a class="is-flex-grow has-text-black-ter" href="/categories/baekjoon/python/">Previous</a>
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/01/30/CtCI-Ch1-%EB%B0%B0%EC%97%B4%EA%B3%BC-%EB%AC%B8%EC%9E%90%EC%97%B4/">
+                <span class="level-item">CtCI_Ch1_배열과_문자열</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
         </div>
-        <div class="pagination-next is-invisible is-hidden-mobile">
-            <a class="is-flex-grow has-text-black-ter" href="/categories/baekjoon/python/page/3/">Next</a>
-        </div>
-        <ul class="pagination-list is-hidden-mobile">
-            
-            <li><a class="pagination-link has-text-black-ter" href="/categories/baekjoon/python/">1</a></li>
-            
-            <li><a class="pagination-link is-current" href="/categories/baekjoon/python/page/2/">2</a></li>
-            
-        </ul>
-    </nav>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2020/02/04/CtCI-Ch3-%EC%8A%A4%ED%83%9D%EA%B3%BC%ED%81%90/';
+        this.page.identifier = '2020/02/04/CtCI-Ch3-스택과큐/';
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'already-ready' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </div>
 </div>
 </div>
                 
@@ -936,7 +1014,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="Hexo" height="28">
+                    <img src="/images/logo.svg" alt="CtCI_Ch3_스택과큐" height="28">
                 
                 </a>
                 <p class="is-size-7">
