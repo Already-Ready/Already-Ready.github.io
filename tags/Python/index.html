@@ -143,6 +143,80 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-03-17T22:50:33.000Z">2020-03-17</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 minutes read (About 459 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/03/17/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-missing-%EB%A9%94%EC%84%9C%EB%93%9C%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC/">파이썬_딕셔너리___missing___메서드에_관하여.</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="파이썬-딕셔너리-missing-메서드에-관하여"><a href="#파이썬-딕셔너리-missing-메서드에-관하여" class="headerlink" title="파이썬 딕셔너리 missing 메서드에 관하여"></a>파이썬 딕셔너리 <strong>missing</strong> 메서드에 관하여</h1><ul>
+<li>파이썬 딕셔너리를 사용할 때 찾는 key값이 없는 경우 다음과 같은 에러가 발생한다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mine2 = dict()</span><br><span class="line">mine2[<span class="string">"dog"</span>] = [<span class="string">"Na"</span>, <span class="string">"Mg"</span>]</span><br><span class="line">print(mine2[<span class="string">"cat"</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">### print &gt;&gt; KeyError: 'cat'</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>이러한 KeyError 를 딕셔너리를 상속받는 자기만의 딕셔너리 클래스를 만들어서 해결할 수 있는 방법이 있다.</p>
+<ul>
+<li><p>missing 메서드는 딕셔너리의 key 값을 찾고싶다는 입력을 보냈을 때 키 값이 존재하지 않을 경우 어떤 값을 return 할까를 작성할 수 있다. (정확히는 getitem 에서 key가 없을 경우 정의된 missing 을 호출한다.)</p>
+</li>
+<li><p>다음과 같은 나만의 딕셔너리를 만들어보자.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">mydict</span><span class="params">(dict)</span>:</span></span><br><span class="line">   	<span class="function"><span class="keyword">def</span> <span class="title">__missing__</span><span class="params">(self, key)</span>:</span></span><br><span class="line">       	<span class="keyword">return</span> []</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>딕셔너리를 상속받은 나의 mydict에 다음과 같은 데이터를 넣어보자.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mine = mydict()</span><br><span class="line"></span><br><span class="line">mine[<span class="string">"dog"</span>] = [<span class="string">"H"</span>]</span><br><span class="line">mine[<span class="string">"tiger"</span>] = [<span class="string">"He, Li"</span>]</span><br><span class="line">mine[<span class="string">"wolf"</span>] = [<span class="string">"Be"</span>, <span class="string">"B"</span>, <span class="string">"C"</span>]</span><br><span class="line"></span><br><span class="line">print(mine)</span><br><span class="line"></span><br><span class="line"><span class="comment">### print &gt;&gt; &#123;'dog': ['H'], 'tiger': ['He, Li'], 'wolf': ['Be', 'B', 'C']&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>위와 같은 mine 딕셔너리에서 처음과 같이 “cat” 을 찾으려고 한다면 어떻게 될까?</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(mine[&quot;cat&quot;])</span><br><span class="line"></span><br><span class="line">### print &gt;&gt; []</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>KeyError 가 발생하지 않았다. 왜냐하면 나만의 딕셔너리에 정의한 missing 메서드를 통해 key값이 없다면 빈 리스트를 return하게 만들었기 때문이다!</p>
+</li>
+<li><p>이를 이용하면 다음과 같이 데이터를 다룰 수도 있다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mine[&quot;cat&quot;] +&#x3D; [&quot;N&quot;, &quot;O&quot;, &quot;F&quot;, &quot;Ne&quot;]</span><br><span class="line"></span><br><span class="line">print(mine)</span><br><span class="line"></span><br><span class="line">### print &gt;&gt; &#123;&#39;dog&#39;: [&#39;H&#39;], &#39;tiger&#39;: [&#39;He, Li&#39;], &#39;wolf&#39;: [&#39;Be&#39;, &#39;B&#39;, &#39;C&#39;], &#39;cat&#39;: [&#39;N&#39;, &#39;O&#39;, &#39;F&#39;, &#39;Ne&#39;]&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>그냥 처음과 같이 데이터를 입력하면 되는것이 아닌가? 라고 생각할 수 있지만 큐나 스텍을 이용해 순차적으로 모든 데이터를 순회하는 경우에는 이와같은 방법이 유용하게 쓰일 수 있다.</p>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-01-25T19:40:14.000Z">2020-01-25</time>
                 
                 <div class="level-item">
@@ -923,7 +997,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            25
+                            26
                         </p>
                     </a>
                 </div>
@@ -935,7 +1009,7 @@
                     </p>
                     <a href="/categories">
                         <p class="title has-text-weight-normal">
-                            9
+                            11
                         </p>
                     </a>
                 </div>
@@ -1090,6 +1164,22 @@
                 <span class="level-item tag">4</span>
             </span>
         </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/Python/">
+            <span class="level-start">
+                <span class="level-item">Python</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/Python/About-Python/">
+            <span class="level-start">
+                <span class="level-item">About Python</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
             <span class="level-start">
                 <span class="level-item">baekjoon</span>
@@ -1132,7 +1222,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/CS/" style="font-size: 15px;">CS</a> <a href="/tags/CtCI/" style="font-size: 12.5px;">CtCI</a> <a href="/tags/Go/" style="font-size: 20px;">Go</a> <a href="/tags/Python/" style="font-size: 17.5px;">Python</a> <a href="/tags/baekjoon/" style="font-size: 20px;">baekjoon</a> <a href="/tags/github-io/" style="font-size: 10px;">github.io</a> <a href="/tags/%EB%B8%94%EB%A1%9C%EA%B7%B8/" style="font-size: 10px;">블로그</a>
+        <a href="/tags/CS/" style="font-size: 16.67px;">CS</a> <a href="/tags/CtCI/" style="font-size: 13.33px;">CtCI</a> <a href="/tags/Go/" style="font-size: 20px;">Go</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/baekjoon/" style="font-size: 20px;">baekjoon</a> <a href="/tags/github-io/" style="font-size: 10px;">github.io</a> <a href="/tags/%EB%B8%94%EB%A1%9C%EA%B7%B8/" style="font-size: 10px;">블로그</a>
     </div>
 </div>
     
@@ -1144,6 +1234,25 @@
         <h3 class="menu-label">
             Recent
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/03/17/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-missing-%EB%A9%94%EC%84%9C%EB%93%9C%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="파이썬_딕셔너리___missing___메서드에_관하여.">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-17T22:50:33.000Z">2020-03-17</time></div>
+                    <a href="/2020/03/17/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-missing-%EB%A9%94%EC%84%9C%EB%93%9C%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC/" class="title has-link-black-ter is-size-6 has-text-weight-normal">파이썬_딕셔너리___missing___메서드에_관하여.</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1221,25 +1330,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/01/30/CtCI-Ch1-%EB%B0%B0%EC%97%B4%EA%B3%BC-%EB%AC%B8%EC%9E%90%EC%97%B4/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="CtCI_Ch1_배열과_문자열">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-30T15:24:13.000Z">2020-01-30</time></div>
-                    <a href="/2020/01/30/CtCI-Ch1-%EB%B0%B0%EC%97%B4%EA%B3%BC-%EB%AC%B8%EC%9E%90%EC%97%B4/" class="title has-link-black-ter is-size-6 has-text-weight-normal">CtCI_Ch1_배열과_문자열</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/CS-basic/">CS basic</a> / <a class="has-link-grey -link" href="/categories/CS-basic/CtCI/">CtCI</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1257,7 +1347,7 @@
                     <span class="level-item">March 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -1332,7 +1422,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">9</span>
+                        <span class="tag is-grey">10</span>
                     </a>
                 </div>
                 
@@ -1381,6 +1471,25 @@
         
         <article class="media">
             
+            <a href="/2020/03/17/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-missing-%EB%A9%94%EC%84%9C%EB%93%9C%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="파이썬_딕셔너리___missing___메서드에_관하여.">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-17T22:50:33.000Z">2020-03-17</time></div>
+                    <a href="/2020/03/17/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-missing-%EB%A9%94%EC%84%9C%EB%93%9C%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC/" class="title has-link-black-ter is-size-6 has-text-weight-normal">파이썬_딕셔너리___missing___메서드에_관하여.</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/03/04/CtCI-Ch5-%EB%B9%84%ED%8A%B8-%EC%A1%B0%EC%9E%91/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="CtCI_Ch5_비트_조작">
@@ -1455,25 +1564,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/01/30/CtCI-Ch1-%EB%B0%B0%EC%97%B4%EA%B3%BC-%EB%AC%B8%EC%9E%90%EC%97%B4/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="CtCI_Ch1_배열과_문자열">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-30T15:24:13.000Z">2020-01-30</time></div>
-                    <a href="/2020/01/30/CtCI-Ch1-%EB%B0%B0%EC%97%B4%EA%B3%BC-%EB%AC%B8%EC%9E%90%EC%97%B4/" class="title has-link-black-ter is-size-6 has-text-weight-normal">CtCI_Ch1_배열과_문자열</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/CS-basic/">CS basic</a> / <a class="has-link-grey -link" href="/categories/CS-basic/CtCI/">CtCI</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1491,7 +1581,7 @@
                     <span class="level-item">March 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -1566,7 +1656,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">9</span>
+                        <span class="tag is-grey">10</span>
                     </a>
                 </div>
                 
