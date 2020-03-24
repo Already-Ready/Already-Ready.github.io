@@ -146,6 +146,127 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-03-24T11:55:20.000Z">2020-03-24</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 minutes read (About 510 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/03/24/%ED%8C%8C%EC%9D%B4%EC%8D%AC-dataframe-function-apply-%EB%B0%A9%EB%B2%95-without-iterrrows/">파이썬_dataframe_function_apply_방법_without_iterrrows</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="파이썬-dataframe-각-row에-function을-apply하는-방법에-대하여"><a href="#파이썬-dataframe-각-row에-function을-apply하는-방법에-대하여" class="headerlink" title="파이썬 dataframe 각 row에 function을 apply하는 방법에 대하여."></a>파이썬 dataframe 각 row에 function을 apply하는 방법에 대하여.</h1><ul>
+<li><p>dataframe을 다루다보면 각 행(row)에 대해 특정 값에 대한 결과를 얻거나 과정을 수행하고 싶을 때가 있다.</p>
+</li>
+<li><p>이럴때 가장먼저 떠오르는것은 <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.iterrows.html">pd.iterrows()</a> 였다.</p>
+</li>
+<li><p>하지만 천만건이 넘어가는 데이터를 다루려 하다보니 iterrows는 너무나 느리다는 것을 알게 되었다.</p>
+</li>
+<li><p>이를 해결하기 위해 찾아낸 방법이 수행할 작업을 function으로 만들고 각 행에 <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html">apply</a>하는 것이다.</p>
+</li>
+<li><p>간단한 dataframe 을 만들어서 살펴보자.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">rectangles = [</span><br><span class="line">    &#123; <span class="string">'Name'</span>: <span class="string">"A"</span>, <span class="string">'Age'</span>: <span class="number">17</span> &#125;,</span><br><span class="line">    &#123; <span class="string">'Name'</span>: <span class="string">"B"</span>, <span class="string">'Age'</span>: <span class="number">20</span> &#125;,</span><br><span class="line">    &#123; <span class="string">'Name'</span>: <span class="string">"C"</span>, <span class="string">'Age'</span>: <span class="number">27</span> &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">rectangles_df = pd.DataFrame(rectangles)</span><br><span class="line">print(rectangles_df)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Age</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>17</td>
+</tr>
+<tr>
+<td>B</td>
+<td>20</td>
+</tr>
+<tr>
+<td>C</td>
+<td>27</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>이름과 성별이 주어진 dataframe이 있을 때 각 행을 살펴보며 어떤 사람이 투표권을 행사할 수 있을지 판단해보려고 한다.</p>
+</li>
+<li><p>각 행을 입력받아 Age 가 18세 이상이라면 True를 그렇지 않다면 False를 반환하는 함수를 만든뒤 datafrmae에 <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html">apply</a>한다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">vote</span><span class="params">(row)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> row[<span class="string">'Age'</span>] &gt;= <span class="number">18</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">else</span>: <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">rectangles_df[<span class="string">"vote"</span>] = rectangles_df.apply(vote, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">print(rectangles_df)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Age</th>
+<th>vote</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>17</td>
+<td>False</td>
+</tr>
+<tr>
+<td>B</td>
+<td>20</td>
+<td>True</td>
+</tr>
+<tr>
+<td>C</td>
+<td>27</td>
+<td>True</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>위와 같이 각 행의 Age 를 판단해 vote라는 새로운 칼럼을 만들어낸 것을 볼 수 있다.</p>
+</li>
+<li><p>이와같이 함수를 dataframe에 apply할 때 각 행(row)에 대하여 적용하고 싶다면 df.apply(func, axis=1) 로 axis=1 을 잊지말아야 한다.</p>
+</li>
+<li><p>위의 예제는 행이 3개라 iterrows로 실습해도 차이를 느낄순 없을것이다. 하지만 데이터 크기가 커질수록 iterrows를 사용하는것은 자제하고 apply를 적용하는 방법을 알아야한다.</p>
+</li>
+<li><p>apply 외에도 몇가지 다른 방법을 알고 싶다면 <a href="https://medium.com/@rtjeannier/pandas-101-cont-9d061cb73bfc">참고</a>해보자.</p>
+</li>
+</ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-03-17T22:50:33.000Z">2020-03-17</time>
                 
                 <div class="level-item">
@@ -258,7 +379,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            26
+                            27
                         </p>
                     </a>
                 </div>
@@ -430,7 +551,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -438,7 +559,7 @@
                 <span class="level-item">About Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -483,7 +604,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/CS/" style="font-size: 16.67px;">CS</a> <a href="/tags/CtCI/" style="font-size: 13.33px;">CtCI</a> <a href="/tags/Go/" style="font-size: 20px;">Go</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/baekjoon/" style="font-size: 20px;">baekjoon</a> <a href="/tags/github-io/" style="font-size: 10px;">github.io</a> <a href="/tags/%EB%B8%94%EB%A1%9C%EA%B7%B8/" style="font-size: 10px;">블로그</a>
+        <a href="/tags/CS/" style="font-size: 15px;">CS</a> <a href="/tags/CtCI/" style="font-size: 12.5px;">CtCI</a> <a href="/tags/Go/" style="font-size: 17.5px;">Go</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/baekjoon/" style="font-size: 17.5px;">baekjoon</a> <a href="/tags/github-io/" style="font-size: 10px;">github.io</a> <a href="/tags/%EB%B8%94%EB%A1%9C%EA%B7%B8/" style="font-size: 10px;">블로그</a>
     </div>
 </div>
     
@@ -495,6 +616,25 @@
         <h3 class="menu-label">
             Recent
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/03/24/%ED%8C%8C%EC%9D%B4%EC%8D%AC-dataframe-function-apply-%EB%B0%A9%EB%B2%95-without-iterrrows/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="파이썬_dataframe_function_apply_방법_without_iterrrows">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-24T11:55:20.000Z">2020-03-24</time></div>
+                    <a href="/2020/03/24/%ED%8C%8C%EC%9D%B4%EC%8D%AC-dataframe-function-apply-%EB%B0%A9%EB%B2%95-without-iterrrows/" class="title has-link-black-ter is-size-6 has-text-weight-normal">파이썬_dataframe_function_apply_방법_without_iterrrows</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -572,25 +712,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/04/CtCI-Ch3-%EC%8A%A4%ED%83%9D%EA%B3%BC%ED%81%90/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="CtCI_Ch3_스택과큐">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-04T20:17:20.000Z">2020-02-04</time></div>
-                    <a href="/2020/02/04/CtCI-Ch3-%EC%8A%A4%ED%83%9D%EA%B3%BC%ED%81%90/" class="title has-link-black-ter is-size-6 has-text-weight-normal">CtCI_Ch3_스택과큐</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/CS-basic/">CS basic</a> / <a class="has-link-grey -link" href="/categories/CS-basic/CtCI/">CtCI</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -608,7 +729,7 @@
                     <span class="level-item">March 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -683,7 +804,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">10</span>
+                        <span class="tag is-grey">11</span>
                     </a>
                 </div>
                 
@@ -732,6 +853,25 @@
         
         <article class="media">
             
+            <a href="/2020/03/24/%ED%8C%8C%EC%9D%B4%EC%8D%AC-dataframe-function-apply-%EB%B0%A9%EB%B2%95-without-iterrrows/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="파이썬_dataframe_function_apply_방법_without_iterrrows">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-24T11:55:20.000Z">2020-03-24</time></div>
+                    <a href="/2020/03/24/%ED%8C%8C%EC%9D%B4%EC%8D%AC-dataframe-function-apply-%EB%B0%A9%EB%B2%95-without-iterrrows/" class="title has-link-black-ter is-size-6 has-text-weight-normal">파이썬_dataframe_function_apply_방법_without_iterrrows</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/03/17/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-missing-%EB%A9%94%EC%84%9C%EB%93%9C%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="파이썬_딕셔너리___missing___메서드에_관하여.">
@@ -806,25 +946,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/04/CtCI-Ch3-%EC%8A%A4%ED%83%9D%EA%B3%BC%ED%81%90/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="CtCI_Ch3_스택과큐">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-04T20:17:20.000Z">2020-02-04</time></div>
-                    <a href="/2020/02/04/CtCI-Ch3-%EC%8A%A4%ED%83%9D%EA%B3%BC%ED%81%90/" class="title has-link-black-ter is-size-6 has-text-weight-normal">CtCI_Ch3_스택과큐</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/CS-basic/">CS basic</a> / <a class="has-link-grey -link" href="/categories/CS-basic/CtCI/">CtCI</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -842,7 +963,7 @@
                     <span class="level-item">March 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -917,7 +1038,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">10</span>
+                        <span class="tag is-grey">11</span>
                     </a>
                 </div>
                 
