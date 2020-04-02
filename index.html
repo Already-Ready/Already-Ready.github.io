@@ -133,6 +133,101 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-04-02T23:26:54.000Z">2020-04-02</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 minutes read (About 534 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/04/02/Pytorch-Linear-regression-%EA%B8%B0%EB%B3%B8%EC%A0%95%EB%A6%AC/">Pytorch_Linear_regression_기본정리</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="Pytorch-Linear-regression-기본-정리"><a href="#Pytorch-Linear-regression-기본-정리" class="headerlink" title="Pytorch Linear regression 기본 정리"></a>Pytorch Linear regression 기본 정리</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
+<li><p>하나의 x값을 통해 하나의 y를 예측하는 간단한 모델을 만들어보자.</p>
+</li>
+<li><p>다음과 같이 세개의 데이터를 만들고 이를 통해 간단한 선형 예측 모델을 학습시켜본다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x_train = torch.FloatTensor([[<span class="number">1</span>], [<span class="number">2</span>], [<span class="number">3</span>]])</span><br><span class="line">y_train = torch.FloatTensor([[<span class="number">2</span>], [<span class="number">4</span>], [<span class="number">6</span>]])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>선형 모델에서 x값이 주어졌을 때 y값(hypothesis-H(x))을 계산하기 위해서는 다음과 같은 식을 따르게 된다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">H(x) = W * x + b</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>가지고 있는 데이터를 위 식을 통해 학습시키고자 한다면 우리가 알아야 하는 값 즉, 학습해야 하는 값은 W 와 b이다.</p>
+</li>
+<li><p>“requires_grad=True” 를 설정하여 다음과 같이 0으로 초기화된 W 와 b 를 만들 수 있다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">w = torch.zeros(<span class="number">1</span>, requires_grad=<span class="literal">True</span>)</span><br><span class="line">b = torch.zeros(<span class="number">1</span>, requires_grad=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>우리가 만든 모델을 평가하기 위해서는 Mean Squared Error(MSE) 를 사용할 것입니다.</p>
+</li>
+<li><p>MSE는 예측값과 실제값의 차이를 제곱한 후 평균을 구한 값으로 다음과 같이 나타낼 수 있습니다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">loss = torch.mean((hypothesis - y_train) ** <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>loss 를 구했다면 이를 통해 학습해야 하는 W 와 b 값을 개선해야 합니다.</p>
+</li>
+<li><p>이를 위해 Stochastic gradient descent(SGD)를 사용할 것입니다.</p>
+</li>
+<li><p>optim 라이브러리의 SGD에 학습할 tensor를 리스트 형태로 넣어주고 learing rate를 지정해 다음과 같이 나타낼 수 있습니다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">optimizer = torch.optim.SGD([w, b], lr=<span class="number">0.01</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>optimizer를 정의했다면 아래와 같은 순서를 통해 W와 b를 개선해준다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">optimizer.zero_grad()  <span class="comment"># gradient 초기화</span></span><br><span class="line">loss.backward()		   <span class="comment"># gradient 계산</span></span><br><span class="line">optimizer.step()	   <span class="comment"># W 와 b 개선</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>이러한 학습 방법을 따라 모델을 100회 한 후 x가 4일때의 y값을 살펴보면 8에 근접하는 값이 나오는 것을 확인할 수 있다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x_test = torch.FloatTensor([[<span class="number">4</span>]])</span><br><span class="line">print(x_test * w + b)</span><br><span class="line"><span class="comment">#&gt;&gt;&gt; tensor([[7.5598]], grad_fn=&lt;AddBackward0&gt;)</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/Linear_regression.py">Full Code</a></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-03-29T20:31:22.000Z">2020-03-29</time>
                 
                 <div class="level-item">
@@ -1121,172 +1216,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-01-23T15:03:44.000Z">2020-01-23</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/CS-basic/">CS basic</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    8 minutes read (About 1251 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/01/23/%EC%8B%9C%EA%B0%84%EB%B3%B5%EC%9E%A1%EB%8F%84-big-O/">시간복잡도_big-O</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="시간-복잡도-big-O"><a href="#시간-복잡도-big-O" class="headerlink" title="시간 복잡도(big-O)"></a>시간 복잡도(big-O)</h1><h3 id="코딩-인터뷰-완전-분석-저-게일-라크만-맥도웰-참조"><a href="#코딩-인터뷰-완전-분석-저-게일-라크만-맥도웰-참조" class="headerlink" title="코딩 인터뷰 완전 분석(저 : 게일 라크만 맥도웰) 참조"></a><a href="https://www.google.com/search?sxsrf=ACYBGNSEu2Z1xUz3cvyO7UGKy9e6sPD-Vg%3A1579746820188&source=hp&ei=BAYpXqSdCdP7wAOsrIHwBg&q=%EC%BD%94%EB%94%A9+%EC%9D%B8%ED%84%B0%EB%B7%B0+%EC%99%84%EC%A0%84+%EB%B6%84%EC%84%9D&oq=%EC%BD%94%EB%94%A9+%EC%9D%B8%ED%84%B0%EB%B7%B0&gs_l=psy-ab.3.0.0l10.411.2315..3295...3.0..2.169.1521.0j13......0....1..gws-wiz.......35i39j0i131.182vM3XJZPY">코딩 인터뷰 완전 분석(저 : 게일 라크만 맥도웰) 참조</a></h3><ul>
-<li><p>실행 시간을 나타내기 위해 사용되는 개념이 시간 복잡도이다.  </p>
-</li>
-<li><p>변수 N을 통해 O(logN), O(NlogN),… 등과 같이 표현하기도 하지만 이외에도 다양한 변수가 포함될 수 있다.  </p>
-<ul>
-<li>예를 들어, 너비가 w이고 높이가 h인 울타리를 칠한다고 할 때 소요 시간은 O(wh)로 표현할 수 있고 p번 덧칠한다면 O(pwh)로 표현할 수 있다.    </li>
-</ul>
-</li>
-<li><p>상수항과 지배적이지 않은 항은 무시하자.  </p>
-<ul>
-<li><p>big-O는 단순히 증가하는 비율을 나타내는 개념으로 수행 시간에 지배적이지 않은 항은 무시할 수 있다.  </p>
-</li>
-<li><p>두 개의 중첩되지 않은 루프로 이루어진 코드의 수행 시간을 O(2N) 과 같이 표현할 수도 있지만 이는 결국 O(N)과 같은 의미이다.  </p>
-</li>
-<li><p>마찬가지로, O(N^2 + N)과 같은 수행 시간이 있을 때, N^2이 지배적인 항이므로(N에 비해 빠르게 증가하기 떄문) O(N^2 + N) 은 O(N^2) 이 된다.  </p>
-</li>
-<li><p>즉, big-O 는 수행 시간이 어떻게 변화하는지를 표현해주는 도구이다.  </p>
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>덧셈? 곱셈??  </p>
-<ul>
-<li><p>두 단계로 이루어진 알고리즘이 있을 경우, 수행 시간을 어떤 경우에는 더하고 혹은 곱해야 하는걸까?  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">### 덧셈 수행 시간 : O(A+B)</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> a : arrA) &#123;</span><br><span class="line">	print(a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> b : arrB) &#123;</span><br><span class="line">	print(b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>위와 같이 A의 일을 모두 끝마친 후 B의 일을 시행하는 형태라면 A와 B의 수행 시간을 <strong>더해야</strong> 한다.  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">### 곱셈 수행 시간 : O(A*B)</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> a : arrA) &#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> b : arrB) &#123;</span><br><span class="line">		print(a + <span class="string">","</span> + b);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>위와 같이 A의 일을 할 때마다 B의 일을 시행하는 형태라면 A와 B의 수행 시간을 <strong>곱해야</strong> 한다.</p>
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>log N 수행 시간</p>
-<ul>
-<li><p>logN 수행 시간이 어떻게 나오는지 알기 위해 이진 탐색을 생각해보자. 이진 탐색은 N개의 정렬된 원소가 들어있는 배열에서 원소 x를 찾을 때, 배열의 중간값과 x의 값을 비교하여 배열의 부분을 재탐색하는 것이다.</p>
-</li>
-<li><p>예를 들어, 16개의 원소를 가진 배열을 생각해보자. N = 16</p>
-</li>
-<li><p>이진 탐색을 통해 각 단계별로 탐색해야 하는 원소의 개수는 다음과 같다.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">N &#x3D; 16 # 처음</span><br><span class="line">N &#x3D; 8  # 나누기 2</span><br><span class="line">N &#x3D; 4  # 나누기 2</span><br><span class="line">N &#x3D; 2  # 나누기 2</span><br><span class="line">N &#x3D; 1  # 나누기 2, 찾고자하는 원소 x를 찾았다.</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>즉, 총 수행 시간은 N을 절반씩 나누는 과정을 몇단계 거쳐서 1이 되는지에 따라서 결정된다.</p>
-</li>
-<li><p>위의 경우를 반대로 생각해보자. 1에서 16으로 증가하려면 1에서 2를 몇번 곱해야 할까?</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">N &#x3D; 1  # 처음</span><br><span class="line">N &#x3D; 2  # 곱하기 2</span><br><span class="line">N &#x3D; 4  # 곱하기 2</span><br><span class="line">N &#x3D; 8  # 곱하기 2</span><br><span class="line">N &#x3D; 16 # 곱하기 2</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>다시 말해, 절반씩 나누는 과정(나누기2)을 1에서 2를 곱해가는 과정으로도 표현할 수 있다는 뜻이다.</p>
-</li>
-<li><p>이는, 2를 k번 곱해서 N이 된다고 말할 수 있으며 다음과 같은 수식으로 나타낼 수 있다.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2^k &#x3D; N</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>위 수식을 만족하는 k는 무엇인가? k를 찾기 위해 양 변에 밑이 2인 로그를 취해주자.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">### &lt;밑이 2인 로그입니다.&gt;</span><br><span class="line">---&gt; log(2^k) &#x3D; logN</span><br><span class="line">---&gt; k * log2 &#x3D; logN</span><br><span class="line">---&gt; k &#x3D; logN (∵ log2 &#x3D; 1)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>big-O 에서는 로그의 밑을 고려할 필요가 없다. 위에서 밑이 10인 로그를 취했다 할지라도 이는 상수항일 뿐이다. 시작할 때 말했듯이 big-O 에서 상수항은 무시할 수 있다.</p>
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>재귀함수의 수행 시간</p>
-<ul>
-<li><p>다음과 같은 재귀함수의 수행 시간은 어떻게 될까?</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (n&lt;=<span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> f(n<span class="number">-1</span>) + f(n<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>함수 f가 두번 호출되는것을 보고 O(N^2)이라고 생각할 수 있지만 틀렸다.</p>
-</li>
-<li><p>f(4) 일때 위와 같이 f(3)을 두번 호출하고 f(3)은 f(2)를 거쳐 f(1)까지 호출한다.</p>
-</li>
-<li><p>위와 같이 두 개의 자식 노트를 가진 경우 총 호출 횟수는 얼마인가? 호출 횟수를 표로 나타내보자.</p>
-</li>
-</ul>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>깊이</th>
-<th>노드의 개수</th>
-<th>2^N 표현</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0</td>
-<td>1</td>
-<td>2<sup>0</sup></td>
-</tr>
-<tr>
-<td>1</td>
-<td>2</td>
-<td>2<sup>1</sup></td>
-</tr>
-<tr>
-<td>2</td>
-<td>4</td>
-<td>2<sup>2</sup></td>
-</tr>
-<tr>
-<td>3</td>
-<td>8</td>
-<td>2<sup>3</sup></td>
-</tr>
-<tr>
-<td>4</td>
-<td>16</td>
-<td>2<sup>4</sup></td>
-</tr>
-</tbody></table>
-<ul>
-<li><ul>
-<li><p>따라서, 전체 노드의 개수는 2<sup>0</sup> + 2<sup>1</sup> + 2<sup>2</sup> + 2<sup>3</sup> + … + 2<sup>N</sup> = 2<sup>N+1</sup> - 1 이다.</p>
-</li>
-<li><p>즉, 위와 같은 재귀 함수의 수행 시간은 O(2<sup>N</sup>)이 된다.</p>
-</li>
-<li><p>보통 다수의 호출로 이루어진 재귀 함수의 수행 시간은 O(분기<sup>깊이</sup>) 로 표현할 수 있다. 여기서 분기란 재귀 함수가 자신을 재호출 하는 횟수를 뜻한다.</p>
-</li>
-</ul>
-</li>
-</ul>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1353,7 +1282,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            28
+                            29
                         </p>
                     </a>
                 </div>
@@ -1365,7 +1294,7 @@
                     </p>
                     <a href="/categories">
                         <p class="title has-text-weight-normal">
-                            11
+                            12
                         </p>
                     </a>
                 </div>
@@ -1377,7 +1306,7 @@
                     </p>
                     <a href="/tags">
                         <p class="title has-text-weight-normal">
-                            7
+                            8
                         </p>
                     </a>
                 </div>
@@ -1525,7 +1454,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">3</span>
+                <span class="level-item tag">4</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -1534,6 +1463,14 @@
             </span>
             <span class="level-end">
                 <span class="level-item tag">3</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Python/Pytorch/">
+            <span class="level-start">
+                <span class="level-item">Pytorch</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -1578,7 +1515,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/CS/" style="font-size: 15px;">CS</a> <a href="/tags/CtCI/" style="font-size: 12.5px;">CtCI</a> <a href="/tags/Go/" style="font-size: 17.5px;">Go</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/baekjoon/" style="font-size: 17.5px;">baekjoon</a> <a href="/tags/github-io/" style="font-size: 10px;">github.io</a> <a href="/tags/%EB%B8%94%EB%A1%9C%EA%B7%B8/" style="font-size: 10px;">블로그</a>
+        <a href="/tags/CS/" style="font-size: 15px;">CS</a> <a href="/tags/CtCI/" style="font-size: 12.5px;">CtCI</a> <a href="/tags/Go/" style="font-size: 17.5px;">Go</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/tags/baekjoon/" style="font-size: 17.5px;">baekjoon</a> <a href="/tags/github-io/" style="font-size: 10px;">github.io</a> <a href="/tags/%EB%B8%94%EB%A1%9C%EA%B7%B8/" style="font-size: 10px;">블로그</a>
     </div>
 </div>
     
@@ -1590,6 +1527,25 @@
         <h3 class="menu-label">
             Recent
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/04/02/Pytorch-Linear-regression-%EA%B8%B0%EB%B3%B8%EC%A0%95%EB%A6%AC/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Linear_regression_기본정리">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-02T23:26:54.000Z">2020-04-02</time></div>
+                    <a href="/2020/04/02/Pytorch-Linear-regression-%EA%B8%B0%EB%B3%B8%EC%A0%95%EB%A6%AC/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Linear_regression_기본정리</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1667,25 +1623,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/12/CtCI-Ch4-%ED%8A%B8%EB%A6%AC%EC%99%80-%EA%B7%B8%EB%9E%98%ED%94%84-2/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="CtCI_Ch4_트리와_그래프_2">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-12T16:50:37.000Z">2020-02-12</time></div>
-                    <a href="/2020/02/12/CtCI-Ch4-%ED%8A%B8%EB%A6%AC%EC%99%80-%EA%B7%B8%EB%9E%98%ED%94%84-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">CtCI_Ch4_트리와_그래프_2</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/CS-basic/">CS basic</a> / <a class="has-link-grey -link" href="/categories/CS-basic/CtCI/">CtCI</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1696,6 +1633,17 @@
             Archives
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2020/03/">
@@ -1778,7 +1726,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">12</span>
+                        <span class="tag is-grey">13</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Pytorch/">
+                        <span class="tag">Pytorch</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
@@ -1827,6 +1782,25 @@
         
         <article class="media">
             
+            <a href="/2020/04/02/Pytorch-Linear-regression-%EA%B8%B0%EB%B3%B8%EC%A0%95%EB%A6%AC/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Linear_regression_기본정리">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-02T23:26:54.000Z">2020-04-02</time></div>
+                    <a href="/2020/04/02/Pytorch-Linear-regression-%EA%B8%B0%EB%B3%B8%EC%A0%95%EB%A6%AC/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Linear_regression_기본정리</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/03/29/%ED%8C%8C%EC%9D%B4%EC%8D%AC-dataframe-loc-iloc-%EC%9D%B8%EB%8D%B1%EC%8B%B1/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="파이썬_dataframe_loc_iloc_인덱싱">
@@ -1901,25 +1875,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/12/CtCI-Ch4-%ED%8A%B8%EB%A6%AC%EC%99%80-%EA%B7%B8%EB%9E%98%ED%94%84-2/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="CtCI_Ch4_트리와_그래프_2">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-12T16:50:37.000Z">2020-02-12</time></div>
-                    <a href="/2020/02/12/CtCI-Ch4-%ED%8A%B8%EB%A6%AC%EC%99%80-%EA%B7%B8%EB%9E%98%ED%94%84-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">CtCI_Ch4_트리와_그래프_2</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/CS-basic/">CS basic</a> / <a class="has-link-grey -link" href="/categories/CS-basic/CtCI/">CtCI</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1930,6 +1885,17 @@
             Archives
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2020/03/">
@@ -2012,7 +1978,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">12</span>
+                        <span class="tag is-grey">13</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Pytorch/">
+                        <span class="tag">Pytorch</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
