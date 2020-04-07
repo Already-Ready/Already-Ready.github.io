@@ -133,6 +133,105 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-01-08T11:45:49.000Z">2020-01-08</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Go/">Go</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Go/tutorial/">tutorial</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 minutes read (About 643 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/01/08/Golang-%EC%A0%95%EB%A6%AC%ED%95%98%EA%B8%B0-3/">Golang_정리하기_3</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="Go-tutorial-Go-정리하기-3"><a href="#Go-tutorial-Go-정리하기-3" class="headerlink" title="[Go tutorial] Go 정리하기 - 3"></a>[Go tutorial] Go 정리하기 - 3</h1><h3 id="Go-tour-참조"><a href="#Go-tour-참조" class="headerlink" title="Go-tour 참조"></a><a href="https://go-tour-kr.appspot.com/#1">Go-tour 참조</a></h3><h3 id="구름edu-참조"><a href="#구름edu-참조" class="headerlink" title="구름edu 참조"></a><a href="https://edu.goorm.io/learn/lecture/2010/%EB%B0%94%EB%A1%9C-%EC%8B%A4%ED%96%89%ED%95%B4%EB%B3%B4%EB%A9%B4%EC%84%9C-%EB%B0%B0%EC%9A%B0%EB%8A%94-go-lang-%EA%B3%A0%EB%9E%AD/lesson/226422/%EA%B5%AC%EC%A1%B0%EC%B2%B4">구름edu 참조</a></h3><ul>
+<li><p>맵(map)</p>
+<ul>
+<li><p>키와 value의 조합을 나타내기 위한것으로 파이썬의 딕셔너리를 생각하자.</p>
+</li>
+<li><p>var 맵이름 map[key자료형]value자료형 으로 선언</p>
+<ul>
+<li>var a map[int]string :: key가 int이고 value가 string인 맵 a</li>
+</ul>
+</li>
+<li><p>선언만 하고 초기화하지 않는다면 Nil map 이다.</p>
+</li>
+<li><p>데이터 추가 or 갱신 :: 맵이름[key] = value 를 이용</p>
+</li>
+<li><p>데이터 삭제 :: delete(맵이름,key) 를 이용</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">//지역번호와 지역 저장</span></span><br><span class="line">	<span class="keyword">var</span> m = <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>)</span><br><span class="line"></span><br><span class="line">	m[<span class="string">"02"</span>] = <span class="string">"서울특별시"</span></span><br><span class="line">	m[<span class="string">"031"</span>] = <span class="string">"경기도"</span></span><br><span class="line">	m[<span class="string">"032"</span>] = <span class="string">"충청남도"</span></span><br><span class="line">	m[<span class="string">"053"</span>] = <span class="string">"대구광역시"</span></span><br><span class="line"></span><br><span class="line">	fmt.Println(m)</span><br><span class="line"></span><br><span class="line">	<span class="comment">//동일한 key값으로 value값을 저장하면 갱신이 된다</span></span><br><span class="line">	m[<span class="string">"032"</span>] = <span class="string">"인천"</span></span><br><span class="line"></span><br><span class="line">	fmt.Println(m)</span><br><span class="line"></span><br><span class="line">	<span class="comment">//m에 있는 "031"key의 value와 함께 삭제</span></span><br><span class="line">	<span class="built_in">delete</span>(m, <span class="string">"031"</span>)</span><br><span class="line"></span><br><span class="line">	fmt.Println(m)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>key체크, value 확인</p>
+<ul>
+<li><p>“맵이름[key]” 는 value와 키가 존재하는지 여부를 반환한다.</p>
+</li>
+<li><p>존재하지 않는 키값이라면 자료형에따라 0 혹은 “” 를 반환</p>
+</li>
+<li><p>해당 키가 존재하는지 여부에 따라 true/false 반환</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	m := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)</span><br><span class="line"></span><br><span class="line">	m[<span class="string">"Answer"</span>] = <span class="number">42</span></span><br><span class="line">	fmt.Println(<span class="string">"The value:"</span>, m[<span class="string">"Answer"</span>])</span><br><span class="line">	## <span class="built_in">print</span> : The value: <span class="number">42</span></span><br><span class="line">	m[<span class="string">"Answer"</span>] = <span class="number">48</span></span><br><span class="line">	fmt.Println(<span class="string">"The value:"</span>, m[<span class="string">"Answer"</span>])</span><br><span class="line">	## <span class="built_in">print</span> : The value: <span class="number">48</span></span><br><span class="line">	<span class="built_in">delete</span>(m, <span class="string">"Answer"</span>)</span><br><span class="line">	fmt.Println(<span class="string">"The value:"</span>, m[<span class="string">"Answer"</span>])</span><br><span class="line">	## <span class="built_in">print</span> : The value: <span class="number">0</span></span><br><span class="line">	v, ok := m[<span class="string">"Answer"</span>]</span><br><span class="line">	fmt.Println(<span class="string">"The value:"</span>, v, <span class="string">"Present?"</span>, ok)</span><br><span class="line">	## <span class="built_in">print</span> : The value: <span class="number">0</span> Present? <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a href="https://go-tour-kr.appspot.com/#41">연습 : 맵 - 문제</a></p>
+<ul>
+<li><a href="https://github.com/Already-Ready/go_tour/blob/master/go_tour_solutions/map.go">연습 : 맵 - solution</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>함수 클로져</p>
+<ul>
+<li><p>클로져는 함수 안에서 익명 함수를 정의해 바깥쪽 함수에서 선언한 변수에도 접근할 수 있는 함수를 뜻한다.</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">adder</span><span class="params">()</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">   	sum := <span class="number">0</span></span><br><span class="line">   	<span class="keyword">return</span> <span class="function"><span class="keyword">func</span><span class="params">(x <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">       	sum += x</span><br><span class="line">       	<span class="keyword">return</span> sum</span><br><span class="line">   	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  		pos, neg := adder(), adder()</span><br><span class="line">   	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line">       	fmt.Println(</span><br><span class="line">           pos(i),</span><br><span class="line">           neg(<span class="number">-2</span>*i),</span><br><span class="line">       	)</span><br><span class="line">  		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>위의 예에서 adder() 함수는 지역 변수 sum 을 초기화하고 입력받는 x를 더해주는 익명 함수를 반환합니다.</p>
+</li>
+<li><p>for문에서 함수가 실행될때마다 지역 변수가 초기화되지않고 더해주는 익명함수만을 통해 값이 지속적으로 증가/감소 하는것을 확인할 수 있습니다.</p>
+</li>
+</ul>
+</li>
+<li><p><a href="https://go-tour-kr.appspot.com/#44">연습 : 피보나치 클로져 - 문제</a></p>
+<ul>
+<li><a href="https://github.com/Already-Ready/go_tour/blob/master/go_tour_solutions/fib.go">연습 : 피보나치 클로져 - solution</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-01-07T15:26:50.000Z">2020-01-07</time>
                 
                 <div class="level-item">
@@ -901,60 +1000,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-12-24T05:47:48.560Z">2019-12-24</time>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    a minute read (About 123 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2019/12/24/hello-world/">Hello World</a>
-            
-        </h1>
-        <div class="content">
-            <p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -962,7 +1007,7 @@
         <div class="pagination-previous">
             <a class="is-flex-grow has-text-black-ter" href="/page/2/">Previous</a>
         </div>
-        <div class="pagination-next is-invisible is-hidden-mobile">
+        <div class="pagination-next">
             <a class="is-flex-grow has-text-black-ter" href="/page/4/">Next</a>
         </div>
         <ul class="pagination-list is-hidden-mobile">
@@ -972,6 +1017,8 @@
             <li><a class="pagination-link has-text-black-ter" href="/page/2/">2</a></li>
             
             <li><a class="pagination-link is-current" href="/page/3/">3</a></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/page/4/">4</a></li>
             
         </ul>
     </nav>
@@ -1021,7 +1068,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            30
+                            31
                         </p>
                     </a>
                 </div>
@@ -1193,7 +1240,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">6</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -1209,7 +1256,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -1269,6 +1316,25 @@
         
         <article class="media">
             
+            <a href="/2020/04/07/Pytorch-data-loading-with-DataLoader/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_data_loading_with_DataLoader">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-07T17:42:35.000Z">2020-04-07</time></div>
+                    <a href="/2020/04/07/Pytorch-data-loading-with-DataLoader/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_data_loading_with_DataLoader</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/04/06/Pytorch-Multivariable-Linear-regression/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Multivariable_Linear_regression">
@@ -1343,25 +1409,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/03/17/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-missing-%EB%A9%94%EC%84%9C%EB%93%9C%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="파이썬_딕셔너리___missing___메서드에_관하여.">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-17T22:50:33.000Z">2020-03-17</time></div>
-                    <a href="/2020/03/17/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-missing-%EB%A9%94%EC%84%9C%EB%93%9C%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC/" class="title has-link-black-ter is-size-6 has-text-weight-normal">파이썬_딕셔너리___missing___메서드에_관하여.</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1379,7 +1426,7 @@
                     <span class="level-item">April 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -1465,14 +1512,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">14</span>
+                        <span class="tag is-grey">15</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
@@ -1521,6 +1568,25 @@
         
         <article class="media">
             
+            <a href="/2020/04/07/Pytorch-data-loading-with-DataLoader/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_data_loading_with_DataLoader">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-07T17:42:35.000Z">2020-04-07</time></div>
+                    <a href="/2020/04/07/Pytorch-data-loading-with-DataLoader/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_data_loading_with_DataLoader</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/04/06/Pytorch-Multivariable-Linear-regression/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Multivariable_Linear_regression">
@@ -1595,25 +1661,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/03/17/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-missing-%EB%A9%94%EC%84%9C%EB%93%9C%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="파이썬_딕셔너리___missing___메서드에_관하여.">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-17T22:50:33.000Z">2020-03-17</time></div>
-                    <a href="/2020/03/17/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-missing-%EB%A9%94%EC%84%9C%EB%93%9C%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC/" class="title has-link-black-ter is-size-6 has-text-weight-normal">파이썬_딕셔너리___missing___메서드에_관하여.</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1631,7 +1678,7 @@
                     <span class="level-item">April 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -1717,14 +1764,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">14</span>
+                        <span class="tag is-grey">15</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 

@@ -143,6 +143,96 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-04-07T17:42:35.000Z">2020-04-07</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 minutes read (About 638 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/04/07/Pytorch-data-loading-with-DataLoader/">Pytorch_data_loading_with_DataLoader</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="Pytorch-DataLoader를-통한-data-loading"><a href="#Pytorch-DataLoader를-통한-data-loading" class="headerlink" title="Pytorch DataLoader를 통한 data loading"></a>Pytorch DataLoader를 통한 data loading</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
+<li><p>DataLoader를 통해 데이터를 batch_size 만큼 나누어 읽어오기 위해서는 torch.utils.data 의 Dataset을 상속받는 클래스를 정의해야 합니다.</p>
+</li>
+<li><p>자기만의 Dataset을 만든 뒤, <code>__len__</code> 과 <code>__getitem__</code> 메서드를 overriding해서 사용해야 합니다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__len__</span><span class="params">(self)</span>:</span></span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, idx)</span>:</span></span><br><span class="line">	...</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>Dataset의 소스는 <a href="https://pytorch.org/docs/stable/_modules/torch/utils/data/dataset.html#Dataset">이곳</a>에서 확인할 수 있으며, DataLoader에 대한 한글 설명은 <a href="https://deepbaksuvision.github.io/Modu_ObjectDetection/posts/03_01_dataloader.html">이곳</a>을 참고할 수 있습니다.</p>
+</li>
+<li><p>간단한 Linear regression 모델과 데이터를 만들어서 실습해 보았습니다.</p>
+</li>
+<li><p>먼저 Dataset을 상속받는 저만의 Dataset과 <code>__len__</code> 과 <code>__getitem__</code> 메서드를 만들어 보겠습니다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyDataset</span><span class="params">(Dataset)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.x_train = [[<span class="number">73</span>, <span class="number">80</span>, <span class="number">75</span>],</span><br><span class="line">                         [<span class="number">93</span>, <span class="number">88</span>, <span class="number">83</span>],</span><br><span class="line">                         [<span class="number">89</span>, <span class="number">91</span>, <span class="number">90</span>],</span><br><span class="line">                         [<span class="number">96</span>,<span class="number">98</span>, <span class="number">100</span>],</span><br><span class="line">                         [<span class="number">73</span>, <span class="number">66</span>, <span class="number">70</span>]]</span><br><span class="line">        self.y_train = [[<span class="number">152</span>], [<span class="number">185</span>], [<span class="number">180</span>], [<span class="number">196</span>], [<span class="number">142</span>]]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> len(self.x_train)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, idx)</span>:</span></span><br><span class="line">        x = torch.FloatTensor(self.x_train[idx])</span><br><span class="line">        y = torch.FloatTensor(self.y_train[idx])</span><br><span class="line">        <span class="keyword">return</span> x, y</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>이렇게 만들어진 MyDataset은 <code>torch.utils.data</code>의 <code>DataLoader</code>를 통해 batch_size를 조절할 수 있습니다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dataset = MyDataset()</span><br><span class="line">dataloader = DataLoader(dataset, batch_size=<span class="number">2</span>, shuffle=<span class="literal">True</span>) <span class="comment"># shuffle 은 데이터를 섞어서 각각의 배치를 만들어준다는 뜻이다.</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>DataLoader를 통해 만들어진 객체는 iterable한 객체이기 때문에 다음과 같이 출력해서 확인해 볼 수도 있습니다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">a = iter(dataloader)</span><br><span class="line">print(next(a))</span><br><span class="line">print(next(a))</span><br><span class="line">print(next(a))</span><br><span class="line"><span class="comment">#&gt;&gt;&gt;</span></span><br><span class="line">[tensor([[ <span class="number">73.</span>,  <span class="number">80.</span>,  <span class="number">75.</span>],</span><br><span class="line">        [ <span class="number">96.</span>,  <span class="number">98.</span>, <span class="number">100.</span>]]), tensor([[<span class="number">152.</span>],</span><br><span class="line">        [<span class="number">196.</span>]])]</span><br><span class="line">[tensor([[<span class="number">73.</span>, <span class="number">66.</span>, <span class="number">70.</span>],</span><br><span class="line">        [<span class="number">93.</span>, <span class="number">88.</span>, <span class="number">83.</span>]]), tensor([[<span class="number">142.</span>],</span><br><span class="line">        [<span class="number">185.</span>]])]</span><br><span class="line">[tensor([[<span class="number">89.</span>, <span class="number">91.</span>, <span class="number">90.</span>]]), tensor([[<span class="number">180.</span>]])]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>저만의 MyDataset에 입력한 데이터가 DataLoader를 통해 지정한 배치로 나눠져서 정상적으로 출력되는것을 확인할 수 있습니다.</p>
+</li>
+<li><p>이제 Linear regression 모델, optimizer를 다음과 같이 만든 뒤,</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MultivariateLinearRegressionModel</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super().__init__()</span><br><span class="line">        self.linear = nn.Linear(<span class="number">3</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.linear(x)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">model = MultivariateLinearRegressionModel()</span><br><span class="line">optimizer = optim.SGD(model.parameters(), lr=<span class="number">1e-5</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>DataLoader를 통해 데이터를 불러와 학습해 보겠습니다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">epochs = <span class="number">20</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs + <span class="number">1</span>):</span><br><span class="line">    <span class="keyword">for</span> batch_idx, train <span class="keyword">in</span> enumerate(dataloader):</span><br><span class="line">        xt, yt = train</span><br><span class="line"></span><br><span class="line">        prediction = model(xt)</span><br><span class="line"></span><br><span class="line">        loss = F.mse_loss(prediction, yt)</span><br><span class="line"></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step()</span><br><span class="line"></span><br><span class="line">        print(<span class="string">'Epoch &#123;:4d&#125;/&#123;&#125; Batch : &#123;&#125;/&#123;&#125; Cost : &#123;:.6f&#125;'</span>.format(</span><br><span class="line">            epoch, epochs, batch_idx+<span class="number">1</span>, len(dataloader), loss.item()</span><br><span class="line">        ))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>epochs 수만큼 학습을 하는 for문 안에 또 하나의 for문이 들어가 있는것을 확인할 수 있습니다. 안쪽 for문에서 batch_size만큼 나눠진 train 데이터를 model을 통해 학습하는 과정을 구현해 볼 수 있었습니다.</li>
+</ul>
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/Loading_data.py">Full Code</a></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-04-06T15:21:16.000Z">2020-04-06</time>
                 
                 <div class="level-item">
@@ -912,80 +1002,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-01-15T10:55:25.000Z">2020-01-15</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/Go/">Go</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 minutes read (About 575 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/01/15/%EC%8A%A4%ED%83%9D-10828%EB%B2%88/">스택_10828번</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="Python-Go-백준-10828번-풀이"><a href="#Python-Go-백준-10828번-풀이" class="headerlink" title="[Python, Go] 백준 10828번 풀이"></a>[Python, Go] 백준 10828번 풀이</h1><h3 id="스택"><a href="#스택" class="headerlink" title="스택"></a>스택</h3><ul>
-<li>주어지는 명령에 따라 스택을 처리하는 문제이다. 파이썬은 큐나 스택을 지원하는 라이브러리가 있지만 사용하지 않고 리스트를 통해 구현했으며, Go는 슬라이스를 통해 구현했다.</li>
-</ul>
-<ul>
-<li><p>스택을 초기화할 필요가 있는 문제가 아니었으므로 하나의 파이썬의 경우 하나의 for문안에서 처리하고 Go는 각각의 명령에 따른 함수를 만들어 사용했다.  </p>
-</li>
-<li><p>Python 풀이</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">n = int(sys.stdin.readline())</span><br><span class="line"></span><br><span class="line">stack = []</span><br><span class="line"></span><br><span class="line"><span class="comment"># n = int(input())</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line"></span><br><span class="line">    order = sys.stdin.readline().rstrip()</span><br><span class="line">    <span class="comment"># print(order)</span></span><br><span class="line">    <span class="keyword">if</span> len(order.split()) == <span class="number">2</span>:</span><br><span class="line">        stack.insert(<span class="number">0</span>,int(order.split()[<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">if</span> order == <span class="string">"pop"</span>:</span><br><span class="line">            <span class="keyword">if</span> stack == []:</span><br><span class="line">                print(<span class="number">-1</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                print(stack[<span class="number">0</span>])</span><br><span class="line">                stack.pop(<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">elif</span> order == <span class="string">"size"</span>:</span><br><span class="line">            print(len(stack))</span><br><span class="line">        <span class="keyword">elif</span> order == <span class="string">"empty"</span>:</span><br><span class="line">            <span class="keyword">if</span> stack == []:</span><br><span class="line">                print(<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                print(<span class="number">0</span>)</span><br><span class="line">        <span class="comment"># top</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> stack == []:</span><br><span class="line">                print(stack[<span class="number">0</span>])</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                print(<span class="number">-1</span>)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>Go를 통해 슬라이스를 다룰때 파이썬의 pop과 같은 내장함수가 없다.</p>
-<ul>
-<li><p>따라서, 슬라이스에서 하나를 제거할 때 슬라이스의 길이가 1인경우와 1이 아닌경우를 나눠서 생각했다.</p>
-</li>
-<li><p>슬라이스의 길이가 1인경우, 남아있는 하나를 제거하고 empty slice를 만들기 위해 nil 처리</p>
-</li>
-<li><p>슬라이스의 길이가 1이 아닌 경우, 슬라이스의 가장 끝의 하나를 제거하면 되므로 슬라이스의 길이 L 을 구하고 L-1 까지의 슬라이스만을 가져간다.</p>
-</li>
-</ul>
-</li>
-<li><p>Go 풀이</p>
-</li>
-</ul>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"bufio"</span></span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"os"</span></span><br><span class="line">	<span class="string">"strconv"</span></span><br><span class="line">	<span class="string">"strings"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> s []<span class="keyword">int</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">s_push</span><span class="params">(x <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	s = <span class="built_in">append</span>(s, x)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">s_pop</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> s == <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"%d\n"</span>, <span class="number">-1</span>)</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> <span class="built_in">len</span>(s) == <span class="number">1</span> &#123;</span><br><span class="line">		top := s[<span class="number">0</span>]</span><br><span class="line">		fmt.Printf(<span class="string">"%d\n"</span>, top)</span><br><span class="line">		s = <span class="literal">nil</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		l := <span class="built_in">len</span>(s)</span><br><span class="line">		top := s[l<span class="number">-1</span>]</span><br><span class="line">		fmt.Printf(<span class="string">"%d\n"</span>, top)</span><br><span class="line">		s = s[:l<span class="number">-1</span>]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">s_size</span><span class="params">()</span></span> &#123;</span><br><span class="line">	l := <span class="built_in">len</span>(s)</span><br><span class="line">	fmt.Printf(<span class="string">"%d\n"</span>, l)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">s_empty</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> s == <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"%d\n"</span>, <span class="number">1</span>)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"%d\n"</span>, <span class="number">0</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">s_top</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> s == <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"%d\n"</span>, <span class="number">-1</span>)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		l := <span class="built_in">len</span>(s)</span><br><span class="line">		top := s[l<span class="number">-1</span>]</span><br><span class="line">		fmt.Printf(<span class="string">"%d\n"</span>, top)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> n <span class="keyword">int</span></span><br><span class="line">	inputReader := bufio.NewReader(os.Stdin)</span><br><span class="line">	fmt.Scanf(<span class="string">"%d"</span>, &amp;n)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; n+<span class="number">1</span>; i++ &#123;</span><br><span class="line">		input, _ := inputReader.ReadString(<span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line">		order := strings.Split(input, <span class="string">" "</span>)</span><br><span class="line"></span><br><span class="line">		action := strings.TrimSpace(order[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> <span class="built_in">len</span>(order) == <span class="number">2</span> &#123;</span><br><span class="line">			n := strings.TrimSpace(order[<span class="number">1</span>])</span><br><span class="line">			num, _ := strconv.Atoi(n)</span><br><span class="line">			s_push(num)</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">switch</span> action &#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">"pop"</span>:</span><br><span class="line">				s_pop()</span><br><span class="line">			<span class="keyword">case</span> <span class="string">"size"</span>:</span><br><span class="line">				s_size()</span><br><span class="line">			<span class="keyword">case</span> <span class="string">"empty"</span>:</span><br><span class="line">				s_empty()</span><br><span class="line">			<span class="keyword">case</span> <span class="string">"top"</span>:</span><br><span class="line">				s_top()</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/baekjoon/blob/master/10828.py">Full Code - Python</a>  </p>
-<p><a href="https://github.com/Already-Ready/baekjoon/blob/master/Go_solutions/10828.go">Full Code - Go</a> </p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1050,7 +1066,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            30
+                            31
                         </p>
                     </a>
                 </div>
@@ -1222,7 +1238,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">6</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -1238,7 +1254,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -1298,6 +1314,25 @@
         
         <article class="media">
             
+            <a href="/2020/04/07/Pytorch-data-loading-with-DataLoader/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_data_loading_with_DataLoader">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-07T17:42:35.000Z">2020-04-07</time></div>
+                    <a href="/2020/04/07/Pytorch-data-loading-with-DataLoader/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_data_loading_with_DataLoader</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/04/06/Pytorch-Multivariable-Linear-regression/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Multivariable_Linear_regression">
@@ -1372,25 +1407,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/03/17/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-missing-%EB%A9%94%EC%84%9C%EB%93%9C%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="파이썬_딕셔너리___missing___메서드에_관하여.">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-17T22:50:33.000Z">2020-03-17</time></div>
-                    <a href="/2020/03/17/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-missing-%EB%A9%94%EC%84%9C%EB%93%9C%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC/" class="title has-link-black-ter is-size-6 has-text-weight-normal">파이썬_딕셔너리___missing___메서드에_관하여.</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1408,7 +1424,7 @@
                     <span class="level-item">April 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -1494,14 +1510,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">14</span>
+                        <span class="tag is-grey">15</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
@@ -1550,6 +1566,25 @@
         
         <article class="media">
             
+            <a href="/2020/04/07/Pytorch-data-loading-with-DataLoader/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_data_loading_with_DataLoader">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-07T17:42:35.000Z">2020-04-07</time></div>
+                    <a href="/2020/04/07/Pytorch-data-loading-with-DataLoader/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_data_loading_with_DataLoader</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/04/06/Pytorch-Multivariable-Linear-regression/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Multivariable_Linear_regression">
@@ -1624,25 +1659,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/03/17/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-missing-%EB%A9%94%EC%84%9C%EB%93%9C%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="파이썬_딕셔너리___missing___메서드에_관하여.">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-17T22:50:33.000Z">2020-03-17</time></div>
-                    <a href="/2020/03/17/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-missing-%EB%A9%94%EC%84%9C%EB%93%9C%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC/" class="title has-link-black-ter is-size-6 has-text-weight-normal">파이썬_딕셔너리___missing___메서드에_관하여.</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1660,7 +1676,7 @@
                     <span class="level-item">April 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -1746,14 +1762,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">14</span>
+                        <span class="tag is-grey">15</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
