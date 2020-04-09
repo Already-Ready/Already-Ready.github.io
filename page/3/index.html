@@ -133,6 +133,127 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-01-09T14:04:08.000Z">2020-01-09</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Go/">Go</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Go/tutorial/">tutorial</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 minutes read (About 946 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/01/09/Golang-%EC%A0%95%EB%A6%AC%ED%95%98%EA%B8%B0-4/">Golang_정리하기_4</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="Go-tutorial-Go-정리하기-4"><a href="#Go-tutorial-Go-정리하기-4" class="headerlink" title="[Go tutorial] Go 정리하기 - 4"></a>[Go tutorial] Go 정리하기 - 4</h1><h3 id="Go-tour-참조"><a href="#Go-tour-참조" class="headerlink" title="Go-tour 참조"></a><a href="https://go-tour-kr.appspot.com/#1">Go-tour 참조</a></h3><h3 id="구름edu-참조"><a href="#구름edu-참조" class="headerlink" title="구름edu 참조"></a><a href="https://edu.goorm.io/learn/lecture/2010/%EB%B0%94%EB%A1%9C-%EC%8B%A4%ED%96%89%ED%95%B4%EB%B3%B4%EB%A9%B4%EC%84%9C-%EB%B0%B0%EC%9A%B0%EB%8A%94-go-lang-%EA%B3%A0%EB%9E%AD/lesson/226422/%EA%B5%AC%EC%A1%B0%EC%B2%B4">구름edu 참조</a></h3><ul>
+<li><p>스위치 (switch)</p>
+<ul>
+<li><p>case의 라벨과 일치하는경우를 찾아 실행</p>
+</li>
+<li><p>어느것에도 맞지않다면 default문으로 실행 가능</p>
+</li>
+<li><p>break를 따로 입력하지 않아도 해당되는 case문만 실행된다.</p>
+</li>
+<li><p>스위치의 각 조건은 위에서 아래로 평가한다. 참인 case를 찾으면 평가를 마침.</p>
+</li>
+<li><p>switch 전달 인자</p>
+<ul>
+<li><p>태그</p>
+</li>
+<li><p>표현식</p>
+</li>
+<li><p>전달되는 인자 없이 case에 표현식 사용 가능</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> a, b <span class="keyword">int</span></span><br><span class="line"></span><br><span class="line">	fmt.Print(<span class="string">"정수 a와 b를 입력하시오:"</span>)</span><br><span class="line">	fmt.Scanln(&amp;a, &amp;b)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">switch</span> &#123;</span><br><span class="line">	<span class="keyword">case</span> a &gt; b:</span><br><span class="line">		fmt.Println(<span class="string">"a가 b보다 큽니다."</span>)</span><br><span class="line">	<span class="keyword">case</span> a &lt; b:</span><br><span class="line">		fmt.Println(<span class="string">"a가 b보다 작습니다."</span>)</span><br><span class="line">	<span class="keyword">case</span> a == b:</span><br><span class="line">		fmt.Println(<span class="string">"a와 b가 같습니다."</span>)</span><br><span class="line">	<span class="keyword">default</span>:</span><br><span class="line">		fmt.Println(<span class="string">"모르겠어요."</span>)</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>메소드와 인터페이스</p>
+<ul>
+<li><p>메소드란 특정 속성들(구조체)을 이용해 기능을 수행하기 위해 만들어진 함수이다.</p>
+</li>
+<li><p>선언</p>
+<ul>
+<li>“func (매개변수이름 구조체이름) 메소드이름() 반환형 {}” 형식으로 선언</li>
+</ul>
+</li>
+<li><p>매개변수 이름은 메소드 내에서 매개변수처럼 사용</p>
+  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> &#123;</span><br><span class="line">		X, Y <span class="keyword">float64</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(v *Vertex)</span> <span class="title">Abs</span><span class="params">()</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> math.Sqrt(v.X*v.X + v.Y*v.Y)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	v := &amp;Vertex&#123;<span class="number">3</span>, <span class="number">4</span>&#125;</span><br><span class="line">	fmt.Println(v.Abs())  ### <span class="built_in">print</span> : <span class="number">5</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>위의 예에서는 메소드에 구조체를 붙였다.</p>
+</li>
+<li><p>뿐만 아니라 메소드에는 아무 타입이나 붙일 수 있다.</p>
+  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> MyFloats <span class="keyword">float64</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f MyFloats)</span> <span class="title">Abs</span><span class="params">()</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> f &lt; <span class="number">0</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">float64</span>(-f)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">float64</span>(f)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	k := MyFloats(-math.Sqrt2)</span><br><span class="line">	fmt.Println(k.Abs())  ### <span class="built_in">print</span> : <span class="number">1.4142135623730951</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>위의 예에서는 float타입을 메소드에 붙였다.</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>인터페이스</p>
+<ul>
+<li><p>구조체가 변수를 묶어놓은 것이라면, 인터페이스는 메소드를 모아놓은 것이다.</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"math"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> geometry <span class="keyword">interface</span> &#123;</span><br><span class="line">	area() <span class="keyword">float64</span></span><br><span class="line">	perimeter() <span class="keyword">float64</span> </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Rect <span class="keyword">struct</span> &#123;</span><br><span class="line">	width, height <span class="keyword">float64</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Circle <span class="keyword">struct</span> &#123;</span><br><span class="line">	radius <span class="keyword">float64</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r Rect)</span> <span class="title">area</span><span class="params">()</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> r.width * r.height</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c Circle)</span> <span class="title">area</span><span class="params">()</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> math.Pi * c.radius * c.radius</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r Rect)</span> <span class="title">perimeter</span><span class="params">()</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">2</span> * (r.width + r.height)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c Circle)</span> <span class="title">perimeter</span><span class="params">()</span> <span class="title">float64</span></span> &#123; .Pi * c.radius</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	r1 := Rect&#123;<span class="number">10</span>, <span class="number">20</span>&#125;</span><br><span class="line">	c1 := Circle&#123;<span class="number">10</span>&#125;</span><br><span class="line">	r2 := Rect&#123;<span class="number">12</span>, <span class="number">14</span>&#125;</span><br><span class="line">	c2 := Circle&#123;<span class="number">5</span>&#125;</span><br><span class="line"></span><br><span class="line">	printMeasure(r1, c1, r2, c2)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">printMeasure</span><span class="params">(m ...geometry)</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> _, val := <span class="keyword">range</span> m &#123;</span><br><span class="line">		fmt.Println(val)</span><br><span class="line">		fmt.Println(val.area())</span><br><span class="line">		fmt.Println(val.perimeter())</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>위의 예를 보면 인터페이스 안에 메소드가 들어가있다. 또한, 같은 이름의 메소드가 두개씩 있다.</p>
+</li>
+<li><p>이름이 동일하게 선언되어도 메소드가 전달받는 구조체가 다르기 때문에 괜찮은것이다.</p>
+</li>
+<li><p>메인함수에서 구조체를 초기화하고 for문을 통해 각 구조체를 전달받은 메소드에 대해 결과값을 출력하고 있다.</p>
+</li>
+<li><p>빈 인터페이스</p>
+<ul>
+<li><p>인터페이스는 어떠한 타입도 담을 수 있는 dynamic type 이다.</p>
+</li>
+<li><p>인터페이스는 매개변수로 사용할 수 있다.</p>
+</li>
+<li><p>인터페이스는 내용을 따로 선언하지 않아도 형으로 사용할 수 있다.</p>
+</li>
+<li><p>하나의 변수를 형이 다른 형태로 저장해 출력한다고 생각한다면, 매개변수형에 따른 2개 이상의 함수를 만들어야한다.</p>
+</li>
+<li><p>하지만 빈 인터페이스를 사용한다면, 어떤 형도 담을 수 있기 때문에 편하게 사용이 가능하게된다.</p>
+  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">printVal</span><span class="params">(i <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;</span><br><span class="line">	fmt.Println(i)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> x <span class="keyword">interface</span>&#123;&#125; <span class="comment">//빈 인터페이스 선언</span></span><br><span class="line"></span><br><span class="line">	x = <span class="number">1</span></span><br><span class="line">	printVal(x)</span><br><span class="line"></span><br><span class="line">	x = <span class="string">"test"</span></span><br><span class="line">	printVal(x)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>위의 예에서 x의 값에따라 다르게 형을 선언하지 않고 출력하는것을 확인할 수 있다.</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-01-08T17:26:24.000Z">2020-01-08</time>
                 
                 <div class="level-item">
@@ -958,76 +1079,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-12-27T15:33:22.000Z">2019-12-27</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 minutes read (About 558 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2019/12/27/%EC%A3%BC%EC%82%AC%EC%9C%84%EA%B5%B4%EB%A6%AC%EA%B8%B0-14499%EB%B2%88/">주사위굴리기_14499번</a>
-            
-        </h1>
-        <div class="content">
-            <h2 id="14499번-문제-풀이"><a href="#14499번-문제-풀이" class="headerlink" title="14499번 문제 풀이"></a>14499번 문제 풀이</h2><br/>
-
-<p>주사위가 좌표면을 움직일때마다 윗면에 쓰여있는 숫자를 출력하는 문제이다.</p>
-<p>1.규칙에 따라 주사위와 좌표면의 숫자들이 바뀌므로 바뀌는 주사위 면의 숫자들을 저장하고자 했다.  </p>
-<p>&nbsp;&nbsp;&nbsp;따라서, 아래와 같이 dice라는 리스트를 주사위값 저장에 사용했다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dice = [<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>] <span class="comment">#위0 아래1 동2 서3 남4 북5 순서로 값</span></span><br></pre></td></tr></table></figure>
-
-<p>2.주사위가 움직이는 지도가 어떻게 생겼는지를 알아야했다.</p>
-<p>&nbsp;&nbsp;&nbsp;따라서, 아래와 같이 입력받은 크기에 맞는 지도를 생성했다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">field = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> range(rows):</span><br><span class="line">    li = list(map(int, input().split()))</span><br><span class="line">    field.append(li)</span><br></pre></td></tr></table></figure>
-
-
-<p>3.주어지는 움직임대로 주사위를 움직이고 그에따라 지도의 값과 dice의 값을 바꿔주어야한다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(moves)):</span><br><span class="line">    temp = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> moves[i] == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">if</span> position_y + <span class="number">1</span> &lt; columns:</span><br><span class="line">            position_y += <span class="number">1</span></span><br><span class="line">            temp = dice[<span class="number">2</span>]</span><br><span class="line">            field_num = field[position_x][position_y]</span><br><span class="line">            <span class="keyword">if</span> field_num == <span class="number">0</span>:</span><br><span class="line">                dice[<span class="number">2</span>] = dice[<span class="number">0</span>]</span><br><span class="line">                dice[<span class="number">0</span>] = dice[<span class="number">3</span>]</span><br><span class="line">                dice[<span class="number">3</span>] = dice[<span class="number">1</span>]</span><br><span class="line">                dice[<span class="number">1</span>] = temp</span><br><span class="line">                field[position_x][position_y] = temp</span><br><span class="line"></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                dice[<span class="number">2</span>] = dice[<span class="number">0</span>]</span><br><span class="line">                dice[<span class="number">0</span>] = dice[<span class="number">3</span>]</span><br><span class="line">                dice[<span class="number">3</span>] = dice[<span class="number">1</span>]</span><br><span class="line">                dice[<span class="number">1</span>] = field[position_x][position_y]</span><br><span class="line">                field[position_x][position_y] = <span class="number">0</span></span><br><span class="line">        <span class="keyword">else</span> : <span class="keyword">continue</span></span><br></pre></td></tr></table></figure>
-
-<p>주사위가 특정 방향으로 움직이기전에, temp값에 바닥을 향할 주사위 값을 미리 저장해주었다.</p>
-<p>그리고 주사위가 움직일때, 현재 좌표값들을 변경시켜준다.</p>
-<p>이때 주의할점은 우리는 문제에서 값을 입력받을때 세로크기를 먼저받고 그 다음으로 가로 크기를 받는다는 점이다.</p>
-<p>즉 동쪽으로 움직이면 y좌표가 늘어난다.</p>
-<p>주사위가 굴렀다면, dice 리스트에 값들을 바꿔줘야한다.</p>
-<p>위와같이 동쪽으로 굴렀다면, 위를 바라보던 주사위 면은 동쪽을 바라보게 될테고</p>
-<p>서쪽을 바라보던 주사위면은 위를 바라보게 될 것이다.</p>
-<p>이와 같이 주사위 면의 값들을 dice에 바꿔서 입력한다.</p>
-<p>이 과정을 동,서,남,북에 나눠서 처리하고 그때마다 주사위 윗면의 값을 프린트해주면 된다.</p>
-<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/baekjoon/blob/master/14499.py">Full Code</a></p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1096,7 +1147,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            32
+                            33
                         </p>
                     </a>
                 </div>
@@ -1268,7 +1319,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">7</span>
+                <span class="level-item tag">8</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -1284,7 +1335,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">5</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -1329,7 +1380,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/CS/" style="font-size: 16px;">CS</a> <a href="/tags/CtCI/" style="font-size: 14px;">CtCI</a> <a href="/tags/Go/" style="font-size: 18px;">Go</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Pytorch/" style="font-size: 12px;">Pytorch</a> <a href="/tags/baekjoon/" style="font-size: 18px;">baekjoon</a> <a href="/tags/github-io/" style="font-size: 10px;">github.io</a> <a href="/tags/%EB%B8%94%EB%A1%9C%EA%B7%B8/" style="font-size: 10px;">블로그</a>
+        <a href="/tags/CS/" style="font-size: 15px;">CS</a> <a href="/tags/CtCI/" style="font-size: 12.5px;">CtCI</a> <a href="/tags/Go/" style="font-size: 17.5px;">Go</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Pytorch/" style="font-size: 12.5px;">Pytorch</a> <a href="/tags/baekjoon/" style="font-size: 17.5px;">baekjoon</a> <a href="/tags/github-io/" style="font-size: 10px;">github.io</a> <a href="/tags/%EB%B8%94%EB%A1%9C%EA%B7%B8/" style="font-size: 10px;">블로그</a>
     </div>
 </div>
     
@@ -1341,6 +1392,25 @@
         <h3 class="menu-label">
             Recent
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/04/10/Pytorch-Multi-Layer-Perceptron-MLP/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Multi_Layer_Perceptron_MLP">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-10T01:20:19.000Z">2020-04-10</time></div>
+                    <a href="/2020/04/10/Pytorch-Multi-Layer-Perceptron-MLP/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Multi_Layer_Perceptron_MLP</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1418,25 +1488,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/03/29/%ED%8C%8C%EC%9D%B4%EC%8D%AC-dataframe-loc-iloc-%EC%9D%B8%EB%8D%B1%EC%8B%B1/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="파이썬_dataframe_loc_iloc_인덱싱">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-29T20:31:22.000Z">2020-03-29</time></div>
-                    <a href="/2020/03/29/%ED%8C%8C%EC%9D%B4%EC%8D%AC-dataframe-loc-iloc-%EC%9D%B8%EB%8D%B1%EC%8B%B1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">파이썬_dataframe_loc_iloc_인덱싱</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1454,7 +1505,7 @@
                     <span class="level-item">April 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">4</span>
+                    <span class="level-item tag">5</span>
                 </span>
             </a>
         </li>
@@ -1540,14 +1591,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">16</span>
+                        <span class="tag is-grey">17</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">4</span>
+                        <span class="tag is-grey">5</span>
                     </a>
                 </div>
                 
@@ -1596,6 +1647,25 @@
         
         <article class="media">
             
+            <a href="/2020/04/10/Pytorch-Multi-Layer-Perceptron-MLP/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Multi_Layer_Perceptron_MLP">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-10T01:20:19.000Z">2020-04-10</time></div>
+                    <a href="/2020/04/10/Pytorch-Multi-Layer-Perceptron-MLP/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Multi_Layer_Perceptron_MLP</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/04/08/Pytorch-Logistic-regression/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Logistic_regression">
@@ -1670,25 +1740,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/03/29/%ED%8C%8C%EC%9D%B4%EC%8D%AC-dataframe-loc-iloc-%EC%9D%B8%EB%8D%B1%EC%8B%B1/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="파이썬_dataframe_loc_iloc_인덱싱">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-29T20:31:22.000Z">2020-03-29</time></div>
-                    <a href="/2020/03/29/%ED%8C%8C%EC%9D%B4%EC%8D%AC-dataframe-loc-iloc-%EC%9D%B8%EB%8D%B1%EC%8B%B1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">파이썬_dataframe_loc_iloc_인덱싱</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1706,7 +1757,7 @@
                     <span class="level-item">April 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">4</span>
+                    <span class="level-item tag">5</span>
                 </span>
             </a>
         </li>
@@ -1792,14 +1843,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">16</span>
+                        <span class="tag is-grey">17</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">4</span>
+                        <span class="tag is-grey">5</span>
                     </a>
                 </div>
                 

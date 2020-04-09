@@ -7,21 +7,22 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>파이썬_dataframe_loc_iloc_인덱싱 - Hexo</title>
+<title>Pytorch_Multi_Layer_Perceptron_MLP - Hexo</title>
 
 
-    <meta name="description" content="파이썬 dataframe 인덱싱하기 dataframe을 인덱싱할때 loc과 iloc을 사용할 수 있다.  다음과 같은 데이터 프레임을 예시로 두 가지를 살펴보자.   1234567891011121314151617import pandas as pddf &#x3D; pd.DataFrame(&amp;#123;    &#39;age&#39; :     [13,17,19,21,23],    &#39;c">
+    <meta name="description" content="Pytorch Multi Layer Perceptron(MLP)에 관하여 with code모두를 위한 딥러닝 - 파이토치 강의 참고  perceptron은 입력값 x에 대해 weight를 곱하고 bias를 더한 후 activation function을 거쳐서 나온 output을 통해 두가지의 class를 가지는 AND, OR 문제를 해결하기 위해 고안되었습">
 <meta property="og:type" content="article">
-<meta property="og:title" content="파이썬_dataframe_loc_iloc_인덱싱">
-<meta property="og:url" content="http://yoursite.com/2020/03/29/%ED%8C%8C%EC%9D%B4%EC%8D%AC-dataframe-loc-iloc-%EC%9D%B8%EB%8D%B1%EC%8B%B1/index.html">
+<meta property="og:title" content="Pytorch_Multi_Layer_Perceptron_MLP">
+<meta property="og:url" content="http://yoursite.com/2020/04/10/Pytorch-Multi-Layer-Perceptron-MLP/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="파이썬 dataframe 인덱싱하기 dataframe을 인덱싱할때 loc과 iloc을 사용할 수 있다.  다음과 같은 데이터 프레임을 예시로 두 가지를 살펴보자.   1234567891011121314151617import pandas as pddf &#x3D; pd.DataFrame(&amp;#123;    &#39;age&#39; :     [13,17,19,21,23],    &#39;c">
+<meta property="og:description" content="Pytorch Multi Layer Perceptron(MLP)에 관하여 with code모두를 위한 딥러닝 - 파이토치 강의 참고  perceptron은 입력값 x에 대해 weight를 곱하고 bias를 더한 후 activation function을 거쳐서 나온 output을 통해 두가지의 class를 가지는 AND, OR 문제를 해결하기 위해 고안되었습">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="article:published_time" content="2020-03-29T20:31:22.000Z">
-<meta property="article:modified_time" content="2020-03-29T11:31:15.189Z">
+<meta property="article:published_time" content="2020-04-10T01:20:19.000Z">
+<meta property="article:modified_time" content="2020-04-09T16:18:23.263Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Python">
+<meta property="article:tag" content="Pytorch">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
 
@@ -81,7 +82,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="파이썬_dataframe_loc_iloc_인덱싱" height="28">
+                <img src="/images/logo.svg" alt="Pytorch_Multi_Layer_Perceptron_MLP" height="28">
             
             </a>
         </div>
@@ -137,17 +138,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-29T20:31:22.000Z">2020-03-29</time>
+                <time class="level-item has-text-grey" datetime="2020-04-10T01:20:19.000Z">2020-04-10</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    4 minutes read (About 566 words)
+                    6 minutes read (About 961 words)
                 </span>
                 
                 
@@ -156,59 +157,175 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                파이썬_dataframe_loc_iloc_인덱싱
+                Pytorch_Multi_Layer_Perceptron_MLP
             
         </h1>
         <div class="content">
-            <h1 id="파이썬-dataframe-인덱싱하기"><a href="#파이썬-dataframe-인덱싱하기" class="headerlink" title="파이썬 dataframe 인덱싱하기"></a>파이썬 dataframe 인덱싱하기</h1><ul>
-<li><p>dataframe을 인덱싱할때 loc과 iloc을 사용할 수 있다.</p>
+            <h1 id="Pytorch-Multi-Layer-Perceptron-MLP-에-관하여-with-code"><a href="#Pytorch-Multi-Layer-Perceptron-MLP-에-관하여-with-code" class="headerlink" title="Pytorch Multi Layer Perceptron(MLP)에 관하여 with code"></a>Pytorch Multi Layer Perceptron(MLP)에 관하여 with code</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><hr>
+<ul>
+<li><p>perceptron은 입력값 x에 대해 weight를 곱하고 bias를 더한 후 activation function을 거쳐서 나온 output을 통해 두가지의 class를 가지는 AND, OR 문제를 해결하기 위해 고안되었습니다.</p>
 </li>
-<li><p>다음과 같은 데이터 프레임을 예시로 두 가지를 살펴보자.</p>
+<li><p>AND gate는 다음과 같이 표로 나타낼 수 있습니다.</p>
 </li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.DataFrame(&#123;</span><br><span class="line">    <span class="string">'age'</span> :     [<span class="number">13</span>,<span class="number">17</span>,<span class="number">19</span>,<span class="number">21</span>,<span class="number">23</span>],</span><br><span class="line">    <span class="string">'class'</span> : [<span class="string">'math'</span>,<span class="string">'science'</span>,<span class="string">'english'</span>,<span class="string">'math'</span>,<span class="string">'science'</span>],</span><br><span class="line">    <span class="string">'city'</span> :    [<span class="string">'A'</span>,<span class="string">'B'</span>,<span class="string">'A'</span>,<span class="string">'C'</span>,<span class="string">'B'</span>],</span><br><span class="line">    <span class="string">'gender'</span> :  [ <span class="string">'M'</span>, <span class="string">'F'</span>, <span class="string">'F'</span>, <span class="string">'M'</span>, <span class="string">'M'</span>],</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">print(df)</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">   age    <span class="class"><span class="keyword">class</span> <span class="title">city</span> <span class="title">gender</span></span></span><br><span class="line"><span class="class">0   13     <span class="title">math</span>    <span class="title">A</span>      <span class="title">M</span></span></span><br><span class="line"><span class="class">1   17  <span class="title">science</span>    <span class="title">B</span>      <span class="title">F</span></span></span><br><span class="line"><span class="class">2   19  <span class="title">english</span>    <span class="title">A</span>      <span class="title">F</span></span></span><br><span class="line"><span class="class">3   21     <span class="title">math</span>    <span class="title">C</span>      <span class="title">M</span></span></span><br><span class="line"><span class="class">4   23  <span class="title">science</span>    <span class="title">B</span>      <span class="title">M</span></span></span><br></pre></td></tr></table></figure>
-
-
-
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>위의 표는 매우 익숙하지만 이를 그래프로 나타내면 다음과 같이도 나타낼 수 있습니다.</p>
+</li>
+<li><p><img src="https://www.simonho.ca/wp-content/uploads/2018/02/AND_gate.png" alt="AND gate"></p>
+</li>
+<li><p>위의 그래프에서 0과 1을(off와 on)을 선 하나를 통해서 구분할 수 있는 방법은 빨간 점선으로 표시되어 있습니다. 즉, 하나의 선으로 두 가지의 class를 구분할 수 있습니다.</p>
+</li>
+<li><p>OR gate도 마찬가지 입니다.</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>위와 같은 OR gate표를 그래프로 나타내면 다음과 같습니다.</p>
+</li>
+<li><p><img src="https://www.simonho.ca/wp-content/uploads/2018/02/OR_gate.png" alt="OR gate"></p>
+</li>
+<li><p>OR gate 그래프에서도 0과 1(off와 on)을 하나의 선으로 구분할 수 있습니다. 즉, AND gate와 마찬가지로 하나의 선으로 두 가지의 class를 구분할 수 있다는 뜻입니다.</p>
+</li>
+<li><p>다시 말해, AND 와 OR gate는 하나의 Layer를 가지는 perceptron으로 구분이 가능했습니다. </p>
+</li>
+<li><p>하지만, XOR gate는 달랐습니다.</p>
+</li>
+<li><p>XOR gate를 표로 나타내면 다음과 같습니다.</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>이와같이 입력이 같으면 0을 다르면 1을 되돌려주는 XOR gate를 그래프로 나타내면 다음과 같습니다.</p>
+</li>
+<li><p><img src="https://www.simonho.ca/wp-content/uploads/2018/02/XOR_gate.png" alt="XOR gate"></p>
+</li>
+<li><p>위와 같은 그래프에서 0과 1(off와 on)을 하나의 선으로 구분할 수 없었습니다. 즉, 하나의 perceptron으로는 AND/OR gate 문제는 해결할 수 있었지만 XOR gate 문제를 해결할 수 없었습니다.</p>
+</li>
+<li><p>이렇게 하나의 perceptron으로 해결할 수 없는 문제를 해결하기 위해 등장한것이 Multi Layer Perceptron입니다.</p>
+</li>
+<li><p>다시 한번 위의 그래프를 봤을때, 하나의 선이 아니라 두개의 선으로는 0과 1(off와 on)을 구분할 수 있을까요?</p>
+</li>
+<li><p>답은 YES입니다. 즉, 두개 이상의 perceptron으로는 XOR gate문제를 해결할 수 있었습니다.</p>
+</li>
+<li><p>4개의 Layer를 갖는 모델을 구현해 확인해 보겠습니다.</p>
+</li>
+<li><p>먼저 XOR gate에 해당하는 데이터를 만들고,</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># XOR 데이터</span></span><br><span class="line">X = torch.FloatTensor([[<span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">1</span>], [<span class="number">1</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">1</span>]]).to(device)</span><br><span class="line">Y = torch.FloatTensor([[<span class="number">0</span>], [<span class="number">1</span>], [<span class="number">1</span>], [<span class="number">0</span>]]).to(device)</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><p><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.loc.html">loc</a>을 사용하여 인덱싱하기</p>
+<li>4개의 layer를 생성해 모델을 정의해줍니다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 4개의 레이어가 있는 MLP(Multi Layer Perceptron)</span></span><br><span class="line">linear1 = torch.nn.Linear(<span class="number">2</span>, <span class="number">10</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear2 = torch.nn.Linear(<span class="number">10</span>, <span class="number">10</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear3 = torch.nn.Linear(<span class="number">10</span>, <span class="number">10</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear4 = torch.nn.Linear(<span class="number">10</span>, <span class="number">1</span>, bias=<span class="literal">True</span>)</span><br><span class="line">sigmoid = torch.nn.Sigmoid()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 모델 정의</span></span><br><span class="line">model = torch.nn.Sequential(linear1, sigmoid, linear2, sigmoid, linear3, sigmoid,</span><br><span class="line">                            linear4, sigmoid).to(device)</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li><p>loc 인덱싱은 두 가지 사용법이 있다.</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">df.loc[행 인덱스값]</span><br><span class="line"></span><br><span class="line"><span class="keyword">or</span></span><br><span class="line"></span><br><span class="line">df.loc[행 인덱스값, 열 인덱스값]</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>이를 이용해 둘째, 셋째 행만을 가져오면 다음과 같다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ex1 = print(df.loc[<span class="number">1</span>:<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line">print(ex1)</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">   age    <span class="class"><span class="keyword">class</span> <span class="title">city</span> <span class="title">gender</span></span></span><br><span class="line"><span class="class">1   17  <span class="title">science</span>    <span class="title">B</span>      <span class="title">F</span></span></span><br><span class="line"><span class="class">2   19  <span class="title">english</span>    <span class="title">A</span>      <span class="title">F</span></span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>boolean 시리즈를 행을 선택하는 인덱스값으로 사용할 수 있다.</p>
-</li>
-<li><p>이를 이용하여 A 도시에 사는 행을 선택하면 다음과 같다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ex2 = df.loc[df.city == <span class="string">'A'</span>]</span><br><span class="line"></span><br><span class="line">print(ex2)</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">   age    <span class="class"><span class="keyword">class</span> <span class="title">city</span> <span class="title">gender</span></span></span><br><span class="line"><span class="class">0   13     <span class="title">math</span>    <span class="title">A</span>      <span class="title">M</span></span></span><br><span class="line"><span class="class">2   19  <span class="title">english</span>    <span class="title">A</span>      <span class="title">F</span></span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>한 걸음 더 나가서 A 도시에 사는 사람들의 성별을 나타내는 시리즈를 알고 싶다.</p>
-</li>
-<li><p>이럴때는 열 인덱스값을 추가해서 다음과 같이 얻어낼 수 있다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ex3 = df.loc[df.city == <span class="string">'A'</span>, <span class="string">'gender'</span>]</span><br><span class="line"></span><br><span class="line">print(ex3)</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line"><span class="number">0</span>    M</span><br><span class="line"><span class="number">2</span>    F</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>이렇게 열 인덱스값을 추가하여 다음과 같이 나이와 성별만을 갖는 두개의 행으로 datframe을 슬라이싱 할 수도 있다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ex4 = df.loc[<span class="number">1</span>:<span class="number">2</span>,[<span class="string">'age'</span>,<span class="string">'gender'</span>]]</span><br><span class="line"></span><br><span class="line">print(ex4)</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">   age gender</span><br><span class="line"><span class="number">1</span>   <span class="number">17</span>      F</span><br><span class="line"><span class="number">2</span>   <span class="number">19</span>      F</span><br></pre></td></tr></table></figure>
-</li>
+<li>이후 loss와 optimizer를 정의해주고,</li>
 </ul>
-</li>
-<li><p><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.iloc.html">iloc</a>을 사용하여 인덱싱하기</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  loss / optimizer 정의</span></span><br><span class="line">criterion = torch.nn.BCELoss().to(device)</span><br><span class="line">optimizer = torch.optim.SGD(model.parameters(), lr=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li><p>iloc은 integer-location based indexing 로서 정수(integer)를 인덱스값으로 받는다는 점이 loc과의 차이점이다.</p>
+<li>모델을 통해 weight와 bias를 학습합니다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 학습</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">10001</span>):</span><br><span class="line">    optimizer.zero_grad()</span><br><span class="line">    hypothesis = model(X)</span><br><span class="line"></span><br><span class="line">    loss = criterion(hypothesis, Y)</span><br><span class="line">    loss.backward()</span><br><span class="line">    optimizer.step()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> epoch % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">        print(epoch, loss.item())</span><br><span class="line"><span class="comment">#&gt;&gt;&gt; print</span></span><br><span class="line"><span class="number">0</span> <span class="number">0.6948983669281006</span></span><br><span class="line"><span class="number">100</span> <span class="number">0.6931558847427368</span></span><br><span class="line"><span class="number">200</span> <span class="number">0.6931535005569458</span></span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line"><span class="number">9800</span> <span class="number">0.00016415018762927502</span></span><br><span class="line"><span class="number">9900</span> <span class="number">0.00016021561168599874</span></span><br><span class="line"><span class="number">10000</span> <span class="number">0.0001565046259202063</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>학습이 끝나면 실제값과 예측값이 잘 맞아 떨어지는지 확인합니다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 학습 후 실제값과 예측값 비교해보기</span></span><br><span class="line"><span class="keyword">with</span> torch.no_grad():</span><br><span class="line">    hypothesis = model(X)</span><br><span class="line">    predict = (hypothesis &gt; <span class="number">0.5</span>).float()</span><br><span class="line">    accuracy = (predict == Y).float().mean()</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'Hyptthesis : '</span>, hypothesis.detach().cpu().numpy(),</span><br><span class="line">          <span class="string">'\nCorrect : '</span>,predict.detach().cpu().numpy(),</span><br><span class="line">          <span class="string">'\nAccuracy : '</span>,accuracy.item())</span><br><span class="line"><span class="comment">#&gt;&gt;&gt; print</span></span><br><span class="line">Hyptthesis :  [[<span class="number">1.1168354e-04</span>]</span><br><span class="line"> [<span class="number">9.9982882e-01</span>]</span><br><span class="line"> [<span class="number">9.9984241e-01</span>]</span><br><span class="line"> [<span class="number">1.8533420e-04</span>]] </span><br><span class="line">Correct :  [[<span class="number">0.</span>]</span><br><span class="line"> [<span class="number">1.</span>]</span><br><span class="line"> [<span class="number">1.</span>]</span><br><span class="line"> [<span class="number">0.</span>]] </span><br><span class="line">Accuracy :  <span class="number">1.0</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>위의 결과를 통해 Multi Layer Perceptron을 사용하면 XOR gate문제를 해결할 수 있음을 확인했습니다.</p>
 </li>
-<li><p>loc의 마지막 예제를 iloc을 통해 나타내면 다음과 같다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ex5 = df.iloc[<span class="number">1</span>:<span class="number">3</span>,[<span class="number">0</span>,<span class="number">3</span>]]</span><br><span class="line"></span><br><span class="line">print(ex5)</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">   age gender</span><br><span class="line"><span class="number">1</span>   <span class="number">17</span>      F</span><br><span class="line"><span class="number">2</span>   <span class="number">19</span>      F</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>ex4와 ex5의 코드를 살펴보면 단순히 정수값을 받는다는 점 이외에도 차이점이 있다.</p>
-</li>
-<li><p>loc 은 행 인덱스값을 1:2 까지로 나타내면 마지막 행까지 모두 포함한 결과를 내놓지만, iloc은 행 인덱스값의 마지막 행을 포함하지 않기 때문에 1:3 으로 나타내줬다.</p>
+<li><p><a href="https://www.simonho.ca/machine-learning/xor-logic-gate-neural-networks/">참고</a></p>
 </li>
 </ul>
-</li>
-</ul>
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/perceptron_XOR_problem.py">Full Code</a></p>
 
         </div>
         
@@ -216,7 +333,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/Python/" rel="tag">Python</a>
+                    <a class="has-link-grey -link" href="/tags/Python/" rel="tag">Python</a>, <a class="has-link-grey -link" href="/tags/Pytorch/" rel="tag">Pytorch</a>
                 </div>
             </div>
         </div>
@@ -242,17 +359,10 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/04/02/Pytorch-Linear-regression-%EA%B8%B0%EB%B3%B8%EC%A0%95%EB%A6%AC/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">Pytorch_Linear_regression_기본정리</span>
-            </a>
-        </div>
-        
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2020/03/24/%ED%8C%8C%EC%9D%B4%EC%8D%AC-dataframe-function-apply-%EB%B0%A9%EB%B2%95-without-iterrrows/">
-                <span class="level-item">파이썬_dataframe_function_apply_방법_without_iterrrows</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/04/08/Pytorch-Logistic-regression/">
+                <span class="level-item">Pytorch_Logistic_regression</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -268,8 +378,8 @@
         
 <script>
     var disqus_config = function () {
-        this.page.url = 'http://yoursite.com/2020/03/29/%ED%8C%8C%EC%9D%B4%EC%8D%AC-dataframe-loc-iloc-%EC%9D%B8%EB%8D%B1%EC%8B%B1/';
-        this.page.identifier = '2020/03/29/파이썬-dataframe-loc-iloc-인덱싱/';
+        this.page.url = 'http://yoursite.com/2020/04/10/Pytorch-Multi-Layer-Perceptron-MLP/';
+        this.page.identifier = '2020/04/10/Pytorch-Multi-Layer-Perceptron-MLP/';
     };
     (function() {
         var d = document, s = d.createElement('script');  
@@ -1075,7 +1185,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="파이썬_dataframe_loc_iloc_인덱싱" height="28">
+                    <img src="/images/logo.svg" alt="Pytorch_Multi_Layer_Perceptron_MLP" height="28">
                 
                 </a>
                 <p class="is-size-7">
