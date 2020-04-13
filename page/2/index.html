@@ -133,6 +133,129 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-02-12T16:50:37.000Z">2020-02-12</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/CS-basic/">CS basic</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/CS-basic/CtCI/">CtCI</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 minutes read (About 949 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/02/12/CtCI-Ch4-%ED%8A%B8%EB%A6%AC%EC%99%80-%EA%B7%B8%EB%9E%98%ED%94%84-2/">CtCI_Ch4_트리와_그래프_2</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="Ch4-1-그래프"><a href="#Ch4-1-그래프" class="headerlink" title="Ch4-1. 그래프"></a>Ch4-1. 그래프</h1><h3 id="코딩-인터뷰-완전-분석-저-게일-라크만-맥도웰-참조"><a href="#코딩-인터뷰-완전-분석-저-게일-라크만-맥도웰-참조" class="headerlink" title="코딩 인터뷰 완전 분석(저 : 게일 라크만 맥도웰) 참조"></a><a href="https://www.google.com/search?sxsrf=ACYBGNSEu2Z1xUz3cvyO7UGKy9e6sPD-Vg%3A1579746820188&source=hp&ei=BAYpXqSdCdP7wAOsrIHwBg&q=%EC%BD%94%EB%94%A9+%EC%9D%B8%ED%84%B0%EB%B7%B0+%EC%99%84%EC%A0%84+%EB%B6%84%EC%84%9D&oq=%EC%BD%94%EB%94%A9+%EC%9D%B8%ED%84%B0%EB%B7%B0&gs_l=psy-ab.3.0.0l10.411.2315..3295...3.0..2.169.1521.0j13......0....1..gws-wiz.......35i39j0i131.182vM3XJZPY">코딩 인터뷰 완전 분석(저 : 게일 라크만 맥도웰) 참조</a></h3><ul>
+<li><p>그래프</p>
+<ul>
+<li><p>앞서 이야기한 트리는 그래프의 한 종류이다. 하지만 모든 그래프가 트리는 아니다.</p>
+</li>
+<li><p>트리는 사이클이 없는 하나의 연결 그래프라고 말할 수 있다.</p>
+</li>
+<li><p>그래프는 노드와 노드를 연결하는 간선을 하나로 모아 놓은 것이다.</p>
+</li>
+<li><p>그래프에는 방향성이 있을 수도 있고 없을 수도 있다. 방향성이 있는 간선은 일방통행, 방향성이 없는 간선은 양방향 통행이라고 생각하면 된다.</p>
+</li>
+<li><p>모든 노드 쌍에 대해 경로가 존재하는 그래프를 “연결 그래프”라고 한다.</p>
+</li>
+<li><p>그래프에는 사이클이 있을 수도 없을 수도 있다. 사이클이 없는 그래프를 “비순환 그래프(acyclic graph)”라고 한다.</p>
+</li>
+</ul>
+</li>
+<li><p>그래프 탐색</p>
+<ul>
+<li><p>깊이 우선 탐색(depth-first search)</p>
+<ul>
+<li><p>깊이 우선 탐색(DFS)은 루트 노드에서 시작해서 다음 분기로 넘어가기 전 해당 분기를 완벽하게 탐색하는 방법이다.</p>
+</li>
+<li><p>즉, a 노드를 방문한 뒤 a 와 이웃한 노드 b를 방문했다면, a 와 인접한 다른 노드를 방문하기 이전에 b 의 이웃 노드들을 전부 방문해야 한다.</p>
+</li>
+<li><p>전위 순회를 포함한 트리 순회는 모두 DFS의 한 종류이다. DFS는 그래프에서 모든 노드를 방문하고자 할 때 더 선호되는 편이다.</p>
+</li>
+<li><p><img src="https://www.codesdope.com/staticroot/images/algorithm/dfs.gif" alt="DFS"></p>
+</li>
+</ul>
+</li>
+<li><p>너비 우선 탐색(breadth-first search)</p>
+<ul>
+<li><p>너비 우선 탐색(BFS)은 a 노드에서 시작했을 때, a 노드의 이웃 노드를 모두 방문한 다음에 이웃의 이웃들을 방문한다.</p>
+</li>
+<li><p>즉, BFS는 a 에서 시작해서 거리에 따라 단계별로 탐색한다고 봉 수 있다.</p>
+</li>
+<li><p>BFS는 재귀적으로 동작하지 않는다. BFS는 큐를 이용해서 방문할 노드를 저장하고 이를 탐색한다.</p>
+</li>
+<li><p><img src="https://www.codesdope.com/staticroot/images/algorithm/bfs.gif" alt="BFS"></p>
+</li>
+</ul>
+</li>
+<li><p>양방향 탐색(bidirectional search)</p>
+<ul>
+<li><p>양방향 탐색은 출발지와 도착지 사이의 최단 경로를 찾을 때 사용된다.</p>
+</li>
+<li><p>출발지와 도착지 두 노드에서 동시에 너비 우선 탐색을 수행한 뒤, 두 탐색 지점이 충돌하는 경우에 경로를 찾는 방식이다.</p>
+</li>
+<li><p>노드 s에서 노드 t까지 너비 우선 탐색으로 4단계를 거쳐야하는 경우를 생각해보자.</p>
+</li>
+<li><p>s와 t 두 지점에서 동시에 탐색을 시작하면 각 노드의 2단계 이후에 탐색 지점이 충돌한다.</p>
+</li>
+<li><p>이를 수행시간으로 비교해보자.</p>
+</li>
+<li><p>전통적인 너비 우선 탐색을 통해 k개의 노드를 탐색하는 과정을 d번 반복하면 O(k<sup>d</sup>) 개의 노드를 탐색해야 한다.</p>
+</li>
+<li><p>양방향 탐색을 이용한다면 두 노드의 중간 지점 정도인 d/2 반복에서 충돌할 것이다.</p>
+</li>
+<li><p>따라서 s와 t 각각에서 방문하게 될 노드의 수는 대략 k<sup>d/2</sup> 개가 될 것이고, 전체 노드는 2*k<sup>d/2</sup>, O(k<sup>d/2</sup>) 의 수행시간이 된다.</p>
+</li>
+<li><p>k<sup>d/2</sup> * k<sup>d/2</sup> = k<sup>d</sup> 인 것을 생각해 보면, 양방향 탐색은 일반적인 너비 우선 탐색보다 k<sup>d/2</sup> 만큼 더 빠르다.</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>참고</p>
+<ul>
+<li><p><a href="https://www.codesdope.com/course/algorithms-bfs/">https://www.codesdope.com/course/algorithms-bfs/</a></p>
+</li>
+<li><p><a href="https://www.codesdope.com/course/algorithms-dfs/">https://www.codesdope.com/course/algorithms-dfs/</a></p>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-02-12T10:48:32.000Z">2020-02-12</time>
                 
                 <div class="level-item">
@@ -1070,80 +1193,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-01-15T10:55:25.000Z">2020-01-15</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/Go/">Go</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 minutes read (About 575 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/01/15/%EC%8A%A4%ED%83%9D-10828%EB%B2%88/">스택_10828번</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="Python-Go-백준-10828번-풀이"><a href="#Python-Go-백준-10828번-풀이" class="headerlink" title="[Python, Go] 백준 10828번 풀이"></a>[Python, Go] 백준 10828번 풀이</h1><h3 id="스택"><a href="#스택" class="headerlink" title="스택"></a>스택</h3><ul>
-<li>주어지는 명령에 따라 스택을 처리하는 문제이다. 파이썬은 큐나 스택을 지원하는 라이브러리가 있지만 사용하지 않고 리스트를 통해 구현했으며, Go는 슬라이스를 통해 구현했다.</li>
-</ul>
-<ul>
-<li><p>스택을 초기화할 필요가 있는 문제가 아니었으므로 하나의 파이썬의 경우 하나의 for문안에서 처리하고 Go는 각각의 명령에 따른 함수를 만들어 사용했다.  </p>
-</li>
-<li><p>Python 풀이</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">n = int(sys.stdin.readline())</span><br><span class="line"></span><br><span class="line">stack = []</span><br><span class="line"></span><br><span class="line"><span class="comment"># n = int(input())</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line"></span><br><span class="line">    order = sys.stdin.readline().rstrip()</span><br><span class="line">    <span class="comment"># print(order)</span></span><br><span class="line">    <span class="keyword">if</span> len(order.split()) == <span class="number">2</span>:</span><br><span class="line">        stack.insert(<span class="number">0</span>,int(order.split()[<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">if</span> order == <span class="string">"pop"</span>:</span><br><span class="line">            <span class="keyword">if</span> stack == []:</span><br><span class="line">                print(<span class="number">-1</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                print(stack[<span class="number">0</span>])</span><br><span class="line">                stack.pop(<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">elif</span> order == <span class="string">"size"</span>:</span><br><span class="line">            print(len(stack))</span><br><span class="line">        <span class="keyword">elif</span> order == <span class="string">"empty"</span>:</span><br><span class="line">            <span class="keyword">if</span> stack == []:</span><br><span class="line">                print(<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                print(<span class="number">0</span>)</span><br><span class="line">        <span class="comment"># top</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> stack == []:</span><br><span class="line">                print(stack[<span class="number">0</span>])</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                print(<span class="number">-1</span>)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>Go를 통해 슬라이스를 다룰때 파이썬의 pop과 같은 내장함수가 없다.</p>
-<ul>
-<li><p>따라서, 슬라이스에서 하나를 제거할 때 슬라이스의 길이가 1인경우와 1이 아닌경우를 나눠서 생각했다.</p>
-</li>
-<li><p>슬라이스의 길이가 1인경우, 남아있는 하나를 제거하고 empty slice를 만들기 위해 nil 처리</p>
-</li>
-<li><p>슬라이스의 길이가 1이 아닌 경우, 슬라이스의 가장 끝의 하나를 제거하면 되므로 슬라이스의 길이 L 을 구하고 L-1 까지의 슬라이스만을 가져간다.</p>
-</li>
-</ul>
-</li>
-<li><p>Go 풀이</p>
-</li>
-</ul>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"bufio"</span></span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"os"</span></span><br><span class="line">	<span class="string">"strconv"</span></span><br><span class="line">	<span class="string">"strings"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> s []<span class="keyword">int</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">s_push</span><span class="params">(x <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	s = <span class="built_in">append</span>(s, x)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">s_pop</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> s == <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"%d\n"</span>, <span class="number">-1</span>)</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> <span class="built_in">len</span>(s) == <span class="number">1</span> &#123;</span><br><span class="line">		top := s[<span class="number">0</span>]</span><br><span class="line">		fmt.Printf(<span class="string">"%d\n"</span>, top)</span><br><span class="line">		s = <span class="literal">nil</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		l := <span class="built_in">len</span>(s)</span><br><span class="line">		top := s[l<span class="number">-1</span>]</span><br><span class="line">		fmt.Printf(<span class="string">"%d\n"</span>, top)</span><br><span class="line">		s = s[:l<span class="number">-1</span>]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">s_size</span><span class="params">()</span></span> &#123;</span><br><span class="line">	l := <span class="built_in">len</span>(s)</span><br><span class="line">	fmt.Printf(<span class="string">"%d\n"</span>, l)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">s_empty</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> s == <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"%d\n"</span>, <span class="number">1</span>)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"%d\n"</span>, <span class="number">0</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">s_top</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> s == <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"%d\n"</span>, <span class="number">-1</span>)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		l := <span class="built_in">len</span>(s)</span><br><span class="line">		top := s[l<span class="number">-1</span>]</span><br><span class="line">		fmt.Printf(<span class="string">"%d\n"</span>, top)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> n <span class="keyword">int</span></span><br><span class="line">	inputReader := bufio.NewReader(os.Stdin)</span><br><span class="line">	fmt.Scanf(<span class="string">"%d"</span>, &amp;n)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; n+<span class="number">1</span>; i++ &#123;</span><br><span class="line">		input, _ := inputReader.ReadString(<span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line">		order := strings.Split(input, <span class="string">" "</span>)</span><br><span class="line"></span><br><span class="line">		action := strings.TrimSpace(order[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> <span class="built_in">len</span>(order) == <span class="number">2</span> &#123;</span><br><span class="line">			n := strings.TrimSpace(order[<span class="number">1</span>])</span><br><span class="line">			num, _ := strconv.Atoi(n)</span><br><span class="line">			s_push(num)</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">switch</span> action &#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">"pop"</span>:</span><br><span class="line">				s_pop()</span><br><span class="line">			<span class="keyword">case</span> <span class="string">"size"</span>:</span><br><span class="line">				s_size()</span><br><span class="line">			<span class="keyword">case</span> <span class="string">"empty"</span>:</span><br><span class="line">				s_empty()</span><br><span class="line">			<span class="keyword">case</span> <span class="string">"top"</span>:</span><br><span class="line">				s_top()</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/baekjoon/blob/master/10828.py">Full Code - Python</a>  </p>
-<p><a href="https://github.com/Already-Ready/baekjoon/blob/master/Go_solutions/10828.go">Full Code - Go</a> </p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1212,7 +1261,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            33
+                            34
                         </p>
                     </a>
                 </div>
@@ -1384,7 +1433,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">8</span>
+                <span class="level-item tag">9</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -1400,7 +1449,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">6</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -1445,7 +1494,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/CS/" style="font-size: 15px;">CS</a> <a href="/tags/CtCI/" style="font-size: 12.5px;">CtCI</a> <a href="/tags/Go/" style="font-size: 17.5px;">Go</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Pytorch/" style="font-size: 12.5px;">Pytorch</a> <a href="/tags/baekjoon/" style="font-size: 17.5px;">baekjoon</a> <a href="/tags/github-io/" style="font-size: 10px;">github.io</a> <a href="/tags/%EB%B8%94%EB%A1%9C%EA%B7%B8/" style="font-size: 10px;">블로그</a>
+        <a href="/tags/CS/" style="font-size: 15px;">CS</a> <a href="/tags/CtCI/" style="font-size: 12.5px;">CtCI</a> <a href="/tags/Go/" style="font-size: 17.5px;">Go</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Pytorch/" style="font-size: 15px;">Pytorch</a> <a href="/tags/baekjoon/" style="font-size: 17.5px;">baekjoon</a> <a href="/tags/github-io/" style="font-size: 10px;">github.io</a> <a href="/tags/%EB%B8%94%EB%A1%9C%EA%B7%B8/" style="font-size: 10px;">블로그</a>
     </div>
 </div>
     
@@ -1457,6 +1506,25 @@
         <h3 class="menu-label">
             Recent
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/04/13/Pytorch-Softmax-classification/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Softmax_classification">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-13T15:45:13.000Z">2020-04-13</time></div>
+                    <a href="/2020/04/13/Pytorch-Softmax-classification/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Softmax_classification</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1534,25 +1602,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/02/Pytorch-Linear-regression-%EA%B8%B0%EB%B3%B8%EC%A0%95%EB%A6%AC/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Linear_regression_기본정리">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-02T23:26:54.000Z">2020-04-02</time></div>
-                    <a href="/2020/04/02/Pytorch-Linear-regression-%EA%B8%B0%EB%B3%B8%EC%A0%95%EB%A6%AC/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Linear_regression_기본정리</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1570,7 +1619,7 @@
                     <span class="level-item">April 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">5</span>
+                    <span class="level-item tag">6</span>
                 </span>
             </a>
         </li>
@@ -1656,14 +1705,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">17</span>
+                        <span class="tag is-grey">18</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">5</span>
+                        <span class="tag is-grey">6</span>
                     </a>
                 </div>
                 
@@ -1712,6 +1761,25 @@
         
         <article class="media">
             
+            <a href="/2020/04/13/Pytorch-Softmax-classification/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Softmax_classification">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-13T15:45:13.000Z">2020-04-13</time></div>
+                    <a href="/2020/04/13/Pytorch-Softmax-classification/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Softmax_classification</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/04/10/Pytorch-Multi-Layer-Perceptron-MLP/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Multi_Layer_Perceptron_MLP">
@@ -1786,25 +1854,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/02/Pytorch-Linear-regression-%EA%B8%B0%EB%B3%B8%EC%A0%95%EB%A6%AC/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Linear_regression_기본정리">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-02T23:26:54.000Z">2020-04-02</time></div>
-                    <a href="/2020/04/02/Pytorch-Linear-regression-%EA%B8%B0%EB%B3%B8%EC%A0%95%EB%A6%AC/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Linear_regression_기본정리</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1822,7 +1871,7 @@
                     <span class="level-item">April 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">5</span>
+                    <span class="level-item tag">6</span>
                 </span>
             </a>
         </li>
@@ -1908,14 +1957,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">17</span>
+                        <span class="tag is-grey">18</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">5</span>
+                        <span class="tag is-grey">6</span>
                     </a>
                 </div>
                 
