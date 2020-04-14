@@ -133,6 +133,112 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-04-14T16:26:50.000Z">2020-04-14</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 minutes read (About 930 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/04/14/Pytorch-ReLU/">Pytorch_ReLU</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="Pytorch-ReLU에-대하여"><a href="#Pytorch-ReLU에-대하여" class="headerlink" title="Pytorch ReLU에 대하여"></a>Pytorch ReLU에 대하여</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
+<li><p><a href="https://already-ready.github.io/2020/04/08/Pytorch-Logistic-regression/">이전 포스팅</a>에서 두 가지 클래스를 분류하는 모델을 만들때 sigmoid함수를 사용했습니다.</p>
+</li>
+<li><p>하지만, sigmoid함수에는 모델이 깊어질수록 vanishing Gradient문제가 발생하게 됩니다.</p>
+</li>
+<li><p>vanishing Gradient란, 역전파를 통해 gradient를 전파받을 때, 0에 근접한 값들이 곱해짐에 따라 앞단으로 갈수록 gradient가 사라지게 되는 문제입니다.</p>
+</li>
+<li><p>이러한 문제가 생기는 이유는 sigmoid 함수 그래프를 통해 확인할 수 있습니다.</p>
+</li>
+<li><p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Logistic-curve.svg/320px-Logistic-curve.svg.png" alt="sigmoid 그래프"></p>
+</li>
+<li><p>sigmoid 그래프의 양 극단으로 갈수록 기울기는 0에 수렴하게 되는것을 볼 수 있고, 이때문에 역전파를 통해 gradient가 곱해질 때마다 그 값 또한 0으로 수렴하게 됩니다.</p>
+</li>
+<li><p>따라서 아래 그림과 같이 역전파가 깊이 전달될수록 gradient가 사라지는 vanishing gradient 문제가 발생하게 됩니다.</p>
+</li>
+<li><p><img src="https://www.googleapis.com/download/storage/v1/b/kaggle-user-content/o/inbox%2F278186%2Fd158ec3585bc1551d9f3a03ae13a3a73%2Fvanishing%20gradient%20problem.png?generation=1574233763365617&alt=media" alt="vanishing Gradient"></p>
+</li>
+<li><p>이러한 문제를 해결하기 위해 Hinton교수님이 찾아낸 방법이 바로 ReLU 입니다.</p>
+</li>
+<li><p>ReLU를 수식으로 나타내면 다음과 같습니다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(x) = max(<span class="number">0</span>, x)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>입력값 x가 들어왔을때, 0보다 크다면 자기자신을 그렇지 않다면 0을 되돌려주는것이 바로 ReLU입니다.</p>
+</li>
+<li><p>코드에서 활성화 함수만 sigmoid에서 ReLU로 바꾸면 되기때문에 ReLU를 이용한 MNIST classifier 를 만들어보겠습니다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># nn Linear layer 만들기</span></span><br><span class="line">linear1 = torch.nn.Linear(<span class="number">784</span>, <span class="number">256</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear2 = torch.nn.Linear(<span class="number">256</span>, <span class="number">256</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear3 = torch.nn.Linear(<span class="number">256</span>, <span class="number">10</span>, bias=<span class="literal">True</span>)</span><br><span class="line">relu = torch.nn.ReLU()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Linear layer와 활성화 함수로 사용할 ReLU를 정의해주고, Linear layer의 weight를 normalization 합니다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Linear layer의 weight를 normalization시켜주기</span></span><br><span class="line">torch.nn.init.normal_(linear1.weight)</span><br><span class="line">torch.nn.init.normal_(linear2.weight)</span><br><span class="line">torch.nn.init.normal_(linear3.weight)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>위를 이용해 모델을 정의하고,</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 모델 정의</span></span><br><span class="line">model = torch.nn.Sequential(linear1, relu, linear2, relu, linear3).to(device)</span><br><span class="line"><span class="comment">###&gt;&gt;&gt; 왜 linear3다음에는 relu를 하지않는가</span></span><br><span class="line"><span class="comment">###&gt;&gt;&gt; 우리가 사용할 criterion은 CrossEntropyLoss인데 여기에는 마지막에 softmax activation이 포함되어 있기 때문이다.</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>loss / optimizer 를 정의합니다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># loss / optimizer 정의</span></span><br><span class="line">criterion = torch.nn.CrossEntropyLoss().to(device)</span><br><span class="line">optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>정한 epoch수만큼 모델을 학습시킵니다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">total_batch = len(data_loader)</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs):</span><br><span class="line">    avg_loss = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> X, Y <span class="keyword">in</span> data_loader:</span><br><span class="line">        X = X.view(<span class="number">-1</span>, <span class="number">28</span>*<span class="number">28</span>).to(device)</span><br><span class="line">        Y = Y.to(device)</span><br><span class="line"></span><br><span class="line">        hypothesis = model(X)</span><br><span class="line">        loss = criterion(hypothesis, Y)</span><br><span class="line"></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step()</span><br><span class="line"></span><br><span class="line">        avg_loss += loss / total_batch</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'Epoch:'</span>, <span class="string">'%04d'</span> % (epoch + <span class="number">1</span>), <span class="string">'cost ='</span>, <span class="string">'&#123;:.9f&#125;'</span>.format(avg_loss))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>학습이 끝났다면 테스트 데이터에서 하나를 선택해 예측값과 실제값을 비교해 결과를 확인해봅니다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> torch.no_grad(): <span class="comment"># --&gt; 여기에서는(test에서는) gradient를 계산하지 않고 진행한다는 뜻이다.</span></span><br><span class="line">    X_test = mnist_test.test_data.view(<span class="number">-1</span>, <span class="number">28</span>*<span class="number">28</span>).float().to(device)</span><br><span class="line">    Y_test = mnist_test.test_labels.to(device)</span><br><span class="line"></span><br><span class="line">    prediction = model(X_test)</span><br><span class="line">    correct_prediction = torch.argmax(prediction, dim=<span class="number">1</span>) == Y_test</span><br><span class="line">    accuracy = correct_prediction.float().mean()</span><br><span class="line">    print(<span class="string">'Accuracy:'</span>, accuracy.item())</span><br><span class="line"></span><br><span class="line">    r = random.randint(<span class="number">0</span>, len(mnist_test) - <span class="number">1</span>)</span><br><span class="line">    X_single_data = mnist_test.test_data[r:r + <span class="number">1</span>].view(<span class="number">-1</span>, <span class="number">28</span> * <span class="number">28</span>).float().to(device)</span><br><span class="line">    Y_single_data = mnist_test.test_labels[r:r + <span class="number">1</span>].to(device)</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'Label: '</span>, Y_single_data.item())</span><br><span class="line">    single_prediction = model(X_single_data)</span><br><span class="line">    print(<span class="string">'Prediction: '</span>, torch.argmax(single_prediction, <span class="number">1</span>).item())</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>하나의 데이터를 통해 예측값과 실제값까지 확인해볼 수 있었습니다.</li>
+</ul>
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/MNIST_nn_ReLU.py">Full Code</a></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-04-13T15:45:13.000Z">2020-04-13</time>
                 
                 <div class="level-item">
@@ -1035,127 +1141,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-04T16:08:33.000Z">2020-03-04</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/CS-basic/">CS basic</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/CS-basic/CtCI/">CtCI</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    5 minutes read (About 697 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/03/04/CtCI-Ch5-%EB%B9%84%ED%8A%B8-%EC%A1%B0%EC%9E%91/">CtCI_Ch5_비트_조작</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="Ch5-비트-조작"><a href="#Ch5-비트-조작" class="headerlink" title="Ch5. 비트 조작"></a>Ch5. 비트 조작</h1><h3 id="코딩-인터뷰-완전-분석-저-게일-라크만-맥도웰-참조"><a href="#코딩-인터뷰-완전-분석-저-게일-라크만-맥도웰-참조" class="headerlink" title="코딩 인터뷰 완전 분석(저 : 게일 라크만 맥도웰) 참조"></a><a href="https://www.google.com/search?sxsrf=ACYBGNSEu2Z1xUz3cvyO7UGKy9e6sPD-Vg%3A1579746820188&source=hp&ei=BAYpXqSdCdP7wAOsrIHwBg&q=%EC%BD%94%EB%94%A9+%EC%9D%B8%ED%84%B0%EB%B7%B0+%EC%99%84%EC%A0%84+%EB%B6%84%EC%84%9D&oq=%EC%BD%94%EB%94%A9+%EC%9D%B8%ED%84%B0%EB%B7%B0&gs_l=psy-ab.3.0.0l10.411.2315..3295...3.0..2.169.1521.0j13......0....1..gws-wiz.......35i39j0i131.182vM3XJZPY">코딩 인터뷰 완전 분석(저 : 게일 라크만 맥도웰) 참조</a></h3><ul>
-<li><p>산술 우측 시프트와 논리 우측 시프트</p>
-<ul>
-<li><p>산술 우측 시프트(arithmetic right shift)</p>
-<ul>
-<li><p>산술 우측 시프트는 기본적으로 2를 나눈 결과와 같다.</p>
-</li>
-<li><p>이는 비트를 오른쪽으로 옮기긴 하지만 부호비트는 바꾸지 않는다.</p>
-</li>
-<li><p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Rotate_right_arithmetically.svg/1280px-Rotate_right_arithmetically.svg.png" alt="산술 우측 시프트"></p>
-</li>
-</ul>
-</li>
-<li><p>논리 우측 시프트(logical right shift)</p>
-<ul>
-<li><p>논리 우측 시프트는 비트를 옆으로 옮긴 뒤 최상위 비트(most significant bit)에 0을 넣는다.</p>
-</li>
-<li><p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Rotate_right_logically.svg/1280px-Rotate_right_logically.svg.png" alt="논리 우측 시프트"></p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>비트 조작하기</p>
-<ul>
-<li><p>비트값 확인</p>
-<ul>
-<li><p>i 번째 비트의 값이 0인지 1인지 확인하고자 한다.</p>
-</li>
-<li><p>이를 위해 1을 i만큼 시프트해서 00010000 과 같은 값을 만든다.</p>
-</li>
-<li><p>이를 AND 연산을 통해 i 번째 비트를 제외한 나머지 비트를 모두 삭제한 뒤, 이 값을 0 과 비교한다.</p>
-</li>
-<li><p>만약 이 값이 0이 아니라면 i 번째 비트는 1일 것이며, 0이라면 i 번쨰 비트는 0이어야 한다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getBit</span><span class="params">(num, i)</span>:</span></span><br><span class="line">  		<span class="keyword">return</span> ((num &amp; (<span class="number">1</span>&lt;&lt;i)) != <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>위의 함수를 통해 i 번째 비트의 값을 확인할 수 있다.</p>
-</li>
-</ul>
-</li>
-<li><p>비트값 채워넣기</p>
-<ul>
-<li><p>i 번째 비트를 1로 바꾸려고 한다.</p>
-</li>
-<li><p>이를 위해 1을 i만큼 시프트해서 00010000 과 같은 값을 만든다.</p>
-</li>
-<li><p>이를 OR 연산을 통해 num의 i번째 값만을 바꿔줄 수 있다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">setBit</span><span class="params">(num, i)</span>:</span></span><br><span class="line">  		<span class="keyword">return</span> num | (<span class="number">1</span> &lt;&lt; i)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>위의 함수를 통해 i 번쨰 비트를 1로 바꿔줄 수 있다.</p>
-</li>
-</ul>
-</li>
-<li><p>비트값 삭제하기</p>
-<ul>
-<li><p>i 번쨰 비트값만 삭제하고자 한다.</p>
-</li>
-<li><p>이를 위해 11101111 과 같은 마스크를 만들어야 한다.</p>
-</li>
-<li><p>1 을 num 의 길이보다 1 크게 쉬프트한 뒤 1을 빼서 11111111 과 같은 값을 만든다.</p>
-</li>
-<li><p>그리고 1을 i 만큼 쉬프트해서 00010000 과 같은 값을 만든다.</p>
-</li>
-<li><p>만든 두 개의 값을 XOR 연산을 통해 11101111 과 같은 마스크를 만든다.</p>
-</li>
-<li><p>마스크와 num 을 AND 연산하면 i 번쨰 비트만 삭제된다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">clearBit</span><span class="params">(num, i)</span>:</span></span><br><span class="line">	length = len(bin(num))<span class="number">-2</span>     </span><br><span class="line">	temp1 = (<span class="number">1</span>&lt;&lt;(length+<span class="number">1</span>)) <span class="number">-1</span>	   <span class="comment">## 11111111 만들기</span></span><br><span class="line">	temp2 = <span class="number">1</span>&lt;&lt;i				 	<span class="comment">## 00010000 만들기</span></span><br><span class="line">	mask = temp1 ^ temp2			 <span class="comment">## 두개를 합쳐서 마스크 만들기</span></span><br><span class="line">	<span class="keyword">return</span> num &amp; mask</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>위의 함수를 통해 i 번쨰 비트만 삭제할 수 있다.</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="Ch5-연습문제-코드"><a href="#Ch5-연습문제-코드" class="headerlink" title="Ch5. 연습문제 코드"></a>Ch5. 연습문제 코드</h2><p><a href="https://github.com/Already-Ready/CtCI_Python/tree/master/Ch_5">CtCI_Ch5_Python</a></p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1224,7 +1209,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            34
+                            35
                         </p>
                     </a>
                 </div>
@@ -1396,7 +1381,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">9</span>
+                <span class="level-item tag">10</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -1412,7 +1397,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">6</span>
+                <span class="level-item tag">7</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -1457,7 +1442,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/CS/" style="font-size: 15px;">CS</a> <a href="/tags/CtCI/" style="font-size: 12.5px;">CtCI</a> <a href="/tags/Go/" style="font-size: 17.5px;">Go</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Pytorch/" style="font-size: 15px;">Pytorch</a> <a href="/tags/baekjoon/" style="font-size: 17.5px;">baekjoon</a> <a href="/tags/github-io/" style="font-size: 10px;">github.io</a> <a href="/tags/%EB%B8%94%EB%A1%9C%EA%B7%B8/" style="font-size: 10px;">블로그</a>
+        <a href="/tags/CS/" style="font-size: 14px;">CS</a> <a href="/tags/CtCI/" style="font-size: 12px;">CtCI</a> <a href="/tags/Go/" style="font-size: 18px;">Go</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Pytorch/" style="font-size: 16px;">Pytorch</a> <a href="/tags/baekjoon/" style="font-size: 18px;">baekjoon</a> <a href="/tags/github-io/" style="font-size: 10px;">github.io</a> <a href="/tags/%EB%B8%94%EB%A1%9C%EA%B7%B8/" style="font-size: 10px;">블로그</a>
     </div>
 </div>
     
@@ -1469,6 +1454,25 @@
         <h3 class="menu-label">
             Recent
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/04/14/Pytorch-ReLU/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_ReLU">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-14T16:26:50.000Z">2020-04-14</time></div>
+                    <a href="/2020/04/14/Pytorch-ReLU/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_ReLU</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1546,25 +1550,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/06/Pytorch-Multivariable-Linear-regression/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Multivariable_Linear_regression">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-06T15:21:16.000Z">2020-04-06</time></div>
-                    <a href="/2020/04/06/Pytorch-Multivariable-Linear-regression/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Multivariable_Linear_regression</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1582,7 +1567,7 @@
                     <span class="level-item">April 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">6</span>
+                    <span class="level-item tag">7</span>
                 </span>
             </a>
         </li>
@@ -1668,14 +1653,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">18</span>
+                        <span class="tag is-grey">19</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">6</span>
+                        <span class="tag is-grey">7</span>
                     </a>
                 </div>
                 
@@ -1724,6 +1709,25 @@
         
         <article class="media">
             
+            <a href="/2020/04/14/Pytorch-ReLU/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_ReLU">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-14T16:26:50.000Z">2020-04-14</time></div>
+                    <a href="/2020/04/14/Pytorch-ReLU/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_ReLU</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/04/13/Pytorch-Softmax-classification/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Softmax_classification">
@@ -1798,25 +1802,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/06/Pytorch-Multivariable-Linear-regression/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Multivariable_Linear_regression">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-06T15:21:16.000Z">2020-04-06</time></div>
-                    <a href="/2020/04/06/Pytorch-Multivariable-Linear-regression/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Multivariable_Linear_regression</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1834,7 +1819,7 @@
                     <span class="level-item">April 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">6</span>
+                    <span class="level-item tag">7</span>
                 </span>
             </a>
         </li>
@@ -1920,14 +1905,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">18</span>
+                        <span class="tag is-grey">19</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">6</span>
+                        <span class="tag is-grey">7</span>
                     </a>
                 </div>
                 
