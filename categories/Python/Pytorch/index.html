@@ -146,6 +146,116 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-04-16T19:56:28.000Z">2020-04-16</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 minutes read (About 624 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/04/16/Pytorch-weight-initialization/">Pytorch_weight_initialization</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="Pytorch-Weight-initialization에-대하여"><a href="#Pytorch-Weight-initialization에-대하여" class="headerlink" title="Pytorch Weight initialization에 대하여"></a>Pytorch Weight initialization에 대하여</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
+<li><p>모델을 학습하기 이전에 weight의 초기값을 설정하는 문제는 모델의 학습에 굉장히 중요한 문제였습니다.</p>
+</li>
+<li><p>초기에 이 문제를 해결하기 위해서 사용했던 방법은 RBM(restricted boltzmann machine)이었습니다.</p>
+</li>
+<li><p>RBM은 layer1과 다음 레이어 layer2를 통해 weight1을 학습한 후 w1을 고정한 상태에서 layer2와 layer3를 통해 weight2를 학습하는 과정을 반복하는 방법입니다.</p>
+</li>
+<li><p><img src="http://www.todaysoftmag.ro/tsm/images/articles/tsm20/a22.png" alt="RBM"></p>
+</li>
+<li><p>하지만, 요즘에는 새로운 initialization 방법들이 제안되면서 RBM을 많이 사용하지 않고 있습니다.</p>
+</li>
+<li><p>대표적으로 간단히 initialization할 수 있는 두 가지 방법인 Xavier / He initialization 에 대해 알아보겠습니다.</p>
+</li>
+<li><p><a href="https://pytorch.org/docs/stable/nn.init.html#torch.nn.init.xavier_uniform_"><strong>Xavier initialization</strong></a></p>
+<ul>
+<li><p>Xavier / He initialization 모두 Normal initialization 방법과 Uniform initialization 방법을 가지고 있으며 모두 간단한 수식을 통해 이루어집니다.</p>
+</li>
+<li><p>Xavier Normal initialization</p>
+<script type="math/tex; mode=display">W\sim N({ 0 }, Var(W))</script>
+
+<script type="math/tex; mode=display">Var(W)=\sqrt{\frac { 2 }{ { n }_{ in }+{ n }_{ out } } }</script>
+</li>
+<li><p>n<sub>in</sub>은 layer의 input수, n<sub>out</sub>은 layer의 output수를 뜻합니다.<br><br></br></p>
+</li>
+<li><p>Xavier Uniform initialization</p>
+<script type="math/tex; mode=display">W\sim U(- \sqrt{\frac { 6 }{ { n }_{ in }+{ n }_{ out } } } , \space\space + \sqrt{\frac { 6 }{ { n }_{ in }+{ n }_{ out } } } )</script>
+</li>
+<li><p>n<sub>in</sub>은 layer의 input수, n<sub>out</sub>은 layer의 output수를 뜻합니다.<br><br></br></p>
+</li>
+</ul>
+</li>
+<li><p><a href="https://pytorch.org/docs/stable/nn.init.html#torch.nn.init.kaiming_uniform_"><strong>He initialization</strong></a></p>
+<ul>
+<li><p>He Normal initialization</p>
+<script type="math/tex; mode=display">W\sim N({ 0 }, Var(W))</script>
+
+<script type="math/tex; mode=display">Var(W)=\sqrt{\frac { 2 }{ { n }_{ in } } }</script> 
+</li>
+<li><p>n<sub>in</sub>은 layer의 input수를 뜻합니다.<br><br></br></p>
+</li>
+<li><p>He Uniform initialization</p>
+<script type="math/tex; mode=display">W\sim U(- \sqrt{\frac { 6 }{ { n }_{ in } } } , \space\space + \sqrt{\frac { 6 }{ { n }_{ in } } } )</script>
+</li>
+<li><p>n<sub>in</sub>은 layer의 input수를 뜻합니다.  </p>
+</li>
+</ul>
+</li>
+<li><p>Pytorch에서는 <code>torch.nn.init</code>패키지를 통해서 사용할 수 있습니다.</p>
+</li>
+<li><p><a href="https://already-ready.github.io/2020/04/14/Pytorch-ReLU/">ReLU</a>에 관해서 작성한 포스트에서 작성한 코드와 달라진 점은 weight를 초기화해주는 부분뿐입니다.</p>
+</li>
+<li><p>먼저 linear layer를 만들고,</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">linear1 = torch.nn.Linear(<span class="number">784</span>, <span class="number">256</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear2 = torch.nn.Linear(<span class="number">256</span>, <span class="number">256</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear3 = torch.nn.Linear(<span class="number">256</span>, <span class="number">10</span>, bias=<span class="literal">True</span>)</span><br><span class="line">relu = torch.nn.ReLU()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>다음과 같이 xavier_uniform으로 초기화 할 수 있습니다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">torch.nn.init.xavier_uniform_(linear1.weight)</span><br><span class="line">torch.nn.init.xavier_uniform_(linear2.weight)</span><br><span class="line">torch.nn.init.xavier_uniform_(linear3.weight)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a href="https://already-ready.github.io/2020/04/14/Pytorch-ReLU/">ReLU</a> 포스트의 코드와 다른점은 weight initialization뿐이지만 Accuracy가 상승된것을 확인할 수 있습니다.</li>
+</ul>
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/xavier_initialization_MNIST.py">Full Code</a></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-04-14T16:26:50.000Z">2020-04-14</time>
                 
                 <div class="level-item">
@@ -910,7 +1020,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            35
+                            36
                         </p>
                     </a>
                 </div>
@@ -1082,7 +1192,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">10</span>
+                <span class="level-item tag">11</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -1098,7 +1208,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">7</span>
+                <span class="level-item tag">8</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -1158,6 +1268,25 @@
         
         <article class="media">
             
+            <a href="/2020/04/16/Pytorch-weight-initialization/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_weight_initialization">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-16T19:56:28.000Z">2020-04-16</time></div>
+                    <a href="/2020/04/16/Pytorch-weight-initialization/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_weight_initialization</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/04/14/Pytorch-ReLU/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_ReLU">
@@ -1232,25 +1361,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/07/Pytorch-data-loading-with-DataLoader/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_data_loading_with_DataLoader">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-07T17:42:35.000Z">2020-04-07</time></div>
-                    <a href="/2020/04/07/Pytorch-data-loading-with-DataLoader/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_data_loading_with_DataLoader</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1268,7 +1378,7 @@
                     <span class="level-item">April 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">7</span>
+                    <span class="level-item tag">8</span>
                 </span>
             </a>
         </li>
@@ -1354,14 +1464,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">19</span>
+                        <span class="tag is-grey">20</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">7</span>
+                        <span class="tag is-grey">8</span>
                     </a>
                 </div>
                 
@@ -1410,6 +1520,25 @@
         
         <article class="media">
             
+            <a href="/2020/04/16/Pytorch-weight-initialization/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_weight_initialization">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-16T19:56:28.000Z">2020-04-16</time></div>
+                    <a href="/2020/04/16/Pytorch-weight-initialization/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_weight_initialization</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/04/14/Pytorch-ReLU/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_ReLU">
@@ -1484,25 +1613,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/07/Pytorch-data-loading-with-DataLoader/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_data_loading_with_DataLoader">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-07T17:42:35.000Z">2020-04-07</time></div>
-                    <a href="/2020/04/07/Pytorch-data-loading-with-DataLoader/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_data_loading_with_DataLoader</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1520,7 +1630,7 @@
                     <span class="level-item">April 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">7</span>
+                    <span class="level-item tag">8</span>
                 </span>
             </a>
         </li>
@@ -1606,14 +1716,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">19</span>
+                        <span class="tag is-grey">20</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">7</span>
+                        <span class="tag is-grey">8</span>
                     </a>
                 </div>
                 
