@@ -143,6 +143,127 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-03-24T11:55:20.000Z">2020-03-24</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 minutes read (About 510 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/03/24/%ED%8C%8C%EC%9D%B4%EC%8D%AC-dataframe-function-apply-%EB%B0%A9%EB%B2%95-without-iterrrows/">파이썬_dataframe_function_apply_방법_without_iterrrows</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="파이썬-dataframe-각-row에-function을-apply하는-방법에-대하여"><a href="#파이썬-dataframe-각-row에-function을-apply하는-방법에-대하여" class="headerlink" title="파이썬 dataframe 각 row에 function을 apply하는 방법에 대하여."></a>파이썬 dataframe 각 row에 function을 apply하는 방법에 대하여.</h1><ul>
+<li><p>dataframe을 다루다보면 각 행(row)에 대해 특정 값에 대한 결과를 얻거나 과정을 수행하고 싶을 때가 있다.</p>
+</li>
+<li><p>이럴때 가장먼저 떠오르는것은 <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.iterrows.html">pd.iterrows()</a> 였다.</p>
+</li>
+<li><p>하지만 천만건이 넘어가는 데이터를 다루려 하다보니 iterrows는 너무나 느리다는 것을 알게 되었다.</p>
+</li>
+<li><p>이를 해결하기 위해 찾아낸 방법이 수행할 작업을 function으로 만들고 각 행에 <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html">apply</a>하는 것이다.</p>
+</li>
+<li><p>간단한 dataframe 을 만들어서 살펴보자.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">rectangles = [</span><br><span class="line">    &#123; <span class="string">'Name'</span>: <span class="string">"A"</span>, <span class="string">'Age'</span>: <span class="number">17</span> &#125;,</span><br><span class="line">    &#123; <span class="string">'Name'</span>: <span class="string">"B"</span>, <span class="string">'Age'</span>: <span class="number">20</span> &#125;,</span><br><span class="line">    &#123; <span class="string">'Name'</span>: <span class="string">"C"</span>, <span class="string">'Age'</span>: <span class="number">27</span> &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">rectangles_df = pd.DataFrame(rectangles)</span><br><span class="line">print(rectangles_df)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Age</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>17</td>
+</tr>
+<tr>
+<td>B</td>
+<td>20</td>
+</tr>
+<tr>
+<td>C</td>
+<td>27</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>이름과 성별이 주어진 dataframe이 있을 때 각 행을 살펴보며 어떤 사람이 투표권을 행사할 수 있을지 판단해보려고 한다.</p>
+</li>
+<li><p>각 행을 입력받아 Age 가 18세 이상이라면 True를 그렇지 않다면 False를 반환하는 함수를 만든뒤 datafrmae에 <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html">apply</a>한다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">vote</span><span class="params">(row)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> row[<span class="string">'Age'</span>] &gt;= <span class="number">18</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">else</span>: <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">rectangles_df[<span class="string">"vote"</span>] = rectangles_df.apply(vote, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">print(rectangles_df)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Age</th>
+<th>vote</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>17</td>
+<td>False</td>
+</tr>
+<tr>
+<td>B</td>
+<td>20</td>
+<td>True</td>
+</tr>
+<tr>
+<td>C</td>
+<td>27</td>
+<td>True</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>위와 같이 각 행의 Age 를 판단해 vote라는 새로운 칼럼을 만들어낸 것을 볼 수 있다.</p>
+</li>
+<li><p>이와같이 함수를 dataframe에 apply할 때 각 행(row)에 대하여 적용하고 싶다면 df.apply(func, axis=1) 로 axis=1 을 잊지말아야 한다.</p>
+</li>
+<li><p>위의 예제는 행이 3개라 iterrows로 실습해도 차이를 느낄순 없을것이다. 하지만 데이터 크기가 커질수록 iterrows를 사용하는것은 자제하고 apply를 적용하는 방법을 알아야한다.</p>
+</li>
+<li><p>apply 외에도 몇가지 다른 방법을 알고 싶다면 <a href="https://medium.com/@rtjeannier/pandas-101-cont-9d061cb73bfc">참고</a>해보자.</p>
+</li>
+</ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-03-17T22:50:33.000Z">2020-03-17</time>
                 
                 <div class="level-item">
@@ -882,76 +1003,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-12-27T15:33:22.000Z">2019-12-27</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 minutes read (About 558 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2019/12/27/%EC%A3%BC%EC%82%AC%EC%9C%84%EA%B5%B4%EB%A6%AC%EA%B8%B0-14499%EB%B2%88/">주사위굴리기_14499번</a>
-            
-        </h1>
-        <div class="content">
-            <h2 id="14499번-문제-풀이"><a href="#14499번-문제-풀이" class="headerlink" title="14499번 문제 풀이"></a>14499번 문제 풀이</h2><br/>
-
-<p>주사위가 좌표면을 움직일때마다 윗면에 쓰여있는 숫자를 출력하는 문제이다.</p>
-<p>1.규칙에 따라 주사위와 좌표면의 숫자들이 바뀌므로 바뀌는 주사위 면의 숫자들을 저장하고자 했다.  </p>
-<p>&nbsp;&nbsp;&nbsp;따라서, 아래와 같이 dice라는 리스트를 주사위값 저장에 사용했다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dice = [<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>] <span class="comment">#위0 아래1 동2 서3 남4 북5 순서로 값</span></span><br></pre></td></tr></table></figure>
-
-<p>2.주사위가 움직이는 지도가 어떻게 생겼는지를 알아야했다.</p>
-<p>&nbsp;&nbsp;&nbsp;따라서, 아래와 같이 입력받은 크기에 맞는 지도를 생성했다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">field = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> range(rows):</span><br><span class="line">    li = list(map(int, input().split()))</span><br><span class="line">    field.append(li)</span><br></pre></td></tr></table></figure>
-
-
-<p>3.주어지는 움직임대로 주사위를 움직이고 그에따라 지도의 값과 dice의 값을 바꿔주어야한다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(moves)):</span><br><span class="line">    temp = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> moves[i] == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">if</span> position_y + <span class="number">1</span> &lt; columns:</span><br><span class="line">            position_y += <span class="number">1</span></span><br><span class="line">            temp = dice[<span class="number">2</span>]</span><br><span class="line">            field_num = field[position_x][position_y]</span><br><span class="line">            <span class="keyword">if</span> field_num == <span class="number">0</span>:</span><br><span class="line">                dice[<span class="number">2</span>] = dice[<span class="number">0</span>]</span><br><span class="line">                dice[<span class="number">0</span>] = dice[<span class="number">3</span>]</span><br><span class="line">                dice[<span class="number">3</span>] = dice[<span class="number">1</span>]</span><br><span class="line">                dice[<span class="number">1</span>] = temp</span><br><span class="line">                field[position_x][position_y] = temp</span><br><span class="line"></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                dice[<span class="number">2</span>] = dice[<span class="number">0</span>]</span><br><span class="line">                dice[<span class="number">0</span>] = dice[<span class="number">3</span>]</span><br><span class="line">                dice[<span class="number">3</span>] = dice[<span class="number">1</span>]</span><br><span class="line">                dice[<span class="number">1</span>] = field[position_x][position_y]</span><br><span class="line">                field[position_x][position_y] = <span class="number">0</span></span><br><span class="line">        <span class="keyword">else</span> : <span class="keyword">continue</span></span><br></pre></td></tr></table></figure>
-
-<p>주사위가 특정 방향으로 움직이기전에, temp값에 바닥을 향할 주사위 값을 미리 저장해주었다.</p>
-<p>그리고 주사위가 움직일때, 현재 좌표값들을 변경시켜준다.</p>
-<p>이때 주의할점은 우리는 문제에서 값을 입력받을때 세로크기를 먼저받고 그 다음으로 가로 크기를 받는다는 점이다.</p>
-<p>즉 동쪽으로 움직이면 y좌표가 늘어난다.</p>
-<p>주사위가 굴렀다면, dice 리스트에 값들을 바꿔줘야한다.</p>
-<p>위와같이 동쪽으로 굴렀다면, 위를 바라보던 주사위 면은 동쪽을 바라보게 될테고</p>
-<p>서쪽을 바라보던 주사위면은 위를 바라보게 될 것이다.</p>
-<p>이와 같이 주사위 면의 값들을 dice에 바꿔서 입력한다.</p>
-<p>이 과정을 동,서,남,북에 나눠서 처리하고 그때마다 주사위 윗면의 값을 프린트해주면 된다.</p>
-<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/baekjoon/blob/master/14499.py">Full Code</a></p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -959,7 +1010,7 @@
         <div class="pagination-previous">
             <a class="is-flex-grow has-text-black-ter" href="/tags/Python/">Previous</a>
         </div>
-        <div class="pagination-next is-invisible is-hidden-mobile">
+        <div class="pagination-next">
             <a class="is-flex-grow has-text-black-ter" href="/tags/Python/page/3/">Next</a>
         </div>
         <ul class="pagination-list is-hidden-mobile">
@@ -967,6 +1018,8 @@
             <li><a class="pagination-link has-text-black-ter" href="/tags/Python/">1</a></li>
             
             <li><a class="pagination-link is-current" href="/tags/Python/page/2/">2</a></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/tags/Python/page/3/">3</a></li>
             
         </ul>
     </nav>
@@ -1016,7 +1069,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            36
+                            37
                         </p>
                     </a>
                 </div>
@@ -1107,20 +1160,9 @@
         <ul class="menu-list">
         
             <li>
-                <a class="level is-mobile" href="https://hexo.io" target="_blank" rel="noopener">
+                <a class="level is-mobile" href="https://github.com/Already-Ready" target="_blank" rel="noopener">
                     <span class="level-left">
-                        <span class="level-item">Hexo</span>
-                    </span>
-                    <span class="level-right">
-                        <span class="level-item tag">hexo.io</span>
-                    </span>
-                </a>
-            </li>
-        
-            <li>
-                <a class="level is-mobile" href="https://github.com/ppoffice" target="_blank" rel="noopener">
-                    <span class="level-left">
-                        <span class="level-item">PPOffice</span>
+                        <span class="level-item">My_Github</span>
                     </span>
                     <span class="level-right">
                         <span class="level-item tag">github.com</span>
@@ -1188,7 +1230,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">11</span>
+                <span class="level-item tag">12</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -1204,7 +1246,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">8</span>
+                <span class="level-item tag">9</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -1264,6 +1306,25 @@
         
         <article class="media">
             
+            <a href="/2020/04/18/Pytorch-Dropout/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Dropout">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-18T22:57:35.000Z">2020-04-18</time></div>
+                    <a href="/2020/04/18/Pytorch-Dropout/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Dropout</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/04/16/Pytorch-weight-initialization/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_weight_initialization">
@@ -1338,25 +1399,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/08/Pytorch-Logistic-regression/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Logistic_regression">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-08T19:59:00.000Z">2020-04-08</time></div>
-                    <a href="/2020/04/08/Pytorch-Logistic-regression/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Logistic_regression</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1374,7 +1416,7 @@
                     <span class="level-item">April 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">8</span>
+                    <span class="level-item tag">9</span>
                 </span>
             </a>
         </li>
@@ -1460,14 +1502,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">20</span>
+                        <span class="tag is-grey">21</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">8</span>
+                        <span class="tag is-grey">9</span>
                     </a>
                 </div>
                 
@@ -1516,6 +1558,25 @@
         
         <article class="media">
             
+            <a href="/2020/04/18/Pytorch-Dropout/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Dropout">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-18T22:57:35.000Z">2020-04-18</time></div>
+                    <a href="/2020/04/18/Pytorch-Dropout/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Dropout</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/04/16/Pytorch-weight-initialization/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_weight_initialization">
@@ -1590,25 +1651,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/08/Pytorch-Logistic-regression/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Logistic_regression">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-08T19:59:00.000Z">2020-04-08</time></div>
-                    <a href="/2020/04/08/Pytorch-Logistic-regression/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Logistic_regression</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1626,7 +1668,7 @@
                     <span class="level-item">April 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">8</span>
+                    <span class="level-item tag">9</span>
                 </span>
             </a>
         </li>
@@ -1712,14 +1754,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">20</span>
+                        <span class="tag is-grey">21</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">8</span>
+                        <span class="tag is-grey">9</span>
                     </a>
                 </div>
                 
