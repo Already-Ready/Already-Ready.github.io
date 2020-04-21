@@ -19,7 +19,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
 <meta property="article:published_time" content="2020-04-21T21:01:37.000Z">
-<meta property="article:modified_time" content="2020-04-21T12:02:08.562Z">
+<meta property="article:modified_time" content="2020-04-21T12:09:02.556Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="Pytorch">
@@ -148,7 +148,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    4 minutes read (About 658 words)
+                    6 minutes read (About 839 words)
                 </span>
                 
                 
@@ -192,8 +192,24 @@
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 학습 &amp; 각epoch 마다 평가</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs):</span><br><span class="line">    bn_model.train()</span><br><span class="line">    <span class="keyword">for</span> X, Y <span class="keyword">in</span> train_loader:</span><br><span class="line">        X = X.view(<span class="number">-1</span>, <span class="number">28</span>*<span class="number">28</span>).to(device)</span><br><span class="line">        Y = Y.to(device)</span><br><span class="line">		.</span><br><span class="line">		.</span><br><span class="line">		.</span><br><span class="line">	<span class="keyword">with</span> torch.no_grad():</span><br><span class="line">		bn_model.eval()</span><br><span class="line"></span><br><span class="line">		<span class="comment"># train셋을 통한 평가</span></span><br><span class="line">		bn_loss, nn_loss, bn_Acc, nn_Acc = <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">		<span class="keyword">for</span> i, (X, Y) <span class="keyword">in</span> enumerate(train_loader):</span><br><span class="line">			X = X.view(<span class="number">-1</span>, <span class="number">28</span> * <span class="number">28</span>).to(device)</span><br><span class="line">			Y = Y.to(device)</span><br><span class="line">			.</span><br><span class="line">			.</span><br><span class="line">			.</span><br><span class="line">		<span class="comment"># test셋을 통한 평가</span></span><br><span class="line">        bn_loss, nn_loss, bn_Acc, nn_Acc = <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i, (X, Y) <span class="keyword">in</span> enumerate(test_loader):</span><br><span class="line">            X = X.view(<span class="number">-1</span>, <span class="number">28</span> * <span class="number">28</span>).to(device)</span><br><span class="line">            Y = Y.to(device)</span><br><span class="line">			.</span><br><span class="line">			.</span><br><span class="line">			.</span><br></pre></td></tr></table></figure>
 
+<ul>
+<li><p>이후 train과 validation의 Loss와 Accuracy를 Line Plot으로 그려 확인할 수 있었습니다.</p>
+</li>
+<li><p><img src="https://github.com/Already-Ready/Already-Ready.github.io/blob/master/images/training%20loss.png?raw=true" alt="training Loss"></p>
+</li>
+<li><p><img src="https://github.com/Already-Ready/Already-Ready.github.io/blob/master/images/training%20acc.png?raw=true" alt="training Acc"></p>
+</li>
+<li><p><img src="https://github.com/Already-Ready/Already-Ready.github.io/blob/master/images/validation%20loss.png?raw=true" alt="validation Loss"></p>
+</li>
+<li><p><img src="https://github.com/Already-Ready/Already-Ready.github.io/blob/master/images/validation%20acc.png?raw=true" alt="validation Acc"></p>
+</li>
+<li><p>그림에서도 확인할 수 있듯이 Batch Normalization을 적용했을 때, validation의 Loss가 더 작은것을 확인할 수 있었습니다.</p>
+</li>
+<li><p>데이터 로딩 ~ 이미지 생성까지 생략된 부분은 아래 Full Code를 확인해주세요.</p>
+</li>
+</ul>
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/Batch_Normalization.py">Full Code</a></p>
 
-<h2 id="내용추가-중"><a href="#내용추가-중" class="headerlink" title="내용추가 중"></a>내용추가 중</h2>
         </div>
         
         <div class="level is-size-7 is-uppercase">
