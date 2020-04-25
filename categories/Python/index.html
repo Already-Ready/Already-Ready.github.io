@@ -144,6 +144,104 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-04-25T23:14:37.000Z">2020-04-25</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 minutes read (About 484 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/04/25/%ED%8C%8C%EC%9D%B4%EC%8D%AC-visdom-port-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0/">파이썬_visdom_port_변경하기</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="파이썬-visdom의-port-변경하기"><a href="#파이썬-visdom의-port-변경하기" class="headerlink" title="파이썬 visdom의 port 변경하기"></a>파이썬 visdom의 port 변경하기</h1><ul>
+<li><p>visdom의 기본포트는 8097포트이다.</p>
+</li>
+<li><p>CNN모델 학습 Loss그래프를 그리기 위해 visdom을 사용하려 했으나 다음과 같은 에러가 발생했다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">액세스 권한에 의해 숨겨진 소켓에 액세스를 시도했습니다</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>이는 이미 8097포트를 다른 프로세스에서 사용하고 있기 때문에 발생한다.</p>
+</li>
+<li><p>따라서, 해당 프로세스를 찾아야하는데 cmd에 다음과 같은 명령어로 사용중인 포트와 프로세스를 확인할 수 있다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -ano</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>해당 프로세스를 찾았으면 좌측 끝의 PID를 확인하고 작업 관리자를 열어주자.</p>
+</li>
+<li><p>작업 관리자 –&gt; 서비스 탭에 들어가면 PID로 프로세스를 정렬할 수 있다.</p>
+</li>
+<li><p>그곳에서 포트를 사용중인 프로세르를 선택하고 서비스 센터로 접근해 작업을 종료하면 된다.</p>
+</li>
+<li><p>이후 다시,</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m visdom.server</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>명령어로 visdom 로컬 서버를 키면된다.</p>
+</li>
+<li><p>하지만, 8097 포트를 사용하는 프로세스를 찾을 수가 없었다.</p>
+</li>
+<li><p>방화벽 문제인지 공유기 문제인지 확실하지는 못했지만 원인을 찾을수가 없었기에 visdom의 포트를 변경해서 사용하기로 결정했다.</p>
+</li>
+<li><p>visdom의 포트는 다음과 같이 변경할 수 있다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m visdom.server -port [포트번호]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>예를들어, 포트번호를 9000으로 옮긴다면 다음과 같이 바꿀 수 있다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m visdom.server -port <span class="number">9000</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>이제 코드에서 visdom 객체를 불러올 때 다음과 같이 정한 포트 번호를 사용해서 불러오기만 하면 된다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vis = visdom.Visdom(port=<span class="number">9000</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>아래 예제를 실행해서 올바르게 출력되는것을 확인할 수 있다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vis.text(<span class="string">'hello world'</span>, env=<span class="string">"main"</span>)</span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-04-21T21:01:37.000Z">2020-04-21</time>
                 
                 <div class="level-item">
@@ -1077,101 +1175,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-02T23:26:54.000Z">2020-04-02</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 minutes read (About 534 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/04/02/Pytorch-Linear-regression-%EA%B8%B0%EB%B3%B8%EC%A0%95%EB%A6%AC/">Pytorch_Linear_regression_기본정리</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="Pytorch-Linear-regression-기본-정리"><a href="#Pytorch-Linear-regression-기본-정리" class="headerlink" title="Pytorch Linear regression 기본 정리"></a>Pytorch Linear regression 기본 정리</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
-<li><p>하나의 x값을 통해 하나의 y를 예측하는 간단한 모델을 만들어보자.</p>
-</li>
-<li><p>다음과 같이 세개의 데이터를 만들고 이를 통해 간단한 선형 예측 모델을 학습시켜본다.</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x_train = torch.FloatTensor([[<span class="number">1</span>], [<span class="number">2</span>], [<span class="number">3</span>]])</span><br><span class="line">y_train = torch.FloatTensor([[<span class="number">2</span>], [<span class="number">4</span>], [<span class="number">6</span>]])</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>선형 모델에서 x값이 주어졌을 때 y값(hypothesis-H(x))을 계산하기 위해서는 다음과 같은 식을 따르게 된다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">H(x) = W * x + b</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>가지고 있는 데이터를 위 식을 통해 학습시키고자 한다면 우리가 알아야 하는 값 즉, 학습해야 하는 값은 W 와 b이다.</p>
-</li>
-<li><p>“requires_grad=True” 를 설정하여 다음과 같이 0으로 초기화된 W 와 b 를 만들 수 있다.</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">w = torch.zeros(<span class="number">1</span>, requires_grad=<span class="literal">True</span>)</span><br><span class="line">b = torch.zeros(<span class="number">1</span>, requires_grad=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>우리가 만든 모델을 평가하기 위해서는 Mean Squared Error(MSE) 를 사용할 것입니다.</p>
-</li>
-<li><p>MSE는 예측값과 실제값의 차이를 제곱한 후 평균을 구한 값으로 다음과 같이 나타낼 수 있습니다.</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">loss = torch.mean((hypothesis - y_train) ** <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>loss 를 구했다면 이를 통해 학습해야 하는 W 와 b 값을 개선해야 합니다.</p>
-</li>
-<li><p>이를 위해 Stochastic gradient descent(SGD)를 사용할 것입니다.</p>
-</li>
-<li><p>optim 라이브러리의 SGD에 학습할 tensor를 리스트 형태로 넣어주고 learing rate를 지정해 다음과 같이 나타낼 수 있습니다.</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">optimizer = torch.optim.SGD([w, b], lr=<span class="number">0.01</span>)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>optimizer를 정의했다면 아래와 같은 순서를 통해 W와 b를 개선해준다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">optimizer.zero_grad()  <span class="comment"># gradient 초기화</span></span><br><span class="line">loss.backward()		   <span class="comment"># gradient 계산</span></span><br><span class="line">optimizer.step()	   <span class="comment"># W 와 b 개선</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>이러한 학습 방법을 따라 모델을 100회 한 후 x가 4일때의 y값을 살펴보면 8에 근접하는 값이 나오는 것을 확인할 수 있다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x_test = torch.FloatTensor([[<span class="number">4</span>]])</span><br><span class="line">print(x_test * w + b)</span><br><span class="line"><span class="comment">#&gt;&gt;&gt; tensor([[7.5598]], grad_fn=&lt;AddBackward0&gt;)</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/Linear_regression.py">Full Code</a></p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1236,7 +1239,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            38
+                            39
                         </p>
                     </a>
                 </div>
@@ -1397,7 +1400,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">13</span>
+                <span class="level-item tag">14</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -1405,7 +1408,7 @@
                 <span class="level-item">About Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">3</span>
+                <span class="level-item tag">4</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/Python/Pytorch/">
@@ -1473,6 +1476,25 @@
         
         <article class="media">
             
+            <a href="/2020/04/25/%ED%8C%8C%EC%9D%B4%EC%8D%AC-visdom-port-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="파이썬_visdom_port_변경하기">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-25T23:14:37.000Z">2020-04-25</time></div>
+                    <a href="/2020/04/25/%ED%8C%8C%EC%9D%B4%EC%8D%AC-visdom-port-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0/" class="title has-link-black-ter is-size-6 has-text-weight-normal">파이썬_visdom_port_변경하기</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/04/21/Pytorch-Batch-Normalization/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Batch_Normalization">
@@ -1547,25 +1569,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/13/Pytorch-Softmax-classification/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Softmax_classification">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-13T15:45:13.000Z">2020-04-13</time></div>
-                    <a href="/2020/04/13/Pytorch-Softmax-classification/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Softmax_classification</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1583,7 +1586,7 @@
                     <span class="level-item">April 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">10</span>
+                    <span class="level-item tag">11</span>
                 </span>
             </a>
         </li>
@@ -1669,7 +1672,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">22</span>
+                        <span class="tag is-grey">23</span>
                     </a>
                 </div>
                 
@@ -1725,6 +1728,25 @@
         
         <article class="media">
             
+            <a href="/2020/04/25/%ED%8C%8C%EC%9D%B4%EC%8D%AC-visdom-port-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="파이썬_visdom_port_변경하기">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-25T23:14:37.000Z">2020-04-25</time></div>
+                    <a href="/2020/04/25/%ED%8C%8C%EC%9D%B4%EC%8D%AC-visdom-port-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0/" class="title has-link-black-ter is-size-6 has-text-weight-normal">파이썬_visdom_port_변경하기</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/04/21/Pytorch-Batch-Normalization/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Batch_Normalization">
@@ -1799,25 +1821,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/13/Pytorch-Softmax-classification/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Softmax_classification">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-13T15:45:13.000Z">2020-04-13</time></div>
-                    <a href="/2020/04/13/Pytorch-Softmax-classification/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Softmax_classification</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1835,7 +1838,7 @@
                     <span class="level-item">April 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">10</span>
+                    <span class="level-item tag">11</span>
                 </span>
             </a>
         </li>
@@ -1921,7 +1924,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">22</span>
+                        <span class="tag is-grey">23</span>
                     </a>
                 </div>
                 

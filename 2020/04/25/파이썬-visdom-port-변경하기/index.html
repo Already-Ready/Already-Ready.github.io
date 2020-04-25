@@ -7,23 +7,21 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>균형잡힌_세상_4949번 - Hexo</title>
+<title>파이썬_visdom_port_변경하기 - Hexo</title>
 
 
-    <meta name="description" content="[Python, Go] 백준 4949번 풀이균형잡힌 세상 괄호문제 의 연장이다.  소괄호뿐만 아니라 대괄호까지 포함해 문장에서 괄호가 올바르게 되어져있는지 확인해야한다.  괄호안에 있는 괄호의 짝도 맞아야 yes를 출력할 수 있다. 예를들어 ( [ ) ] 와 같은 경우 하나의 괄호 안에 올바른 짝의 괄호가 들어가지 못했으므로 no 를 출력해야 한다.  정규">
+    <meta name="description" content="파이썬 visdom의 port 변경하기 visdom의 기본포트는 8097포트이다.  CNN모델 학습 Loss그래프를 그리기 위해 visdom을 사용하려 했으나 다음과 같은 에러가 발생했다.   1액세스 권한에 의해 숨겨진 소켓에 액세스를 시도했습니다   이는 이미 8097포트를 다른 프로세스에서 사용하고 있기 때문에 발생한다.  따라서, 해당 프로세스를 찾">
 <meta property="og:type" content="article">
-<meta property="og:title" content="균형잡힌_세상_4949번">
-<meta property="og:url" content="http://yoursite.com/2020/01/19/%EA%B7%A0%ED%98%95%EC%9E%A1%ED%9E%8C-%EC%84%B8%EC%83%81-4949%EB%B2%88/index.html">
+<meta property="og:title" content="파이썬_visdom_port_변경하기">
+<meta property="og:url" content="http://yoursite.com/2020/04/25/%ED%8C%8C%EC%9D%B4%EC%8D%AC-visdom-port-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="[Python, Go] 백준 4949번 풀이균형잡힌 세상 괄호문제 의 연장이다.  소괄호뿐만 아니라 대괄호까지 포함해 문장에서 괄호가 올바르게 되어져있는지 확인해야한다.  괄호안에 있는 괄호의 짝도 맞아야 yes를 출력할 수 있다. 예를들어 ( [ ) ] 와 같은 경우 하나의 괄호 안에 올바른 짝의 괄호가 들어가지 못했으므로 no 를 출력해야 한다.  정규">
+<meta property="og:description" content="파이썬 visdom의 port 변경하기 visdom의 기본포트는 8097포트이다.  CNN모델 학습 Loss그래프를 그리기 위해 visdom을 사용하려 했으나 다음과 같은 에러가 발생했다.   1액세스 권한에 의해 숨겨진 소켓에 액세스를 시도했습니다   이는 이미 8097포트를 다른 프로세스에서 사용하고 있기 때문에 발생한다.  따라서, 해당 프로세스를 찾">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="article:published_time" content="2020-01-19T19:27:01.000Z">
-<meta property="article:modified_time" content="2020-01-19T10:27:59.907Z">
+<meta property="article:published_time" content="2020-04-25T23:14:37.000Z">
+<meta property="article:modified_time" content="2020-04-25T14:14:59.978Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Python">
-<meta property="article:tag" content="baekjoon">
-<meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
 
@@ -83,7 +81,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="균형잡힌_세상_4949번" height="28">
+                <img src="/images/logo.svg" alt="파이썬_visdom_port_변경하기" height="28">
             
             </a>
         </div>
@@ -139,17 +137,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-01-19T19:27:01.000Z">2020-01-19</time>
+                <time class="level-item has-text-grey" datetime="2020-04-25T23:14:37.000Z">2020-04-25</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/Go/">Go</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    3 minutes read (About 475 words)
+                    3 minutes read (About 484 words)
                 </span>
                 
                 
@@ -158,49 +156,71 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                균형잡힌_세상_4949번
+                파이썬_visdom_port_변경하기
             
         </h1>
         <div class="content">
-            <h1 id="Python-Go-백준-4949번-풀이"><a href="#Python-Go-백준-4949번-풀이" class="headerlink" title="[Python, Go] 백준 4949번 풀이"></a>[Python, Go] 백준 4949번 풀이</h1><h3 id="균형잡힌-세상"><a href="#균형잡힌-세상" class="headerlink" title="균형잡힌 세상"></a>균형잡힌 세상</h3><ul>
-<li><p><a href="https://already-ready.github.io/2020/01/16/%EA%B4%84%ED%98%B8-9012%EB%B2%88/">괄호문제</a> 의 연장이다.</p>
+            <h1 id="파이썬-visdom의-port-변경하기"><a href="#파이썬-visdom의-port-변경하기" class="headerlink" title="파이썬 visdom의 port 변경하기"></a>파이썬 visdom의 port 변경하기</h1><ul>
+<li><p>visdom의 기본포트는 8097포트이다.</p>
 </li>
-<li><p>소괄호뿐만 아니라 대괄호까지 포함해 문장에서 괄호가 올바르게 되어져있는지 확인해야한다.</p>
-</li>
-<li><p>괄호안에 있는 괄호의 짝도 맞아야 yes를 출력할 수 있다. 예를들어 ( [ ) ] 와 같은 경우 하나의 괄호 안에 올바른 짝의 괄호가 들어가지 못했으므로 no 를 출력해야 한다.</p>
-</li>
-<li><p>정규표현식을 사용해 따라가야될 괄호들을 뺀 문자들은 pass 시켜주는 방법을 사용했다.</p>
-</li>
-<li><p>이외에는 괄호문제와같이 스텍에 ( 와 [ 를 담아서 사용했다.</p>
-<ul>
-<li>단 ) 와 ] 를 만났을 때, 스텍의 마지막 요소가 짝이되는 괄호인지를 판별해줘야 한다.</li>
-</ul>
+<li><p>CNN모델 학습 Loss그래프를 그리기 위해 visdom을 사용하려 했으나 다음과 같은 에러가 발생했다.</p>
 </li>
 </ul>
-<ul>
-<li>Python 풀이</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">vps</span><span class="params">(line)</span>:</span></span><br><span class="line">    stack = []</span><br><span class="line">    <span class="keyword">if</span> line[<span class="number">0</span>] == <span class="string">")"</span> <span class="keyword">or</span> line[<span class="number">0</span>] == <span class="string">"]"</span>:</span><br><span class="line">        <span class="comment"># print("1")</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">    <span class="keyword">else</span>: <span class="keyword">pass</span></span><br><span class="line">    <span class="keyword">for</span> s <span class="keyword">in</span> line:</span><br><span class="line">        <span class="keyword">if</span> bool(com.match(s)) == <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">elif</span> s == <span class="string">" "</span> <span class="keyword">or</span> s == <span class="string">"."</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">elif</span> s == <span class="string">"("</span> <span class="keyword">or</span> s == <span class="string">"["</span>:</span><br><span class="line">            stack.append(s)</span><br><span class="line">            <span class="comment"># print(stack)</span></span><br><span class="line">        <span class="keyword">elif</span> s == <span class="string">")"</span> <span class="keyword">and</span> stack != []:</span><br><span class="line">            <span class="keyword">if</span> stack[<span class="number">-1</span>] == <span class="string">"("</span>:</span><br><span class="line">                stack.pop()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># print("2")</span></span><br><span class="line">                <span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">        <span class="keyword">elif</span> s == <span class="string">"]"</span> <span class="keyword">and</span> stack != []:</span><br><span class="line">            <span class="keyword">if</span> stack[<span class="number">-1</span>] == <span class="string">"["</span>:</span><br><span class="line">                stack.pop()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># print("3")</span></span><br><span class="line">                <span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># print("4")</span></span><br><span class="line">            <span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">    <span class="keyword">if</span> stack == []:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"yes"</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># print("5")</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"no"</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">액세스 권한에 의해 숨겨진 소켓에 액세스를 시도했습니다</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>Go 풀이</li>
+<li><p>이는 이미 8097포트를 다른 프로세스에서 사용하고 있기 때문에 발생한다.</p>
+</li>
+<li><p>따라서, 해당 프로세스를 찾아야하는데 cmd에 다음과 같은 명령어로 사용중인 포트와 프로세스를 확인할 수 있다.</p>
+</li>
 </ul>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">vps</span><span class="params">(x <span class="keyword">string</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> stack []<span class="keyword">string</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// fmt.Println(string(x[0]))</span></span><br><span class="line">	<span class="comment">// return x</span></span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">string</span>(x[<span class="number">0</span>]) == <span class="string">")"</span> || <span class="keyword">string</span>(x[<span class="number">0</span>]) == <span class="string">"]"</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> _, ch := <span class="keyword">range</span> x &#123;</span><br><span class="line">		s := <span class="keyword">string</span>(ch)</span><br><span class="line">		match, _ := regexp.MatchString(<span class="string">"[a-zA-Z]"</span>, s)</span><br><span class="line">		<span class="keyword">if</span> match == <span class="literal">true</span> &#123;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> s == <span class="string">" "</span> || s == <span class="string">"."</span> &#123;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> s == <span class="string">"("</span> || s == <span class="string">"["</span> &#123;</span><br><span class="line">			stack = <span class="built_in">append</span>(stack, s)</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> s == <span class="string">")"</span> &amp;&amp; stack != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> stack[<span class="built_in">len</span>(stack)<span class="number">-1</span>] == <span class="string">"("</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> <span class="built_in">len</span>(stack) == <span class="number">1</span> &#123;</span><br><span class="line">					stack = <span class="literal">nil</span></span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					stack = stack[:<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> s == <span class="string">"]"</span> &amp;&amp; stack != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> stack[<span class="built_in">len</span>(stack)<span class="number">-1</span>] == <span class="string">"["</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> <span class="built_in">len</span>(stack) == <span class="number">1</span> &#123;</span><br><span class="line">					stack = <span class="literal">nil</span></span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					stack = stack[:<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> stack == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"yes"</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -ano</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>Go로 풀이할때, 조건이 많을때는 switch가 더 좋기때문에 switch를 사용했다면 더 좋았을것같다.  </li>
+<li><p>해당 프로세스를 찾았으면 좌측 끝의 PID를 확인하고 작업 관리자를 열어주자.</p>
+</li>
+<li><p>작업 관리자 –&gt; 서비스 탭에 들어가면 PID로 프로세스를 정렬할 수 있다.</p>
+</li>
+<li><p>그곳에서 포트를 사용중인 프로세르를 선택하고 서비스 센터로 접근해 작업을 종료하면 된다.</p>
+</li>
+<li><p>이후 다시,</p>
+</li>
 </ul>
-<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/baekjoon/blob/master/4949.py">Full Code - Python</a>  </p>
-<p><a href="https://github.com/Already-Ready/baekjoon/blob/master/Go_solutions/4949.go">Full Code - Go</a>      </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m visdom.server</span><br></pre></td></tr></table></figure>
 
+<ul>
+<li><p>명령어로 visdom 로컬 서버를 키면된다.</p>
+</li>
+<li><p>하지만, 8097 포트를 사용하는 프로세스를 찾을 수가 없었다.</p>
+</li>
+<li><p>방화벽 문제인지 공유기 문제인지 확실하지는 못했지만 원인을 찾을수가 없었기에 visdom의 포트를 변경해서 사용하기로 결정했다.</p>
+</li>
+<li><p>visdom의 포트는 다음과 같이 변경할 수 있다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m visdom.server -port [포트번호]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>예를들어, 포트번호를 9000으로 옮긴다면 다음과 같이 바꿀 수 있다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m visdom.server -port <span class="number">9000</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>이제 코드에서 visdom 객체를 불러올 때 다음과 같이 정한 포트 번호를 사용해서 불러오기만 하면 된다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vis = visdom.Visdom(port=<span class="number">9000</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>아래 예제를 실행해서 올바르게 출력되는것을 확인할 수 있다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vis.text(<span class="string">'hello world'</span>, env=<span class="string">"main"</span>)</span><br></pre></td></tr></table></figure>
         </div>
         
         <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/Go/" rel="tag">Go</a>, <a class="has-link-grey -link" href="/tags/Python/" rel="tag">Python</a>, <a class="has-link-grey -link" href="/tags/baekjoon/" rel="tag">baekjoon</a>
+                    <a class="has-link-grey -link" href="/tags/Python/" rel="tag">Python</a>
                 </div>
             </div>
         </div>
@@ -226,17 +246,10 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/01/23/%EC%8B%9C%EA%B0%84%EB%B3%B5%EC%9E%A1%EB%8F%84-big-O/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">시간복잡도_big-O</span>
-            </a>
-        </div>
-        
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2020/01/16/%EA%B4%84%ED%98%B8-9012%EB%B2%88/">
-                <span class="level-item">괄호_9012번</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/04/21/Pytorch-Batch-Normalization/">
+                <span class="level-item">Pytorch_Batch_Normalization</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -252,8 +265,8 @@
         
 <script>
     var disqus_config = function () {
-        this.page.url = 'http://yoursite.com/2020/01/19/%EA%B7%A0%ED%98%95%EC%9E%A1%ED%9E%8C-%EC%84%B8%EC%83%81-4949%EB%B2%88/';
-        this.page.identifier = '2020/01/19/균형잡힌-세상-4949번/';
+        this.page.url = 'http://yoursite.com/2020/04/25/%ED%8C%8C%EC%9D%B4%EC%8D%AC-visdom-port-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0/';
+        this.page.identifier = '2020/04/25/파이썬-visdom-port-변경하기/';
     };
     (function() {
         var d = document, s = d.createElement('script');  
@@ -1048,7 +1061,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="균형잡힌_세상_4949번" height="28">
+                    <img src="/images/logo.svg" alt="파이썬_visdom_port_변경하기" height="28">
                 
                 </a>
                 <p class="is-size-7">
