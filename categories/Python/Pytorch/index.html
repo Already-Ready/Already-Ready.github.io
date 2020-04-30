@@ -146,6 +146,103 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-04-30T16:41:25.000Z">2020-04-30</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 minutes read (About 669 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/04/30/Pytorch-Convolution-layer/">Pytorch_Convolution_layer</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="Pytorch-Convolution-layer에-대하여"><a href="#Pytorch-Convolution-layer에-대하여" class="headerlink" title="Pytorch Convolution layer에 대하여"></a>Pytorch Convolution layer에 대하여</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
+<li><p>Convolution layer란 이미지 위에서 filter가 stride값만큼 움직이며 이미지와 filter가 겹쳐지는 부분의 각 원소의 값을 곱하고 모두 더한 값을 출력으로 하는 연산이다.</p>
+</li>
+<li><p>아래와 같은 이미지 위에서 stride가 1인 filter가 움직이며 나타나는 출력을 계산해보자.</p>
+</li>
+<li><p><img src="https://datascienceplus.com/wp-content/uploads/2019/02/convolved-matrix.gif" alt="Convolution"></p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">위의 그림에서 아래와 같은 필터를 사용했을 때 나오는 결과값을 하나 계산해보자</span><br><span class="line"></span><br><span class="line">filter = [[<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>],</span><br><span class="line">		   [<span class="number">0</span>,<span class="number">1</span>, <span class="number">0</span>],</span><br><span class="line">		   [<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>]]</span><br><span class="line"></span><br><span class="line"><span class="number">3</span>x3필터가 이미지와 처음 겹쳐졌을 때 다음과 같은 연산이 수행된다.</span><br><span class="line"></span><br><span class="line">output = (<span class="number">1</span>*<span class="number">1</span>) + (<span class="number">0</span>*<span class="number">1</span>) + (<span class="number">1</span>*<span class="number">1</span>) +</span><br><span class="line">		 (<span class="number">0</span>*<span class="number">0</span>) + (<span class="number">1</span>*<span class="number">1</span>) + (<span class="number">0</span>*<span class="number">1</span>) +</span><br><span class="line">		 (<span class="number">1</span>*<span class="number">0</span>) + (<span class="number">0</span>*<span class="number">0</span>) + (<span class="number">1</span>*<span class="number">1</span>) = <span class="number">4</span></span><br><span class="line"></span><br><span class="line">따라서, 우측 Convolution Feature의 처음 값이 <span class="number">4</span>로 나타나는 것을 확인할 수 있고, 이후에도 stride가 <span class="number">1</span>이므로, 한칸씩 움직이며 같은 연산을 반복한다.</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>zero-padding</p>
+<ul>
+<li><p>zero-padding이란 이미지 주변에 패드를 끼우듯 0으로 채워진 테두리를 둘러 inpute size를 키워주는 것이다.</p>
+</li>
+<li><p>zero-padding을 사용하는 이유는 Convolution layer를 지났을 때 이미지의 크기를 보존해주기 위해서다.</p>
+</li>
+<li><p>위에서 우리는 3x3 의 filter를 사용한 결과, 원래 이미지의 크기가 5x5에서 3x3으로 줄어든 것을 볼 수 있었다.</p>
+</li>
+<li><p>이와같은 Convolution layer를 반복적으로 지날때 이미지의 크기가 작아져서 정보의 손실이 생기게된다.</p>
+</li>
+<li><p>하지만, zero-padding을 이용해 원본 이미지의 size를 키워서 Convolution layer를 지나게 한다면, 원본 이미지의 크기를 보존시켜 정보의 손실을 최소화할 수 있게된다.</p>
+</li>
+<li><p><img src="https://deeplizard.com/images/zero%20padding%20example%202.PNG" alt="Convolution with zero-padding"></p>
+</li>
+<li><p>위의 그림에서 Input size가 Output에서도 보존되는것을 확인할 수 있다.<br><br></br></p>
+</li>
+</ul>
+</li>
+<li><p>Output size 계산하기</p>
+<ul>
+<li><p>Convolution layer를 지나쳤을때 나오는 output size는 input size, filter size, stride, padding에 의해 결정되며, 다음과 같은 공식을 따른다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">output size = ((input size - filter size + (<span class="number">2</span>*padding)) / strid) + <span class="number">1</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>위의 이미지를 예시로 계산해보면 다음과 같다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">output size = ((<span class="number">4</span>x4 - <span class="number">3</span>x3 + (<span class="number">2</span>*<span class="number">1</span>)) / <span class="number">1</span>) + <span class="number">1</span> = (<span class="number">1</span>x1 + <span class="number">2</span>) + <span class="number">1</span> = (<span class="number">3</span>x3)+<span class="number">1</span> = <span class="number">4</span>x4</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>input size의 높이와 넓이가 다를때도 동일하게 계산할 수 있다.</p>
+</li>
+<li><p>이처럼 하나의 Convolution layer를 통과했을 때 나오는 output size를 계산할 수 있고 이를 다음 layer의 입력값으로 활용할 수 있게된다.</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>참고</p>
+<ul>
+<li><a href="https://datascienceplus.com/starting-with-convolutional-neural-network-cnn/">Convolution layer 이미지</a></li>
+<li><a href="https://deeplizard.com/learn/video/qSTv_m-KFk0">padding 이미지</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-04-21T21:01:37.000Z">2020-04-21</time>
                 
                 <div class="level-item">
@@ -1079,101 +1176,25 @@
 
 
 
+
     
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-02T23:26:54.000Z">2020-04-02</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 minutes read (About 534 words)
-                </span>
-                
-                
-            </div>
+<div class="card card-transparent">
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        <div class="pagination-previous is-invisible is-hidden-mobile">
+            <a class="is-flex-grow has-text-black-ter" href="/categories/Python/Pytorch/page/0/">Previous</a>
         </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/04/02/Pytorch-Linear-regression-%EA%B8%B0%EB%B3%B8%EC%A0%95%EB%A6%AC/">Pytorch_Linear_regression_기본정리</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="Pytorch-Linear-regression-기본-정리"><a href="#Pytorch-Linear-regression-기본-정리" class="headerlink" title="Pytorch Linear regression 기본 정리"></a>Pytorch Linear regression 기본 정리</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
-<li><p>하나의 x값을 통해 하나의 y를 예측하는 간단한 모델을 만들어보자.</p>
-</li>
-<li><p>다음과 같이 세개의 데이터를 만들고 이를 통해 간단한 선형 예측 모델을 학습시켜본다.</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x_train = torch.FloatTensor([[<span class="number">1</span>], [<span class="number">2</span>], [<span class="number">3</span>]])</span><br><span class="line">y_train = torch.FloatTensor([[<span class="number">2</span>], [<span class="number">4</span>], [<span class="number">6</span>]])</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>선형 모델에서 x값이 주어졌을 때 y값(hypothesis-H(x))을 계산하기 위해서는 다음과 같은 식을 따르게 된다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">H(x) = W * x + b</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>가지고 있는 데이터를 위 식을 통해 학습시키고자 한다면 우리가 알아야 하는 값 즉, 학습해야 하는 값은 W 와 b이다.</p>
-</li>
-<li><p>“requires_grad=True” 를 설정하여 다음과 같이 0으로 초기화된 W 와 b 를 만들 수 있다.</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">w = torch.zeros(<span class="number">1</span>, requires_grad=<span class="literal">True</span>)</span><br><span class="line">b = torch.zeros(<span class="number">1</span>, requires_grad=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>우리가 만든 모델을 평가하기 위해서는 Mean Squared Error(MSE) 를 사용할 것입니다.</p>
-</li>
-<li><p>MSE는 예측값과 실제값의 차이를 제곱한 후 평균을 구한 값으로 다음과 같이 나타낼 수 있습니다.</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">loss = torch.mean((hypothesis - y_train) ** <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>loss 를 구했다면 이를 통해 학습해야 하는 W 와 b 값을 개선해야 합니다.</p>
-</li>
-<li><p>이를 위해 Stochastic gradient descent(SGD)를 사용할 것입니다.</p>
-</li>
-<li><p>optim 라이브러리의 SGD에 학습할 tensor를 리스트 형태로 넣어주고 learing rate를 지정해 다음과 같이 나타낼 수 있습니다.</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">optimizer = torch.optim.SGD([w, b], lr=<span class="number">0.01</span>)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>optimizer를 정의했다면 아래와 같은 순서를 통해 W와 b를 개선해준다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">optimizer.zero_grad()  <span class="comment"># gradient 초기화</span></span><br><span class="line">loss.backward()		   <span class="comment"># gradient 계산</span></span><br><span class="line">optimizer.step()	   <span class="comment"># W 와 b 개선</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>이러한 학습 방법을 따라 모델을 100회 한 후 x가 4일때의 y값을 살펴보면 8에 근접하는 값이 나오는 것을 확인할 수 있다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x_test = torch.FloatTensor([[<span class="number">4</span>]])</span><br><span class="line">print(x_test * w + b)</span><br><span class="line"><span class="comment">#&gt;&gt;&gt; tensor([[7.5598]], grad_fn=&lt;AddBackward0&gt;)</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/Linear_regression.py">Full Code</a></p>
-
+        <div class="pagination-next">
+            <a class="is-flex-grow has-text-black-ter" href="/categories/Python/Pytorch/page/2/">Next</a>
         </div>
-        
-        
-        
-    </div>
+        <ul class="pagination-list is-hidden-mobile">
+            
+            <li><a class="pagination-link is-current" href="/categories/Python/Pytorch/">1</a></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/categories/Python/Pytorch/page/2/">2</a></li>
+            
+        </ul>
+    </nav>
 </div>
-
-
-
-
-
-
-
-
 </div>
                 
 
@@ -1219,7 +1240,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            39
+                            40
                         </p>
                     </a>
                 </div>
@@ -1380,7 +1401,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">14</span>
+                <span class="level-item tag">15</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -1396,7 +1417,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">10</span>
+                <span class="level-item tag">11</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -1441,7 +1462,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/CS/" style="font-size: 15px;">CS</a> <a href="/tags/CtCI/" style="font-size: 12.5px;">CtCI</a> <a href="/tags/Go/" style="font-size: 17.5px;">Go</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Pytorch/" style="font-size: 17.5px;">Pytorch</a> <a href="/tags/baekjoon/" style="font-size: 17.5px;">baekjoon</a> <a href="/tags/github-io/" style="font-size: 10px;">github.io</a> <a href="/tags/%EB%B8%94%EB%A1%9C%EA%B7%B8/" style="font-size: 10px;">블로그</a>
+        <a href="/tags/CS/" style="font-size: 14px;">CS</a> <a href="/tags/CtCI/" style="font-size: 12px;">CtCI</a> <a href="/tags/Go/" style="font-size: 16px;">Go</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Pytorch/" style="font-size: 18px;">Pytorch</a> <a href="/tags/baekjoon/" style="font-size: 16px;">baekjoon</a> <a href="/tags/github-io/" style="font-size: 10px;">github.io</a> <a href="/tags/%EB%B8%94%EB%A1%9C%EA%B7%B8/" style="font-size: 10px;">블로그</a>
     </div>
 </div>
     
@@ -1453,6 +1474,25 @@
         <h3 class="menu-label">
             Recent
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/04/30/Pytorch-Convolution-layer/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Convolution_layer">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-30T16:41:25.000Z">2020-04-30</time></div>
+                    <a href="/2020/04/30/Pytorch-Convolution-layer/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Convolution_layer</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1530,25 +1570,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/14/Pytorch-ReLU/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_ReLU">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-14T16:26:50.000Z">2020-04-14</time></div>
-                    <a href="/2020/04/14/Pytorch-ReLU/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_ReLU</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1566,7 +1587,7 @@
                     <span class="level-item">April 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">11</span>
+                    <span class="level-item tag">12</span>
                 </span>
             </a>
         </li>
@@ -1652,14 +1673,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">23</span>
+                        <span class="tag is-grey">24</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">10</span>
+                        <span class="tag is-grey">11</span>
                     </a>
                 </div>
                 
@@ -1708,6 +1729,25 @@
         
         <article class="media">
             
+            <a href="/2020/04/30/Pytorch-Convolution-layer/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Convolution_layer">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-30T16:41:25.000Z">2020-04-30</time></div>
+                    <a href="/2020/04/30/Pytorch-Convolution-layer/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Convolution_layer</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/04/25/%ED%8C%8C%EC%9D%B4%EC%8D%AC-visdom-port-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="파이썬_visdom_port_변경하기">
@@ -1782,25 +1822,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/14/Pytorch-ReLU/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_ReLU">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-14T16:26:50.000Z">2020-04-14</time></div>
-                    <a href="/2020/04/14/Pytorch-ReLU/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_ReLU</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1818,7 +1839,7 @@
                     <span class="level-item">April 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">11</span>
+                    <span class="level-item tag">12</span>
                 </span>
             </a>
         </li>
@@ -1904,14 +1925,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">23</span>
+                        <span class="tag is-grey">24</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">10</span>
+                        <span class="tag is-grey">11</span>
                     </a>
                 </div>
                 
