@@ -7,22 +7,16 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>Pytorch_Softmax_classification - Hexo</title>
+<title>Hexo</title>
 
 
-    <meta name="description" content="Pytorch Softmax Classificaton 을 통한 N개의 이벤트 분류하기모두를 위한 딥러닝 - 파이토치 강의 참고 binary classificaton 문제를 해결할 때 sigmoid함수를 사용했습니다.  정확히는 F.binary_cross_entropy 안에 sigmoid함수가 같이 녹아있는 형태로 loss함수를 사용했습니다.  하지만, 세개">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Pytorch_Softmax_classification">
-<meta property="og:url" content="http://yoursite.com/2020/04/13/Pytorch-Softmax-classification/index.html">
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/5/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Pytorch Softmax Classificaton 을 통한 N개의 이벤트 분류하기모두를 위한 딥러닝 - 파이토치 강의 참고 binary classificaton 문제를 해결할 때 sigmoid함수를 사용했습니다.  정확히는 F.binary_cross_entropy 안에 sigmoid함수가 같이 녹아있는 형태로 loss함수를 사용했습니다.  하지만, 세개">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="article:published_time" content="2020-04-13T15:45:13.000Z">
-<meta property="article:modified_time" content="2020-04-13T06:43:06.577Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="Python">
-<meta property="article:tag" content="Pytorch">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
 
@@ -82,7 +76,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="Pytorch_Softmax_classification" height="28">
+                <img src="/images/logo.svg" alt="Hexo" height="28">
             
             </a>
         </div>
@@ -132,23 +126,20 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+    
 <div class="card">
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-13T15:45:13.000Z">2020-04-13</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                </div>
+                <time class="level-item has-text-grey" datetime="2019-12-24T05:47:48.560Z">2019-12-24</time>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    4 minutes read (About 593 words)
+                    a minute read (About 123 words)
                 </span>
                 
                 
@@ -157,59 +148,24 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                Pytorch_Softmax_classification
+                <a class="has-link-black-ter" href="/2019/12/24/hello-world/">Hello World</a>
             
         </h1>
         <div class="content">
-            <h1 id="Pytorch-Softmax-Classificaton-을-통한-N개의-이벤트-분류하기"><a href="#Pytorch-Softmax-Classificaton-을-통한-N개의-이벤트-분류하기" class="headerlink" title="Pytorch Softmax Classificaton 을 통한 N개의 이벤트 분류하기"></a>Pytorch Softmax Classificaton 을 통한 N개의 이벤트 분류하기</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
-<li><p><a href="https://already-ready.github.io/2020/04/08/Pytorch-Logistic-regression/">binary classificaton</a> 문제를 해결할 때 sigmoid함수를 사용했습니다.</p>
-</li>
-<li><p>정확히는 <code>F.binary_cross_entropy</code> 안에 sigmoid함수가 같이 녹아있는 형태로 loss함수를 사용했습니다.</p>
-</li>
-<li><p>하지만, 세개 이상의 분류문제를 해결하기 위해서는 <code>sigmoid</code>함수가 아닌 <code>softmax</code>함수를 사용해야 합니다.</p>
-</li>
-<li><p>softmax함수는 아래와 같은 식으로 나타낼 수 있습니다.</p>
-</li>
-<li><p><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/bdc1f8eaa8064d15893f1ba6426f20ff8e7149c5" alt="softmax"></p>
-</li>
-<li><p>K개의 입력값을 0~1 사이의 값이 되도록 K개의 SUM으로 나눠주게 됩니다. 따라서 모든 확률의 합은 1이됩니다. 또한 입력값의 순서가 출력값의 순서와 같음을 확인할 수 있습니다.</p>
-</li>
-<li><p>이제 Pytorch를 통해 SoftmaxClassifierModel을 정의해 보았습니다.</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 모델 정의</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SoftmaxClassifierModel</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super().__init__()</span><br><span class="line">        self.linear = nn.Linear(<span class="number">16</span>, <span class="number">7</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.linear(x)</span><br><span class="line"></span><br><span class="line">model = SoftmaxClassifierModel()</span><br></pre></td></tr></table></figure>
+            <p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 
-<ul>
-<li><p>모델을 정의한 내용을 보면 입력값X에 따른 Linear함수만을 통과하고 Softmax함수를 통과하지 않는것을 볼 수 있습니다.</p>
-</li>
-<li><p>이는 loss함수에서 사용하게 될 <code>F.cross_entropy</code>에 Softmax함수가 포함되어 있기 때문입니다.</p>
-</li>
-<li><p>따라서 정의한 모델에서는 Softmax를 통과하기전의 Linear함수를 통과한 output값을 되돌려줘야 합니다.</p>
-</li>
-<li><p>optimizer를 정의하고,</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># optimizer 정의</span></span><br><span class="line">optimizer = optim.SGD(model.parameters(), lr=<span class="number">0.1</span>)</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 
-<ul>
-<li>정한 epoch수 만큼 학습하며 loss를 출력해봅니다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">epochs = <span class="number">1000</span></span><br><span class="line"><span class="comment"># 학습</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs + <span class="number">1</span>):</span><br><span class="line"></span><br><span class="line">    predict = model(x_train)</span><br><span class="line">    loss = F.cross_entropy(predict, y_train)</span><br><span class="line"></span><br><span class="line">    optimizer.zero_grad()</span><br><span class="line">    loss.backward()</span><br><span class="line">    optimizer.step()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> epoch % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'Epoch &#123;:4d&#125;/&#123;&#125; loss : &#123;:.6f&#125;'</span>.format(</span><br><span class="line">            epoch, epochs, loss.item()</span><br><span class="line">        ))</span><br><span class="line">		</span><br><span class="line"><span class="comment">###&gt;&gt;&gt;print</span></span><br><span class="line">Epoch    <span class="number">0</span>/<span class="number">1000</span> loss : <span class="number">1.721660</span></span><br><span class="line">Epoch  <span class="number">100</span>/<span class="number">1000</span> loss : <span class="number">0.462462</span></span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">Epoch  <span class="number">900</span>/<span class="number">1000</span> loss : <span class="number">0.110220</span></span><br><span class="line">Epoch <span class="number">1000</span>/<span class="number">1000</span> loss : <span class="number">0.100880</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 
-<ul>
-<li>출력된 loss를 통해 모델이 정상적으로 학습되는것을 확인할 수 있습니다. 이처럼 N개의 이벤트를 분류할 경우는 Softmax함수를 두개의 이벤트를 분류할 경우는 Sigmoid함수를 사용한다는것을 배울 수 있었습니다.</li>
-</ul>
-<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/softmax_classification.py">Full Code</a></p>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
-        </div>
-        
-        <div class="level is-size-7 is-uppercase">
-            <div class="level-start">
-                <div class="level-item">
-                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/Python/" rel="tag">Python</a>, <a class="has-link-grey -link" href="/tags/Pytorch/" rel="tag">Pytorch</a>
-                </div>
-            </div>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
         </div>
         
         
@@ -219,62 +175,33 @@
 
 
 
-<div class="card">
-    <div class="card-content">
-        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
-        <div class="buttons is-centered">
-            
-        </div>
-    </div>
-</div>
 
 
 
-<div class="card card-transparent">
-    <div class="level post-navigation is-flex-wrap is-mobile">
-        
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/04/14/Pytorch-ReLU/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">Pytorch_ReLU</span>
-            </a>
-        </div>
-        
-        
-        <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2020/04/10/Pytorch-Multi-Layer-Perceptron-MLP/">
-                <span class="level-item">Pytorch_Multi_Layer_Perceptron_MLP</span>
-                <i class="level-item fas fa-chevron-right"></i>
-            </a>
-        </div>
-        
-    </div>
-</div>
 
 
 
-<div class="card">
-    <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
-        
-<script>
-    var disqus_config = function () {
-        this.page.url = 'http://yoursite.com/2020/04/13/Pytorch-Softmax-classification/';
-        this.page.identifier = '2020/04/13/Pytorch-Softmax-classification/';
-    };
-    (function() {
-        var d = document, s = d.createElement('script');  
-        s.src = '//' + 'already-ready' + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-
-<div id="disqus_thread">
     
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-    </div>
+<div class="card card-transparent">
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        <div class="pagination-previous">
+            <a class="is-flex-grow has-text-black-ter" href="/page/4/">Previous</a>
+        </div>
+        <div class="pagination-next is-invisible is-hidden-mobile">
+            <a class="is-flex-grow has-text-black-ter" href="/page/6/">Next</a>
+        </div>
+        <ul class="pagination-list is-hidden-mobile">
+            
+            <li><a class="pagination-link has-text-black-ter" href="/">1</a></li>
+            
+            <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/page/4/">4</a></li>
+            
+            <li><a class="pagination-link is-current" href="/page/5/">5</a></li>
+            
+        </ul>
+    </nav>
 </div>
 </div>
                 
@@ -1077,7 +1004,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="Pytorch_Softmax_classification" height="28">
+                    <img src="/images/logo.svg" alt="Hexo" height="28">
                 
                 </a>
                 <p class="is-size-7">
