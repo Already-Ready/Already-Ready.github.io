@@ -143,6 +143,78 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-01-15T13:55:53.000Z">2020-01-15</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/Go/">Go</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 minutes read (About 389 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/01/15/%EC%98%81%ED%99%94%EA%B0%90%EB%8F%85-%EC%88%8C-1436%EB%B2%88/">영화감독_숌_1436번</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="Python-Go-백준-1436번-풀이"><a href="#Python-Go-백준-1436번-풀이" class="headerlink" title="[Python, Go] 백준 1436번 풀이"></a>[Python, Go] 백준 1436번 풀이</h1><h3 id="영화감독-숌"><a href="#영화감독-숌" class="headerlink" title="영화감독 숌"></a>영화감독 숌</h3><ul>
+<li><p>숫자 6이 연속해서 3번 나타나는 수를 구하는 문제이다.</p>
+</li>
+<li><p>666, 1666, … , 5666, 의 다음은 6660, 6661, … 이다</p>
+</li>
+<li><p>666 부터 시작해서 수를 1씩 늘려가면서 모두 확인한다.</p>
+</li>
+<li><p>해당 수를 string으로 바꾸고 for문을 통해 6이 나왔을때 그 다음의 수도 6인지 그리고 그 다음 숫자도 6인지 확인하는 check 변수를 사용했다.</p>
+</li>
+<li><p>만약 check가 3이되면 해당 숫자는 6이 연속해서 3번 들어갔으므로 count를 1 증가시키고 주어진 목표만큼 count가 증가하면 종료, 출력했다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">n = int(input())</span><br><span class="line"></span><br><span class="line">name = <span class="number">666</span></span><br><span class="line">count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="keyword">if</span> count == n:</span><br><span class="line">        print(name<span class="number">-1</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        check = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> str(name):</span><br><span class="line">            <span class="keyword">if</span> i == <span class="string">"6"</span>:</span><br><span class="line">                check += <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> check == <span class="number">3</span>:</span><br><span class="line">                    count += <span class="number">1</span></span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">                <span class="keyword">else</span>: <span class="keyword">pass</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                check = <span class="number">0</span></span><br><span class="line">        name += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>Go도 같은 방식의 풀이지만, string을 for문에 돌릴때 반환되는 값은 포인터 값이므로 string(x) 로 바꿔주는것만 주의 <a href="https://already-ready.github.io/2020/01/15/for%EB%AC%B8%EC%97%90%EC%84%9C-string-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0/">참조</a></p>
+</li>
+<li><p>string을 int로 바꿀때 strconv.ParseInt 를 사용했으나 strconv.Atoi를 사용해도됨</p>
+</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"strconv"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> n <span class="keyword">int</span></span><br><span class="line">	count := <span class="number">0</span></span><br><span class="line">	name := <span class="number">666</span></span><br><span class="line">	fmt.Scanf(<span class="string">"%d"</span>, &amp;n)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> count == n &#123;</span><br><span class="line">			fmt.Printf(<span class="string">"%d"</span>, name<span class="number">-1</span>)</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			check := <span class="number">0</span></span><br><span class="line">			<span class="keyword">for</span> _, k := <span class="keyword">range</span> strconv.Itoa(name) &#123;</span><br><span class="line">				v, _ := strconv.ParseInt(<span class="keyword">string</span>(k), <span class="number">10</span>, <span class="number">8</span>)</span><br><span class="line">				<span class="keyword">if</span> v == <span class="number">6</span> &#123;</span><br><span class="line">					check += <span class="number">1</span></span><br><span class="line">					<span class="keyword">switch</span> check &#123;</span><br><span class="line">					<span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">						count += <span class="number">1</span></span><br><span class="line">					&#125;</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					check = <span class="number">0</span></span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		name += <span class="number">1</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>check 값이 3인지 확인할때 if문을 사용해도 괜찮지만 switch문을 사용해보았다.</li>
+</ul>
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/baekjoon/blob/master/1436.py">Full Code - Python</a>  </p>
+<p><a href="https://github.com/Already-Ready/baekjoon/blob/master/Go_solutions/1436.go">Full Code - Go</a> </p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-01-15T10:55:25.000Z">2020-01-15</time>
                 
                 <div class="level-item">
@@ -621,7 +693,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            41
+                            42
                         </p>
                     </a>
                 </div>
@@ -782,7 +854,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">16</span>
+                <span class="level-item tag">17</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -798,7 +870,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">12</span>
+                <span class="level-item tag">13</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -858,6 +930,25 @@
         
         <article class="media">
             
+            <a href="/2020/05/06/Pytorch-visdom%EC%9C%BC%EB%A1%9C-Loss-plot%EA%B7%B8%EB%A6%AC%EA%B8%B0/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_visdom으로_Loss_plot그리기">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T16:14:42.000Z">2020-05-06</time></div>
+                    <a href="/2020/05/06/Pytorch-visdom%EC%9C%BC%EB%A1%9C-Loss-plot%EA%B7%B8%EB%A6%AC%EA%B8%B0/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_visdom으로_Loss_plot그리기</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/01/Pytorch-MNIST-CNN/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_MNIST_CNN">
@@ -866,7 +957,7 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-01T20:59:13.000Z">2020-05-01</time></div>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-01T21:01:13.000Z">2020-05-01</time></div>
                     <a href="/2020/05/01/Pytorch-MNIST-CNN/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_MNIST_CNN</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
@@ -932,25 +1023,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/18/Pytorch-Dropout/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Dropout">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-18T22:57:35.000Z">2020-04-18</time></div>
-                    <a href="/2020/04/18/Pytorch-Dropout/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Dropout</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -968,7 +1040,7 @@
                     <span class="level-item">May 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -1065,14 +1137,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">25</span>
+                        <span class="tag is-grey">26</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">12</span>
+                        <span class="tag is-grey">13</span>
                     </a>
                 </div>
                 
@@ -1121,6 +1193,25 @@
         
         <article class="media">
             
+            <a href="/2020/05/06/Pytorch-visdom%EC%9C%BC%EB%A1%9C-Loss-plot%EA%B7%B8%EB%A6%AC%EA%B8%B0/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_visdom으로_Loss_plot그리기">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T16:14:42.000Z">2020-05-06</time></div>
+                    <a href="/2020/05/06/Pytorch-visdom%EC%9C%BC%EB%A1%9C-Loss-plot%EA%B7%B8%EB%A6%AC%EA%B8%B0/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_visdom으로_Loss_plot그리기</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/01/Pytorch-MNIST-CNN/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_MNIST_CNN">
@@ -1129,7 +1220,7 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-01T20:59:13.000Z">2020-05-01</time></div>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-01T21:01:13.000Z">2020-05-01</time></div>
                     <a href="/2020/05/01/Pytorch-MNIST-CNN/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_MNIST_CNN</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
@@ -1195,25 +1286,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/18/Pytorch-Dropout/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Dropout">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-18T22:57:35.000Z">2020-04-18</time></div>
-                    <a href="/2020/04/18/Pytorch-Dropout/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Dropout</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1231,7 +1303,7 @@
                     <span class="level-item">May 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -1328,14 +1400,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">25</span>
+                        <span class="tag is-grey">26</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">12</span>
+                        <span class="tag is-grey">13</span>
                     </a>
                 </div>
                 

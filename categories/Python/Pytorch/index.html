@@ -146,7 +146,155 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-05-01T20:59:13.000Z">2020-05-01</time>
+                <time class="level-item has-text-grey" datetime="2020-05-06T16:14:42.000Z">2020-05-06</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    8 minutes read (About 1266 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/05/06/Pytorch-visdom%EC%9C%BC%EB%A1%9C-Loss-plot%EA%B7%B8%EB%A6%AC%EA%B8%B0/">Pytorch_visdom으로_Loss_plot그리기</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="Visdom에-관하여-amp-Loss-plot-그리기"><a href="#Visdom에-관하여-amp-Loss-plot-그리기" class="headerlink" title="Visdom에 관하여 &amp; Loss plot 그리기"></a>Visdom에 관하여 &amp; Loss plot 그리기</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
+<li><p>visdom을 사용하기 위해서는 서버를 실행시켜줘야 한다.</p>
+</li>
+<li><p>jupyter notebook의 경우, New –&gt; Terminal –&gt; 실행된 터미널 창에서 다음의 명령어를 입력한다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;python -m visdom.server</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>pycharm을 이용한다면 파이참 하단의 terminal을 클릭해 위의 명령어를 입력하면된다.</p>
+</li>
+<li><p>다만, visdom의 기본 포트가 사용중이라면 에러가 발생하는데 이때는 <a href="https://already-ready.github.io/2020/04/25/%ED%8C%8C%EC%9D%B4%EC%8D%AC-visdom-port-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0/">visdom 포트변경</a> 포스트를 확인해 해결할 수 있다.</p>
+</li>
+<li><p>서버가 정상적으로 실행됐다면, visdom 객체를 아래와 같이 생성하고 이를 이용해 text, 이미지, 그래프 등을 나타낼 수 있다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> visdom</span><br><span class="line">vis = visdom.Visdom()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>아래에서 진행하는 예제는 실행된 local서버를 접속해 확인할 수 있다.</p>
+</li>
+<li><p>Text 출력하기</p>
+<ul>
+<li><p>text를 출력하기 위해서 <code>text()</code>를 사용한다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vis.text(<span class="string">'hello world'</span>, env=<span class="string">'main'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>이때 <code>env=&#39;main&#39;</code>은 실행문의 이름을 지정해 추후에 main으로 실행된 모든 창을 한번에 종료할 수 있게 해준다.</p>
+</li>
+</ul>
+</li>
+<li><p>Image 출력하기</p>
+<ul>
+<li><p>image 출력은 <code>image()</code>를 사용한다.</p>
+</li>
+<li><p>랜덤한 이미지를 출력해보자.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ex = torch.randn(<span class="number">3</span>, <span class="number">200</span>, <span class="number">200</span>)</span><br><span class="line">vis.image(ex)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>여러장의 이미지를 출력하기 위해서는 <code>images()</code>를 사용한다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vis.images(torch.Tensor(<span class="number">3</span>,<span class="number">3</span>,<span class="number">28</span>,<span class="number">28</span>))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>CIFAR10의 이미지를 가져와 출력해보자.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cifar10 = dsets.CIFAR10(root=<span class="string">"cifar10/"</span>,train = <span class="literal">True</span>, transform=torchvision.transforms.ToTensor(),download=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">data = cifar10.__getitem(<span class="number">0</span>)__</span><br><span class="line">vis.images(data[<span class="number">0</span>], env=<span class="string">'main'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>DataLoader로부터 여러개의 이미지를 출력할 수 있다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">MNIST = dsets.MNIST(root=<span class="string">"MNIST_data/"</span>,train = <span class="literal">True</span>,transform=torchvision.transforms.ToTensor(), download=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">data_loader = torch.utils.data.DataLoader(dataset = MNIST,</span><br><span class="line">                                         batch_size = <span class="number">32</span>,</span><br><span class="line">                                         shuffle = <span class="literal">False</span>)</span><br><span class="line">									  </span><br><span class="line"><span class="keyword">for</span> num, value <span class="keyword">in</span> enumerate(data_loader):</span><br><span class="line">	value = value[<span class="number">0</span>]</span><br><span class="line">	vis.images(value)</span><br><span class="line">	<span class="keyword">break</span></span><br><span class="line"><span class="comment">###&gt;&gt;&gt; batch_size만큼의 이미지가 한번에 출력된다</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>Line Plot 그리기</p>
+<ul>
+<li><p>line plot은 <code>line()</code>을 사용한다.</p>
+</li>
+<li><p>임의의 y값을 가지는 그래프를 그려보자.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Y_data = torch.randn(<span class="number">5</span>)</span><br><span class="line">X_data = torch.Tensor([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>])</span><br><span class="line">plt = vis.line(Y=Y_data, X=X_data)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>위를 통해 plt라는 이름의 그래프가 그려지는 것을 확인할 수 있다. 만약 이때 X 범위를 설정해주지 않았다면 X의 범위는 0과 1사이에서 출력되게 된다.</p>
+</li>
+<li><p>이미 그려진 line plot을 업데이트도 할 수 있다. 똑같이 <code>line()</code>을 사용한다. 위에서 그린 plt 그래프에 하나의 값을 업데이트 해보자.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Y_append = torch.randn(<span class="number">1</span>)</span><br><span class="line">X_append = torch.Tensor([<span class="number">6</span>])</span><br><span class="line"></span><br><span class="line">vis.line(Y=Y_append, X=X_append, win=plt, update=<span class="string">'append'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>위와같이 업데이트할 plot의 이름을 <code>win</code>에 지정해주고 <code>update=&#39;append&#39;</code>로 지정하면 기존의 그래프에 하나의 값이 추가된 것을 확인할 수 있다.</p>
+</li>
+<li><p>하나의 window에 두개의 line plot을 그릴때도 <code>line()</code>을 사용한다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">num = torch.Tensor(list(range(<span class="number">0</span>,<span class="number">10</span>)))</span><br><span class="line">num = num.view(<span class="number">-1</span>,<span class="number">1</span>)</span><br><span class="line">num = torch.cat((num,num),dim=<span class="number">1</span>)</span><br><span class="line">print(num.shape) <span class="comment">###&gt;&gt;&gt; (10,2)</span></span><br><span class="line"></span><br><span class="line">plt = vis.line(Y=torch.randn(<span class="number">10</span>,<span class="number">2</span>), X = num)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>Line Plot의 정보 나타내기</p>
+<ul>
+<li><p>line plot에 title과 legend를 나타내기 위해서는 dict형태의 입력값을 사용한다.</p>
+</li>
+<li><p>위에 그린 그래프에 title과 legned를 나타내보자.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plt = vis.line(Y=Y_data, X=X_data, opts=dict(title=<span class="string">'test'</span>, legend=[<span class="string">'1번'</span>], showlegend=<span class="literal">True</span>))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>두개의 line plot에도 각각의 legend를 나타낼 수 있다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plt = vis.line(Y=torch.randn(<span class="number">10</span>,<span class="number">2</span>), X=num, optes=dict(title=<span class="string">'test'</span>, legend=[<span class="string">'1번'</span>,<span class="string">'2번'</span>], showlegend=<span class="literal">True</span>))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>창 닫기</p>
+<ul>
+<li><p><code>env=&#39;main&#39;</code>으로 지정한 창을 닫기 위해서 <code>close()</code>를 사용한다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vis.close(env=<span class="string">'main'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>기본적인 visdom 사용법을 알아보았으며, 이를 이용해 <a href="https://already-ready.github.io/2020/05/01/Pytorch-MNIST-CNN/">CNN MNIST</a>의 코드를 조금 변형해 loss plot을 그려보자.</p>
+<ul>
+<li><p>loss plot을 그리기 위해서 line plot을 업데이트해줄 함수를 만들어주자.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loss_tracker</span><span class="params">(loss_plot, loss_value, num)</span>:</span></span><br><span class="line">	<span class="comment">### loss_plot : line plot value</span></span><br><span class="line">	<span class="comment">### loss_value : Tensor</span></span><br><span class="line">	<span class="comment">### num : Tensor</span></span><br><span class="line">	<span class="comment">### return : None</span></span><br><span class="line">	vis.line(X=num, Y=loss_value, win=loss_plot, update=<span class="string">'append'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>그리고 loss를 업데이트해줄 빈 line plot을 하나 만들어준다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">loss_plot = vis.line(Y=torch.Tensor(<span class="number">1</span>).zero_(), opts=dict(title=<span class="string">'loss'</span>, legend=[<span class="string">'loss'</span>], showlegend=<span class="literal">True</span>))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>이후 모델 생성은 모두 동일하지만, train을 진행할때 위의 함수를 통해 그래프를 업데이트 해주는 부분이 추가된다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">total_batch = len(data_loader)</span><br><span class="line">model.train()</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs):</span><br><span class="line">	avg_cost = <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> X, Y <span class="keyword">in</span> data_loader:</span><br><span class="line">		X = X.to(device)</span><br><span class="line">		Y = Y.to(device)</span><br><span class="line"></span><br><span class="line">		optimizer.zero_grad()</span><br><span class="line"></span><br><span class="line">		hypothesis = model(X)</span><br><span class="line">		loss = criterion(hypothesis, Y)</span><br><span class="line">		loss.backward()</span><br><span class="line">		optimizer.step()</span><br><span class="line"></span><br><span class="line">		avg_cost += loss / total_batch</span><br><span class="line"></span><br><span class="line">	print(<span class="string">'[Epoch: &#123;:&gt;4&#125;] cost = &#123;:&gt;.9&#125;'</span>.format(epoch + <span class="number">1</span>, avg_cost))</span><br><span class="line">	loss_tracker(loss_plot, torch.Tensor([avg_cost]), torch.Tensor([epoch])) </span><br><span class="line">	<span class="comment">###&gt;&gt;&gt; loss_tracker함수를 통해 그래프를 업데이트</span></span><br><span class="line">print(<span class="string">'learning finished'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>학습을 진행하면서 visdom의 line plot이 실시간으로 업데이트되는 모습을 확인할 수 있다.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/About_Visdom_example.py">Full Code - Visdom Example</a><br><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/Convolution_with_Visdom.py">Full Code - Loss tracker</a></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-05-01T21:01:13.000Z">2020-05-01</time>
                 
                 <div class="level-item">
                 <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
@@ -1089,96 +1237,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-07T17:42:35.000Z">2020-04-07</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 minutes read (About 638 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/04/07/Pytorch-data-loading-with-DataLoader/">Pytorch_data_loading_with_DataLoader</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="Pytorch-DataLoader를-통한-data-loading"><a href="#Pytorch-DataLoader를-통한-data-loading" class="headerlink" title="Pytorch DataLoader를 통한 data loading"></a>Pytorch DataLoader를 통한 data loading</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
-<li><p>DataLoader를 통해 데이터를 batch_size 만큼 나누어 읽어오기 위해서는 torch.utils.data 의 Dataset을 상속받는 클래스를 정의해야 합니다.</p>
-</li>
-<li><p>자기만의 Dataset을 만든 뒤, <code>__len__</code> 과 <code>__getitem__</code> 메서드를 overriding해서 사용해야 합니다.</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__len__</span><span class="params">(self)</span>:</span></span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, idx)</span>:</span></span><br><span class="line">	...</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>Dataset의 소스는 <a href="https://pytorch.org/docs/stable/_modules/torch/utils/data/dataset.html#Dataset">이곳</a>에서 확인할 수 있으며, DataLoader에 대한 한글 설명은 <a href="https://deepbaksuvision.github.io/Modu_ObjectDetection/posts/03_01_dataloader.html">이곳</a>을 참고할 수 있습니다.</p>
-</li>
-<li><p>간단한 Linear regression 모델과 데이터를 만들어서 실습해 보았습니다.</p>
-</li>
-<li><p>먼저 Dataset을 상속받는 저만의 Dataset과 <code>__len__</code> 과 <code>__getitem__</code> 메서드를 만들어 보겠습니다.</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyDataset</span><span class="params">(Dataset)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.x_train = [[<span class="number">73</span>, <span class="number">80</span>, <span class="number">75</span>],</span><br><span class="line">                         [<span class="number">93</span>, <span class="number">88</span>, <span class="number">83</span>],</span><br><span class="line">                         [<span class="number">89</span>, <span class="number">91</span>, <span class="number">90</span>],</span><br><span class="line">                         [<span class="number">96</span>,<span class="number">98</span>, <span class="number">100</span>],</span><br><span class="line">                         [<span class="number">73</span>, <span class="number">66</span>, <span class="number">70</span>]]</span><br><span class="line">        self.y_train = [[<span class="number">152</span>], [<span class="number">185</span>], [<span class="number">180</span>], [<span class="number">196</span>], [<span class="number">142</span>]]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> len(self.x_train)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, idx)</span>:</span></span><br><span class="line">        x = torch.FloatTensor(self.x_train[idx])</span><br><span class="line">        y = torch.FloatTensor(self.y_train[idx])</span><br><span class="line">        <span class="keyword">return</span> x, y</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>이렇게 만들어진 MyDataset은 <code>torch.utils.data</code>의 <code>DataLoader</code>를 통해 batch_size를 조절할 수 있습니다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dataset = MyDataset()</span><br><span class="line">dataloader = DataLoader(dataset, batch_size=<span class="number">2</span>, shuffle=<span class="literal">True</span>) <span class="comment"># shuffle 은 데이터를 섞어서 각각의 배치를 만들어준다는 뜻이다.</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>DataLoader를 통해 만들어진 객체는 iterable한 객체이기 때문에 다음과 같이 출력해서 확인해 볼 수도 있습니다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">a = iter(dataloader)</span><br><span class="line">print(next(a))</span><br><span class="line">print(next(a))</span><br><span class="line">print(next(a))</span><br><span class="line"><span class="comment">#&gt;&gt;&gt;</span></span><br><span class="line">[tensor([[ <span class="number">73.</span>,  <span class="number">80.</span>,  <span class="number">75.</span>],</span><br><span class="line">        [ <span class="number">96.</span>,  <span class="number">98.</span>, <span class="number">100.</span>]]), tensor([[<span class="number">152.</span>],</span><br><span class="line">        [<span class="number">196.</span>]])]</span><br><span class="line">[tensor([[<span class="number">73.</span>, <span class="number">66.</span>, <span class="number">70.</span>],</span><br><span class="line">        [<span class="number">93.</span>, <span class="number">88.</span>, <span class="number">83.</span>]]), tensor([[<span class="number">142.</span>],</span><br><span class="line">        [<span class="number">185.</span>]])]</span><br><span class="line">[tensor([[<span class="number">89.</span>, <span class="number">91.</span>, <span class="number">90.</span>]]), tensor([[<span class="number">180.</span>]])]</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>저만의 MyDataset에 입력한 데이터가 DataLoader를 통해 지정한 배치로 나눠져서 정상적으로 출력되는것을 확인할 수 있습니다.</p>
-</li>
-<li><p>이제 Linear regression 모델, optimizer를 다음과 같이 만든 뒤,</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MultivariateLinearRegressionModel</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super().__init__()</span><br><span class="line">        self.linear = nn.Linear(<span class="number">3</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.linear(x)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">model = MultivariateLinearRegressionModel()</span><br><span class="line">optimizer = optim.SGD(model.parameters(), lr=<span class="number">1e-5</span>)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>DataLoader를 통해 데이터를 불러와 학습해 보겠습니다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">epochs = <span class="number">20</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs + <span class="number">1</span>):</span><br><span class="line">    <span class="keyword">for</span> batch_idx, train <span class="keyword">in</span> enumerate(dataloader):</span><br><span class="line">        xt, yt = train</span><br><span class="line"></span><br><span class="line">        prediction = model(xt)</span><br><span class="line"></span><br><span class="line">        loss = F.mse_loss(prediction, yt)</span><br><span class="line"></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step()</span><br><span class="line"></span><br><span class="line">        print(<span class="string">'Epoch &#123;:4d&#125;/&#123;&#125; Batch : &#123;&#125;/&#123;&#125; Cost : &#123;:.6f&#125;'</span>.format(</span><br><span class="line">            epoch, epochs, batch_idx+<span class="number">1</span>, len(dataloader), loss.item()</span><br><span class="line">        ))</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>epochs 수만큼 학습을 하는 for문 안에 또 하나의 for문이 들어가 있는것을 확인할 수 있습니다. 안쪽 for문에서 batch_size만큼 나눠진 train 데이터를 model을 통해 학습하는 과정을 구현해 볼 수 있었습니다.</li>
-</ul>
-<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/Loading_data.py">Full Code</a></p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1243,7 +1301,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            41
+                            42
                         </p>
                     </a>
                 </div>
@@ -1404,7 +1462,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">16</span>
+                <span class="level-item tag">17</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -1420,7 +1478,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">12</span>
+                <span class="level-item tag">13</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -1480,6 +1538,25 @@
         
         <article class="media">
             
+            <a href="/2020/05/06/Pytorch-visdom%EC%9C%BC%EB%A1%9C-Loss-plot%EA%B7%B8%EB%A6%AC%EA%B8%B0/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_visdom으로_Loss_plot그리기">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T16:14:42.000Z">2020-05-06</time></div>
+                    <a href="/2020/05/06/Pytorch-visdom%EC%9C%BC%EB%A1%9C-Loss-plot%EA%B7%B8%EB%A6%AC%EA%B8%B0/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_visdom으로_Loss_plot그리기</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/01/Pytorch-MNIST-CNN/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_MNIST_CNN">
@@ -1488,7 +1565,7 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-01T20:59:13.000Z">2020-05-01</time></div>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-01T21:01:13.000Z">2020-05-01</time></div>
                     <a href="/2020/05/01/Pytorch-MNIST-CNN/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_MNIST_CNN</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
@@ -1554,25 +1631,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/18/Pytorch-Dropout/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Dropout">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-18T22:57:35.000Z">2020-04-18</time></div>
-                    <a href="/2020/04/18/Pytorch-Dropout/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Dropout</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1590,7 +1648,7 @@
                     <span class="level-item">May 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -1687,14 +1745,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">25</span>
+                        <span class="tag is-grey">26</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">12</span>
+                        <span class="tag is-grey">13</span>
                     </a>
                 </div>
                 
@@ -1743,6 +1801,25 @@
         
         <article class="media">
             
+            <a href="/2020/05/06/Pytorch-visdom%EC%9C%BC%EB%A1%9C-Loss-plot%EA%B7%B8%EB%A6%AC%EA%B8%B0/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_visdom으로_Loss_plot그리기">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T16:14:42.000Z">2020-05-06</time></div>
+                    <a href="/2020/05/06/Pytorch-visdom%EC%9C%BC%EB%A1%9C-Loss-plot%EA%B7%B8%EB%A6%AC%EA%B8%B0/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_visdom으로_Loss_plot그리기</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/01/Pytorch-MNIST-CNN/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_MNIST_CNN">
@@ -1751,7 +1828,7 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-01T20:59:13.000Z">2020-05-01</time></div>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-01T21:01:13.000Z">2020-05-01</time></div>
                     <a href="/2020/05/01/Pytorch-MNIST-CNN/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_MNIST_CNN</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
@@ -1817,25 +1894,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/18/Pytorch-Dropout/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Dropout">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-18T22:57:35.000Z">2020-04-18</time></div>
-                    <a href="/2020/04/18/Pytorch-Dropout/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Dropout</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1853,7 +1911,7 @@
                     <span class="level-item">May 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -1950,14 +2008,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">25</span>
+                        <span class="tag is-grey">26</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">12</span>
+                        <span class="tag is-grey">13</span>
                     </a>
                 </div>
                 
