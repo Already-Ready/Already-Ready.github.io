@@ -143,6 +143,216 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-04-10T01:20:19.000Z">2020-04-10</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 minutes read (About 961 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/04/10/Pytorch-Multi-Layer-Perceptron-MLP/">Pytorch_Multi_Layer_Perceptron_MLP</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="Pytorch-Multi-Layer-Perceptron-MLP-에-관하여-with-code"><a href="#Pytorch-Multi-Layer-Perceptron-MLP-에-관하여-with-code" class="headerlink" title="Pytorch Multi Layer Perceptron(MLP)에 관하여 with code"></a>Pytorch Multi Layer Perceptron(MLP)에 관하여 with code</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><hr>
+<ul>
+<li><p>perceptron은 입력값 x에 대해 weight를 곱하고 bias를 더한 후 activation function을 거쳐서 나온 output을 통해 두가지의 class를 가지는 AND, OR 문제를 해결하기 위해 고안되었습니다.</p>
+</li>
+<li><p>AND gate는 다음과 같이 표로 나타낼 수 있습니다.</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>위의 표는 매우 익숙하지만 이를 그래프로 나타내면 다음과 같이도 나타낼 수 있습니다.</p>
+</li>
+<li><p><img src="https://www.simonho.ca/wp-content/uploads/2018/02/AND_gate.png" alt="AND gate"></p>
+</li>
+<li><p>위의 그래프에서 0과 1을(off와 on)을 선 하나를 통해서 구분할 수 있는 방법은 빨간 점선으로 표시되어 있습니다. 즉, 하나의 선으로 두 가지의 class를 구분할 수 있습니다.</p>
+</li>
+<li><p>OR gate도 마찬가지 입니다.</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>위와 같은 OR gate표를 그래프로 나타내면 다음과 같습니다.</p>
+</li>
+<li><p><img src="https://www.simonho.ca/wp-content/uploads/2018/02/OR_gate.png" alt="OR gate"></p>
+</li>
+<li><p>OR gate 그래프에서도 0과 1(off와 on)을 하나의 선으로 구분할 수 있습니다. 즉, AND gate와 마찬가지로 하나의 선으로 두 가지의 class를 구분할 수 있다는 뜻입니다.</p>
+</li>
+<li><p>다시 말해, AND 와 OR gate는 하나의 Layer를 가지는 perceptron으로 구분이 가능했습니다. </p>
+</li>
+<li><p>하지만, XOR gate는 달랐습니다.</p>
+</li>
+<li><p>XOR gate를 표로 나타내면 다음과 같습니다.</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>이와같이 입력이 같으면 0을 다르면 1을 되돌려주는 XOR gate를 그래프로 나타내면 다음과 같습니다.</p>
+</li>
+<li><p><img src="https://www.simonho.ca/wp-content/uploads/2018/02/XOR_gate.png" alt="XOR gate"></p>
+</li>
+<li><p>위와 같은 그래프에서 0과 1(off와 on)을 하나의 선으로 구분할 수 없었습니다. 즉, 하나의 perceptron으로는 AND/OR gate 문제는 해결할 수 있었지만 XOR gate 문제를 해결할 수 없었습니다.</p>
+</li>
+<li><p>이렇게 하나의 perceptron으로 해결할 수 없는 문제를 해결하기 위해 등장한것이 Multi Layer Perceptron입니다.</p>
+</li>
+<li><p>다시 한번 위의 그래프를 봤을때, 하나의 선이 아니라 두개의 선으로는 0과 1(off와 on)을 구분할 수 있을까요?</p>
+</li>
+<li><p>답은 YES입니다. 즉, 두개 이상의 perceptron으로는 XOR gate문제를 해결할 수 있었습니다.</p>
+</li>
+<li><p>4개의 Layer를 갖는 모델을 구현해 확인해 보겠습니다.</p>
+</li>
+<li><p>먼저 XOR gate에 해당하는 데이터를 만들고,</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># XOR 데이터</span></span><br><span class="line">X = torch.FloatTensor([[<span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">1</span>], [<span class="number">1</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">1</span>]]).to(device)</span><br><span class="line">Y = torch.FloatTensor([[<span class="number">0</span>], [<span class="number">1</span>], [<span class="number">1</span>], [<span class="number">0</span>]]).to(device)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>4개의 layer를 생성해 모델을 정의해줍니다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 4개의 레이어가 있는 MLP(Multi Layer Perceptron)</span></span><br><span class="line">linear1 = torch.nn.Linear(<span class="number">2</span>, <span class="number">10</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear2 = torch.nn.Linear(<span class="number">10</span>, <span class="number">10</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear3 = torch.nn.Linear(<span class="number">10</span>, <span class="number">10</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear4 = torch.nn.Linear(<span class="number">10</span>, <span class="number">1</span>, bias=<span class="literal">True</span>)</span><br><span class="line">sigmoid = torch.nn.Sigmoid()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 모델 정의</span></span><br><span class="line">model = torch.nn.Sequential(linear1, sigmoid, linear2, sigmoid, linear3, sigmoid,</span><br><span class="line">                            linear4, sigmoid).to(device)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>이후 loss와 optimizer를 정의해주고,</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  loss / optimizer 정의</span></span><br><span class="line">criterion = torch.nn.BCELoss().to(device)</span><br><span class="line">optimizer = torch.optim.SGD(model.parameters(), lr=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>모델을 통해 weight와 bias를 학습합니다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 학습</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">10001</span>):</span><br><span class="line">    optimizer.zero_grad()</span><br><span class="line">    hypothesis = model(X)</span><br><span class="line"></span><br><span class="line">    loss = criterion(hypothesis, Y)</span><br><span class="line">    loss.backward()</span><br><span class="line">    optimizer.step()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> epoch % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">        print(epoch, loss.item())</span><br><span class="line"><span class="comment">#&gt;&gt;&gt; print</span></span><br><span class="line"><span class="number">0</span> <span class="number">0.6948983669281006</span></span><br><span class="line"><span class="number">100</span> <span class="number">0.6931558847427368</span></span><br><span class="line"><span class="number">200</span> <span class="number">0.6931535005569458</span></span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line"><span class="number">9800</span> <span class="number">0.00016415018762927502</span></span><br><span class="line"><span class="number">9900</span> <span class="number">0.00016021561168599874</span></span><br><span class="line"><span class="number">10000</span> <span class="number">0.0001565046259202063</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>학습이 끝나면 실제값과 예측값이 잘 맞아 떨어지는지 확인합니다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 학습 후 실제값과 예측값 비교해보기</span></span><br><span class="line"><span class="keyword">with</span> torch.no_grad():</span><br><span class="line">    hypothesis = model(X)</span><br><span class="line">    predict = (hypothesis &gt; <span class="number">0.5</span>).float()</span><br><span class="line">    accuracy = (predict == Y).float().mean()</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'Hyptthesis : '</span>, hypothesis.detach().cpu().numpy(),</span><br><span class="line">          <span class="string">'\nCorrect : '</span>,predict.detach().cpu().numpy(),</span><br><span class="line">          <span class="string">'\nAccuracy : '</span>,accuracy.item())</span><br><span class="line"><span class="comment">#&gt;&gt;&gt; print</span></span><br><span class="line">Hyptthesis :  [[<span class="number">1.1168354e-04</span>]</span><br><span class="line"> [<span class="number">9.9982882e-01</span>]</span><br><span class="line"> [<span class="number">9.9984241e-01</span>]</span><br><span class="line"> [<span class="number">1.8533420e-04</span>]] </span><br><span class="line">Correct :  [[<span class="number">0.</span>]</span><br><span class="line"> [<span class="number">1.</span>]</span><br><span class="line"> [<span class="number">1.</span>]</span><br><span class="line"> [<span class="number">0.</span>]] </span><br><span class="line">Accuracy :  <span class="number">1.0</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>위의 결과를 통해 Multi Layer Perceptron을 사용하면 XOR gate문제를 해결할 수 있음을 확인했습니다.</p>
+</li>
+<li><p><a href="https://www.simonho.ca/machine-learning/xor-logic-gate-neural-networks/">참고</a></p>
+</li>
+</ul>
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/perceptron_XOR_problem.py">Full Code</a></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-04-08T19:59:00.000Z">2020-04-08</time>
                 
                 <div class="level-item">
@@ -526,7 +736,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            43
+                            44
                         </p>
                     </a>
                 </div>
@@ -687,7 +897,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">18</span>
+                <span class="level-item tag">19</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -703,7 +913,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">14</span>
+                <span class="level-item tag">15</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -763,6 +973,25 @@
         
         <article class="media">
             
+            <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_VGG_Advance_CNN">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-12T11:57:01.000Z">2020-05-12</time></div>
+                    <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_About_VGG_Advance_CNN</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/07/Pytorch-ImageFolder/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_ImageFolder">
@@ -837,25 +1066,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/25/%ED%8C%8C%EC%9D%B4%EC%8D%AC-visdom-port-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="파이썬_visdom_port_변경하기">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-25T23:14:37.000Z">2020-04-25</time></div>
-                    <a href="/2020/04/25/%ED%8C%8C%EC%9D%B4%EC%8D%AC-visdom-port-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0/" class="title has-link-black-ter is-size-6 has-text-weight-normal">파이썬_visdom_port_변경하기</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -873,7 +1083,7 @@
                     <span class="level-item">May 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">3</span>
+                    <span class="level-item tag">4</span>
                 </span>
             </a>
         </li>
@@ -970,14 +1180,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">27</span>
+                        <span class="tag is-grey">28</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">14</span>
+                        <span class="tag is-grey">15</span>
                     </a>
                 </div>
                 
@@ -1026,6 +1236,25 @@
         
         <article class="media">
             
+            <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_VGG_Advance_CNN">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-12T11:57:01.000Z">2020-05-12</time></div>
+                    <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_About_VGG_Advance_CNN</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/07/Pytorch-ImageFolder/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_ImageFolder">
@@ -1100,25 +1329,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/25/%ED%8C%8C%EC%9D%B4%EC%8D%AC-visdom-port-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="파이썬_visdom_port_변경하기">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-25T23:14:37.000Z">2020-04-25</time></div>
-                    <a href="/2020/04/25/%ED%8C%8C%EC%9D%B4%EC%8D%AC-visdom-port-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0/" class="title has-link-black-ter is-size-6 has-text-weight-normal">파이썬_visdom_port_변경하기</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1136,7 +1346,7 @@
                     <span class="level-item">May 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">3</span>
+                    <span class="level-item tag">4</span>
                 </span>
             </a>
         </li>
@@ -1233,14 +1443,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">27</span>
+                        <span class="tag is-grey">28</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">14</span>
+                        <span class="tag is-grey">15</span>
                     </a>
                 </div>
                 

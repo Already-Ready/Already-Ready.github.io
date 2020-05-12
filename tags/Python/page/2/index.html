@@ -143,6 +143,90 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-04-13T15:45:13.000Z">2020-04-13</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 minutes read (About 593 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/04/13/Pytorch-Softmax-classification/">Pytorch_Softmax_classification</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="Pytorch-Softmax-Classificaton-을-통한-N개의-이벤트-분류하기"><a href="#Pytorch-Softmax-Classificaton-을-통한-N개의-이벤트-분류하기" class="headerlink" title="Pytorch Softmax Classificaton 을 통한 N개의 이벤트 분류하기"></a>Pytorch Softmax Classificaton 을 통한 N개의 이벤트 분류하기</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
+<li><p><a href="https://already-ready.github.io/2020/04/08/Pytorch-Logistic-regression/">binary classificaton</a> 문제를 해결할 때 sigmoid함수를 사용했습니다.</p>
+</li>
+<li><p>정확히는 <code>F.binary_cross_entropy</code> 안에 sigmoid함수가 같이 녹아있는 형태로 loss함수를 사용했습니다.</p>
+</li>
+<li><p>하지만, 세개 이상의 분류문제를 해결하기 위해서는 <code>sigmoid</code>함수가 아닌 <code>softmax</code>함수를 사용해야 합니다.</p>
+</li>
+<li><p>softmax함수는 아래와 같은 식으로 나타낼 수 있습니다.</p>
+</li>
+<li><p><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/bdc1f8eaa8064d15893f1ba6426f20ff8e7149c5" alt="softmax"></p>
+</li>
+<li><p>K개의 입력값을 0~1 사이의 값이 되도록 K개의 SUM으로 나눠주게 됩니다. 따라서 모든 확률의 합은 1이됩니다. 또한 입력값의 순서가 출력값의 순서와 같음을 확인할 수 있습니다.</p>
+</li>
+<li><p>이제 Pytorch를 통해 SoftmaxClassifierModel을 정의해 보았습니다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 모델 정의</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SoftmaxClassifierModel</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super().__init__()</span><br><span class="line">        self.linear = nn.Linear(<span class="number">16</span>, <span class="number">7</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.linear(x)</span><br><span class="line"></span><br><span class="line">model = SoftmaxClassifierModel()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>모델을 정의한 내용을 보면 입력값X에 따른 Linear함수만을 통과하고 Softmax함수를 통과하지 않는것을 볼 수 있습니다.</p>
+</li>
+<li><p>이는 loss함수에서 사용하게 될 <code>F.cross_entropy</code>에 Softmax함수가 포함되어 있기 때문입니다.</p>
+</li>
+<li><p>따라서 정의한 모델에서는 Softmax를 통과하기전의 Linear함수를 통과한 output값을 되돌려줘야 합니다.</p>
+</li>
+<li><p>optimizer를 정의하고,</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># optimizer 정의</span></span><br><span class="line">optimizer = optim.SGD(model.parameters(), lr=<span class="number">0.1</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>정한 epoch수 만큼 학습하며 loss를 출력해봅니다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">epochs = <span class="number">1000</span></span><br><span class="line"><span class="comment"># 학습</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs + <span class="number">1</span>):</span><br><span class="line"></span><br><span class="line">    predict = model(x_train)</span><br><span class="line">    loss = F.cross_entropy(predict, y_train)</span><br><span class="line"></span><br><span class="line">    optimizer.zero_grad()</span><br><span class="line">    loss.backward()</span><br><span class="line">    optimizer.step()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> epoch % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'Epoch &#123;:4d&#125;/&#123;&#125; loss : &#123;:.6f&#125;'</span>.format(</span><br><span class="line">            epoch, epochs, loss.item()</span><br><span class="line">        ))</span><br><span class="line">		</span><br><span class="line"><span class="comment">###&gt;&gt;&gt;print</span></span><br><span class="line">Epoch    <span class="number">0</span>/<span class="number">1000</span> loss : <span class="number">1.721660</span></span><br><span class="line">Epoch  <span class="number">100</span>/<span class="number">1000</span> loss : <span class="number">0.462462</span></span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">Epoch  <span class="number">900</span>/<span class="number">1000</span> loss : <span class="number">0.110220</span></span><br><span class="line">Epoch <span class="number">1000</span>/<span class="number">1000</span> loss : <span class="number">0.100880</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>출력된 loss를 통해 모델이 정상적으로 학습되는것을 확인할 수 있습니다. 이처럼 N개의 이벤트를 분류할 경우는 Softmax함수를 두개의 이벤트를 분류할 경우는 Sigmoid함수를 사용한다는것을 배울 수 있었습니다.</li>
+</ul>
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/softmax_classification.py">Full Code</a></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-04-10T01:20:19.000Z">2020-04-10</time>
                 
                 <div class="level-item">
@@ -1039,82 +1123,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-01-19T19:27:01.000Z">2020-01-19</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/Go/">Go</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 minutes read (About 475 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/01/19/%EA%B7%A0%ED%98%95%EC%9E%A1%ED%9E%8C-%EC%84%B8%EC%83%81-4949%EB%B2%88/">균형잡힌_세상_4949번</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="Python-Go-백준-4949번-풀이"><a href="#Python-Go-백준-4949번-풀이" class="headerlink" title="[Python, Go] 백준 4949번 풀이"></a>[Python, Go] 백준 4949번 풀이</h1><h3 id="균형잡힌-세상"><a href="#균형잡힌-세상" class="headerlink" title="균형잡힌 세상"></a>균형잡힌 세상</h3><ul>
-<li><p><a href="https://already-ready.github.io/2020/01/16/%EA%B4%84%ED%98%B8-9012%EB%B2%88/">괄호문제</a> 의 연장이다.</p>
-</li>
-<li><p>소괄호뿐만 아니라 대괄호까지 포함해 문장에서 괄호가 올바르게 되어져있는지 확인해야한다.</p>
-</li>
-<li><p>괄호안에 있는 괄호의 짝도 맞아야 yes를 출력할 수 있다. 예를들어 ( [ ) ] 와 같은 경우 하나의 괄호 안에 올바른 짝의 괄호가 들어가지 못했으므로 no 를 출력해야 한다.</p>
-</li>
-<li><p>정규표현식을 사용해 따라가야될 괄호들을 뺀 문자들은 pass 시켜주는 방법을 사용했다.</p>
-</li>
-<li><p>이외에는 괄호문제와같이 스텍에 ( 와 [ 를 담아서 사용했다.</p>
-<ul>
-<li>단 ) 와 ] 를 만났을 때, 스텍의 마지막 요소가 짝이되는 괄호인지를 판별해줘야 한다.</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>Python 풀이</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">vps</span><span class="params">(line)</span>:</span></span><br><span class="line">    stack = []</span><br><span class="line">    <span class="keyword">if</span> line[<span class="number">0</span>] == <span class="string">")"</span> <span class="keyword">or</span> line[<span class="number">0</span>] == <span class="string">"]"</span>:</span><br><span class="line">        <span class="comment"># print("1")</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">    <span class="keyword">else</span>: <span class="keyword">pass</span></span><br><span class="line">    <span class="keyword">for</span> s <span class="keyword">in</span> line:</span><br><span class="line">        <span class="keyword">if</span> bool(com.match(s)) == <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">elif</span> s == <span class="string">" "</span> <span class="keyword">or</span> s == <span class="string">"."</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">elif</span> s == <span class="string">"("</span> <span class="keyword">or</span> s == <span class="string">"["</span>:</span><br><span class="line">            stack.append(s)</span><br><span class="line">            <span class="comment"># print(stack)</span></span><br><span class="line">        <span class="keyword">elif</span> s == <span class="string">")"</span> <span class="keyword">and</span> stack != []:</span><br><span class="line">            <span class="keyword">if</span> stack[<span class="number">-1</span>] == <span class="string">"("</span>:</span><br><span class="line">                stack.pop()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># print("2")</span></span><br><span class="line">                <span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">        <span class="keyword">elif</span> s == <span class="string">"]"</span> <span class="keyword">and</span> stack != []:</span><br><span class="line">            <span class="keyword">if</span> stack[<span class="number">-1</span>] == <span class="string">"["</span>:</span><br><span class="line">                stack.pop()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># print("3")</span></span><br><span class="line">                <span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># print("4")</span></span><br><span class="line">            <span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">    <span class="keyword">if</span> stack == []:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"yes"</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># print("5")</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"no"</span></span><br></pre></td></tr></table></figure>
-
-
-<ul>
-<li>Go 풀이</li>
-</ul>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">vps</span><span class="params">(x <span class="keyword">string</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> stack []<span class="keyword">string</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// fmt.Println(string(x[0]))</span></span><br><span class="line">	<span class="comment">// return x</span></span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">string</span>(x[<span class="number">0</span>]) == <span class="string">")"</span> || <span class="keyword">string</span>(x[<span class="number">0</span>]) == <span class="string">"]"</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> _, ch := <span class="keyword">range</span> x &#123;</span><br><span class="line">		s := <span class="keyword">string</span>(ch)</span><br><span class="line">		match, _ := regexp.MatchString(<span class="string">"[a-zA-Z]"</span>, s)</span><br><span class="line">		<span class="keyword">if</span> match == <span class="literal">true</span> &#123;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> s == <span class="string">" "</span> || s == <span class="string">"."</span> &#123;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> s == <span class="string">"("</span> || s == <span class="string">"["</span> &#123;</span><br><span class="line">			stack = <span class="built_in">append</span>(stack, s)</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> s == <span class="string">")"</span> &amp;&amp; stack != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> stack[<span class="built_in">len</span>(stack)<span class="number">-1</span>] == <span class="string">"("</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> <span class="built_in">len</span>(stack) == <span class="number">1</span> &#123;</span><br><span class="line">					stack = <span class="literal">nil</span></span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					stack = stack[:<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> s == <span class="string">"]"</span> &amp;&amp; stack != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> stack[<span class="built_in">len</span>(stack)<span class="number">-1</span>] == <span class="string">"["</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> <span class="built_in">len</span>(stack) == <span class="number">1</span> &#123;</span><br><span class="line">					stack = <span class="literal">nil</span></span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					stack = stack[:<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> stack == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"yes"</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"no"</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Go로 풀이할때, 조건이 많을때는 switch가 더 좋기때문에 switch를 사용했다면 더 좋았을것같다.  </li>
-</ul>
-<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/baekjoon/blob/master/4949.py">Full Code - Python</a>  </p>
-<p><a href="https://github.com/Already-Ready/baekjoon/blob/master/Go_solutions/4949.go">Full Code - Go</a>      </p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1181,7 +1189,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            43
+                            44
                         </p>
                     </a>
                 </div>
@@ -1342,7 +1350,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">18</span>
+                <span class="level-item tag">19</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -1358,7 +1366,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">14</span>
+                <span class="level-item tag">15</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -1418,6 +1426,25 @@
         
         <article class="media">
             
+            <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_VGG_Advance_CNN">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-12T11:57:01.000Z">2020-05-12</time></div>
+                    <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_About_VGG_Advance_CNN</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/07/Pytorch-ImageFolder/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_ImageFolder">
@@ -1492,25 +1519,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/25/%ED%8C%8C%EC%9D%B4%EC%8D%AC-visdom-port-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="파이썬_visdom_port_변경하기">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-25T23:14:37.000Z">2020-04-25</time></div>
-                    <a href="/2020/04/25/%ED%8C%8C%EC%9D%B4%EC%8D%AC-visdom-port-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0/" class="title has-link-black-ter is-size-6 has-text-weight-normal">파이썬_visdom_port_변경하기</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1528,7 +1536,7 @@
                     <span class="level-item">May 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">3</span>
+                    <span class="level-item tag">4</span>
                 </span>
             </a>
         </li>
@@ -1625,14 +1633,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">27</span>
+                        <span class="tag is-grey">28</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">14</span>
+                        <span class="tag is-grey">15</span>
                     </a>
                 </div>
                 
@@ -1681,6 +1689,25 @@
         
         <article class="media">
             
+            <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_VGG_Advance_CNN">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-12T11:57:01.000Z">2020-05-12</time></div>
+                    <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_About_VGG_Advance_CNN</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/07/Pytorch-ImageFolder/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_ImageFolder">
@@ -1755,25 +1782,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/25/%ED%8C%8C%EC%9D%B4%EC%8D%AC-visdom-port-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="파이썬_visdom_port_변경하기">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-25T23:14:37.000Z">2020-04-25</time></div>
-                    <a href="/2020/04/25/%ED%8C%8C%EC%9D%B4%EC%8D%AC-visdom-port-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0/" class="title has-link-black-ter is-size-6 has-text-weight-normal">파이썬_visdom_port_변경하기</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1791,7 +1799,7 @@
                     <span class="level-item">May 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">3</span>
+                    <span class="level-item tag">4</span>
                 </span>
             </a>
         </li>
@@ -1888,14 +1896,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">27</span>
+                        <span class="tag is-grey">28</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">14</span>
+                        <span class="tag is-grey">15</span>
                     </a>
                 </div>
                 

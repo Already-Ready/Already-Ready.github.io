@@ -143,6 +143,97 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-05-12T11:57:01.000Z">2020-05-12</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9 minutes read (About 1381 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/">Pytorch_About_VGG_Advance_CNN</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="VGG-모델의-생성과정-살펴보기"><a href="#VGG-모델의-생성과정-살펴보기" class="headerlink" title="VGG 모델의 생성과정 살펴보기"></a>VGG 모델의 생성과정 살펴보기</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
+<li><p><a href="https://pytorch.org/docs/stable/torchvision/models.html#torchvision.models.vgg11">torchvision.models</a>를 통해 VGG11~VGG19까지 이용할 수 있다.</p>
+</li>
+<li><p>3x224x224 input을 기준으로 만들어져 있으며, input size가 다른경우 모델을 약간 수정해서 사용할 수 있다.</p>
+</li>
+<li><p>이번에는 VGG에서 layer가 생성되는 과정을 살펴보려고 한다.</p>
+</li>
+<li><p>VGG의 <a href="https://pytorch.org/docs/stable/_modules/torchvision/models/vgg.html#vgg11">Source Code</a>이며 일부만 가져와서 살펴보자.</p>
+</li>
+<li><p>VGG 모델의 Class선언의 <code>__init__</code> 부분을 살펴보자.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">VGG</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, features, num_classes=<span class="number">1000</span>, init_weights=True)</span>:</span></span><br><span class="line">        super(VGG, self).__init__()</span><br><span class="line">        self.features = features</span><br><span class="line">        self.avgpool = nn.AdaptiveAvgPool2d((<span class="number">7</span>, <span class="number">7</span>))</span><br><span class="line">        self.classifier = nn.Sequential(</span><br><span class="line">            nn.Linear(<span class="number">512</span> * <span class="number">7</span> * <span class="number">7</span>, <span class="number">4096</span>),</span><br><span class="line">            nn.ReLU(<span class="literal">True</span>),</span><br><span class="line">            nn.Dropout(),</span><br><span class="line">            nn.Linear(<span class="number">4096</span>, <span class="number">4096</span>),</span><br><span class="line">            nn.ReLU(<span class="literal">True</span>),</span><br><span class="line">            nn.Dropout(),</span><br><span class="line">            nn.Linear(<span class="number">4096</span>, num_classes),</span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">if</span> init_weights:</span><br><span class="line">            self._initialize_weights()</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>features</code>라는 레이어를 통과하고 pooling and linear layer를 통과하는 모습을 확인할 수 있다.</p>
+</li>
+<li><p>즉 처음 layer는 <code>features</code>부분에서 생성되는데 이는 <code>make_layers</code>라는 함수를 통해 이루어진다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">make_layers</span><span class="params">(cfg, batch_norm=False)</span>:</span></span><br><span class="line">    layers = []</span><br><span class="line">    in_channels = <span class="number">3</span></span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> cfg:</span><br><span class="line">        <span class="keyword">if</span> v == <span class="string">'M'</span>:</span><br><span class="line">            layers += [nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>)]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            conv2d = nn.Conv2d(in_channels, v, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">if</span> batch_norm:</span><br><span class="line">                layers += [conv2d, nn.BatchNorm2d(v), nn.ReLU(inplace=<span class="literal">True</span>)]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                layers += [conv2d, nn.ReLU(inplace=<span class="literal">True</span>)]</span><br><span class="line">            in_channels = v</span><br><span class="line">    <span class="keyword">return</span> nn.Sequential(*layers)</span><br><span class="line"></span><br><span class="line">cfgs = &#123;</span><br><span class="line">    <span class="string">'A'</span>: [<span class="number">64</span>, <span class="string">'M'</span>, <span class="number">128</span>, <span class="string">'M'</span>, <span class="number">256</span>, <span class="number">256</span>, <span class="string">'M'</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="string">'M'</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="string">'M'</span>],</span><br><span class="line">    <span class="string">'B'</span>: [<span class="number">64</span>, <span class="number">64</span>, <span class="string">'M'</span>, <span class="number">128</span>, <span class="number">128</span>, <span class="string">'M'</span>, <span class="number">256</span>, <span class="number">256</span>, <span class="string">'M'</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="string">'M'</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="string">'M'</span>],</span><br><span class="line">    <span class="string">'D'</span>: [<span class="number">64</span>, <span class="number">64</span>, <span class="string">'M'</span>, <span class="number">128</span>, <span class="number">128</span>, <span class="string">'M'</span>, <span class="number">256</span>, <span class="number">256</span>, <span class="number">256</span>, <span class="string">'M'</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="string">'M'</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="string">'M'</span>],</span><br><span class="line">    <span class="string">'E'</span>: [<span class="number">64</span>, <span class="number">64</span>, <span class="string">'M'</span>, <span class="number">128</span>, <span class="number">128</span>, <span class="string">'M'</span>, <span class="number">256</span>, <span class="number">256</span>, <span class="number">256</span>, <span class="number">256</span>, <span class="string">'M'</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="string">'M'</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="number">512</span>, <span class="string">'M'</span>],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>make_layers</code>함수를 살펴보면 cfg값에 따라서 알맞는 layer를 return하고 있다.</p>
+</li>
+<li><p>cfgs에서 ‘A’값을 받았을때 어떻게 Convolution layer가 만들어지는지 따라가보자.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br></pre></td><td class="code"><pre><span class="line">순차적으로 <span class="string">'A'</span>의 값이 <span class="keyword">for</span>문을 통해 들어가면 layers에 어떻게 layer가 쌓이는지 누적시키며 따라가보자.</span><br><span class="line">(batch_norm=<span class="literal">False</span>)인 상황이다.</span><br><span class="line"><span class="number">1.</span> 처음에 <span class="number">64</span> 값을 받으면,</span><br><span class="line">layers = [</span><br><span class="line">conv2d= nn.Conv2d(<span class="number">3</span>, <span class="number">64</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line">]</span><br><span class="line">가 되며 in_channels가 입력받은 <span class="number">64</span>로 바뀌게된다!</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> <span class="string">'M'</span> 을 입력받으면, MaxPool2d가 들어가며 in_channels값은 바뀌지 않는다.</span><br><span class="line">layers = [</span><br><span class="line">conv2d= nn.Conv2d(<span class="number">3</span>, <span class="number">64</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span> 다시 <span class="number">128</span> 값을 받으면, 처음 <span class="number">64</span>를 입력받았을때와 마찬가지로 ```Conv2d```와 ```ReLU```가 추가되며 in_channels는 <span class="number">128</span>로 바뀌게된다.</span><br><span class="line">layers = [</span><br><span class="line">conv2d= nn.Conv2d(<span class="number">3</span>, <span class="number">64</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">conv2d= nn.Conv2d(<span class="number">64</span>, <span class="number">128</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="number">4.</span> 다음으로 <span class="string">'M'</span>을 입력받으면, 두번째 단계와 마찬가지로 MaxPool2d가 들어가고 in_channels는 유지된다.</span><br><span class="line">layers = [</span><br><span class="line">conv2d= nn.Conv2d(<span class="number">3</span>, <span class="number">64</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">conv2d= nn.Conv2d(<span class="number">64</span>, <span class="number">128</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="number">5.</span> 다음으로 <span class="number">256</span> 값을 두번 연속해서 받으면, 첫번째 단계가 두번 실행되는것과 같다.</span><br><span class="line">layers = [</span><br><span class="line">conv2d= nn.Conv2d(<span class="number">3</span>, <span class="number">64</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">conv2d= nn.Conv2d(<span class="number">64</span>, <span class="number">128</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">conv2d= nn.Conv2d(<span class="number">128</span>, <span class="number">256</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">conv2d= nn.Conv2d(<span class="number">256</span>, <span class="number">256</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="number">6.</span> 세번째 <span class="string">'M'</span>을 입력받아서 다음과 같다.</span><br><span class="line">layers = [</span><br><span class="line">conv2d= nn.Conv2d(<span class="number">3</span>, <span class="number">64</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">conv2d= nn.Conv2d(<span class="number">64</span>, <span class="number">128</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">conv2d= nn.Conv2d(<span class="number">128</span>, <span class="number">256</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">conv2d= nn.Conv2d(<span class="number">256</span>, <span class="number">256</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="number">7.</span> 위의 과정을 통해 익숙해졌으므로 [<span class="number">512</span>, <span class="number">512</span>, <span class="string">'M'</span>] 입력을 한번에 살펴보자. 세 개의 입력이 들어오면 다음과 같이 layers가 쌓이게된다.</span><br><span class="line">layers = [</span><br><span class="line">conv2d= nn.Conv2d(<span class="number">3</span>, <span class="number">64</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">conv2d= nn.Conv2d(<span class="number">64</span>, <span class="number">128</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">conv2d= nn.Conv2d(<span class="number">128</span>, <span class="number">256</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">conv2d= nn.Conv2d(<span class="number">256</span>, <span class="number">256</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">conv2d= nn.Conv2d(<span class="number">256</span>, <span class="number">512</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">conv2d= nn.Conv2d(<span class="number">512</span>, <span class="number">512</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="number">8.</span> 마지막으로 다시 한번 [<span class="number">512</span>, <span class="number">512</span>, <span class="string">'M'</span>] 입력을 받는다. 따라서 최종적으로는 다음과 같은 layers가 생성된다.</span><br><span class="line">layers = [</span><br><span class="line">conv2d= nn.Conv2d(<span class="number">3</span>, <span class="number">64</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">conv2d= nn.Conv2d(<span class="number">64</span>, <span class="number">128</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">conv2d= nn.Conv2d(<span class="number">128</span>, <span class="number">256</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">conv2d= nn.Conv2d(<span class="number">256</span>, <span class="number">256</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">conv2d= nn.Conv2d(<span class="number">256</span>, <span class="number">512</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">conv2d= nn.Conv2d(<span class="number">512</span>, <span class="number">512</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">conv2d= nn.Conv2d(<span class="number">512</span>, <span class="number">512</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">conv2d= nn.Conv2d(<span class="number">512</span>, <span class="number">512</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">nn.MaxPool2d(kernel_size=<span class="number">2</span>, stride=<span class="number">2</span>)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>위의 과정을 따라서 만들어진 모델은 VGG11을 의미하게 되는데, 다음과 같이 계산해 볼 수 있다.</p>
+</li>
+<li><p>make_layers를 통해 만들어진 Convolution layer의 갯수는 8개였다. 그리고 Source Code를 살펴보면 이후에 fully connected layer가 3개있다.</p>
+</li>
+<li><p>따라서, 위의 과정으로 만들어진 모델은 8 + 3 = 11 로 VGG11 을 의미한다.</p>
+</li>
+<li><p>이와 마찬가지로, 나머지 모델은 다음과 같다.</p>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">'B' --&gt; 10 + 3 = 13 --&gt; VGG13</span><br><span class="line">'C' --&gt; 13 + 3 = 16 --&gt; VGG16</span><br><span class="line">'D' --&gt; 16 + 3 = 19 --&gt; VGG19</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Source Code를 따라가면서 VGG모델이 생성되는 과정을 살펴볼 수 있었고 다음에는 input size가 다를경우 VGG를 수정해서 사용하는 방법을 살펴볼 것이다.</li>
+</ul>
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/Advance_CNN_VGG_intro.ipynb">Full Code</a></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-05-07T20:40:48.000Z">2020-05-07</time>
                 
                 <div class="level-item">
@@ -1025,216 +1116,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-10T01:20:19.000Z">2020-04-10</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    6 minutes read (About 961 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/04/10/Pytorch-Multi-Layer-Perceptron-MLP/">Pytorch_Multi_Layer_Perceptron_MLP</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="Pytorch-Multi-Layer-Perceptron-MLP-에-관하여-with-code"><a href="#Pytorch-Multi-Layer-Perceptron-MLP-에-관하여-with-code" class="headerlink" title="Pytorch Multi Layer Perceptron(MLP)에 관하여 with code"></a>Pytorch Multi Layer Perceptron(MLP)에 관하여 with code</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><hr>
-<ul>
-<li><p>perceptron은 입력값 x에 대해 weight를 곱하고 bias를 더한 후 activation function을 거쳐서 나온 output을 통해 두가지의 class를 가지는 AND, OR 문제를 해결하기 위해 고안되었습니다.</p>
-</li>
-<li><p>AND gate는 다음과 같이 표로 나타낼 수 있습니다.</p>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>A</th>
-<th>B</th>
-<th>Output</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-</tr>
-</tbody></table>
-<ul>
-<li><p>위의 표는 매우 익숙하지만 이를 그래프로 나타내면 다음과 같이도 나타낼 수 있습니다.</p>
-</li>
-<li><p><img src="https://www.simonho.ca/wp-content/uploads/2018/02/AND_gate.png" alt="AND gate"></p>
-</li>
-<li><p>위의 그래프에서 0과 1을(off와 on)을 선 하나를 통해서 구분할 수 있는 방법은 빨간 점선으로 표시되어 있습니다. 즉, 하나의 선으로 두 가지의 class를 구분할 수 있습니다.</p>
-</li>
-<li><p>OR gate도 마찬가지 입니다.</p>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>A</th>
-<th>B</th>
-<th>Output</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-</tr>
-</tbody></table>
-<ul>
-<li><p>위와 같은 OR gate표를 그래프로 나타내면 다음과 같습니다.</p>
-</li>
-<li><p><img src="https://www.simonho.ca/wp-content/uploads/2018/02/OR_gate.png" alt="OR gate"></p>
-</li>
-<li><p>OR gate 그래프에서도 0과 1(off와 on)을 하나의 선으로 구분할 수 있습니다. 즉, AND gate와 마찬가지로 하나의 선으로 두 가지의 class를 구분할 수 있다는 뜻입니다.</p>
-</li>
-<li><p>다시 말해, AND 와 OR gate는 하나의 Layer를 가지는 perceptron으로 구분이 가능했습니다. </p>
-</li>
-<li><p>하지만, XOR gate는 달랐습니다.</p>
-</li>
-<li><p>XOR gate를 표로 나타내면 다음과 같습니다.</p>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>A</th>
-<th>B</th>
-<th>Output</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-</tr>
-</tbody></table>
-<ul>
-<li><p>이와같이 입력이 같으면 0을 다르면 1을 되돌려주는 XOR gate를 그래프로 나타내면 다음과 같습니다.</p>
-</li>
-<li><p><img src="https://www.simonho.ca/wp-content/uploads/2018/02/XOR_gate.png" alt="XOR gate"></p>
-</li>
-<li><p>위와 같은 그래프에서 0과 1(off와 on)을 하나의 선으로 구분할 수 없었습니다. 즉, 하나의 perceptron으로는 AND/OR gate 문제는 해결할 수 있었지만 XOR gate 문제를 해결할 수 없었습니다.</p>
-</li>
-<li><p>이렇게 하나의 perceptron으로 해결할 수 없는 문제를 해결하기 위해 등장한것이 Multi Layer Perceptron입니다.</p>
-</li>
-<li><p>다시 한번 위의 그래프를 봤을때, 하나의 선이 아니라 두개의 선으로는 0과 1(off와 on)을 구분할 수 있을까요?</p>
-</li>
-<li><p>답은 YES입니다. 즉, 두개 이상의 perceptron으로는 XOR gate문제를 해결할 수 있었습니다.</p>
-</li>
-<li><p>4개의 Layer를 갖는 모델을 구현해 확인해 보겠습니다.</p>
-</li>
-<li><p>먼저 XOR gate에 해당하는 데이터를 만들고,</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># XOR 데이터</span></span><br><span class="line">X = torch.FloatTensor([[<span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">1</span>], [<span class="number">1</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">1</span>]]).to(device)</span><br><span class="line">Y = torch.FloatTensor([[<span class="number">0</span>], [<span class="number">1</span>], [<span class="number">1</span>], [<span class="number">0</span>]]).to(device)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>4개의 layer를 생성해 모델을 정의해줍니다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 4개의 레이어가 있는 MLP(Multi Layer Perceptron)</span></span><br><span class="line">linear1 = torch.nn.Linear(<span class="number">2</span>, <span class="number">10</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear2 = torch.nn.Linear(<span class="number">10</span>, <span class="number">10</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear3 = torch.nn.Linear(<span class="number">10</span>, <span class="number">10</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear4 = torch.nn.Linear(<span class="number">10</span>, <span class="number">1</span>, bias=<span class="literal">True</span>)</span><br><span class="line">sigmoid = torch.nn.Sigmoid()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 모델 정의</span></span><br><span class="line">model = torch.nn.Sequential(linear1, sigmoid, linear2, sigmoid, linear3, sigmoid,</span><br><span class="line">                            linear4, sigmoid).to(device)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>이후 loss와 optimizer를 정의해주고,</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  loss / optimizer 정의</span></span><br><span class="line">criterion = torch.nn.BCELoss().to(device)</span><br><span class="line">optimizer = torch.optim.SGD(model.parameters(), lr=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>모델을 통해 weight와 bias를 학습합니다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 학습</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">10001</span>):</span><br><span class="line">    optimizer.zero_grad()</span><br><span class="line">    hypothesis = model(X)</span><br><span class="line"></span><br><span class="line">    loss = criterion(hypothesis, Y)</span><br><span class="line">    loss.backward()</span><br><span class="line">    optimizer.step()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> epoch % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">        print(epoch, loss.item())</span><br><span class="line"><span class="comment">#&gt;&gt;&gt; print</span></span><br><span class="line"><span class="number">0</span> <span class="number">0.6948983669281006</span></span><br><span class="line"><span class="number">100</span> <span class="number">0.6931558847427368</span></span><br><span class="line"><span class="number">200</span> <span class="number">0.6931535005569458</span></span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line"><span class="number">9800</span> <span class="number">0.00016415018762927502</span></span><br><span class="line"><span class="number">9900</span> <span class="number">0.00016021561168599874</span></span><br><span class="line"><span class="number">10000</span> <span class="number">0.0001565046259202063</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>학습이 끝나면 실제값과 예측값이 잘 맞아 떨어지는지 확인합니다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 학습 후 실제값과 예측값 비교해보기</span></span><br><span class="line"><span class="keyword">with</span> torch.no_grad():</span><br><span class="line">    hypothesis = model(X)</span><br><span class="line">    predict = (hypothesis &gt; <span class="number">0.5</span>).float()</span><br><span class="line">    accuracy = (predict == Y).float().mean()</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'Hyptthesis : '</span>, hypothesis.detach().cpu().numpy(),</span><br><span class="line">          <span class="string">'\nCorrect : '</span>,predict.detach().cpu().numpy(),</span><br><span class="line">          <span class="string">'\nAccuracy : '</span>,accuracy.item())</span><br><span class="line"><span class="comment">#&gt;&gt;&gt; print</span></span><br><span class="line">Hyptthesis :  [[<span class="number">1.1168354e-04</span>]</span><br><span class="line"> [<span class="number">9.9982882e-01</span>]</span><br><span class="line"> [<span class="number">9.9984241e-01</span>]</span><br><span class="line"> [<span class="number">1.8533420e-04</span>]] </span><br><span class="line">Correct :  [[<span class="number">0.</span>]</span><br><span class="line"> [<span class="number">1.</span>]</span><br><span class="line"> [<span class="number">1.</span>]</span><br><span class="line"> [<span class="number">0.</span>]] </span><br><span class="line">Accuracy :  <span class="number">1.0</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>위의 결과를 통해 Multi Layer Perceptron을 사용하면 XOR gate문제를 해결할 수 있음을 확인했습니다.</p>
-</li>
-<li><p><a href="https://www.simonho.ca/machine-learning/xor-logic-gate-neural-networks/">참고</a></p>
-</li>
-</ul>
-<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/perceptron_XOR_problem.py">Full Code</a></p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1299,7 +1180,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            43
+                            44
                         </p>
                     </a>
                 </div>
@@ -1460,7 +1341,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">18</span>
+                <span class="level-item tag">19</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -1476,7 +1357,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">14</span>
+                <span class="level-item tag">15</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -1536,6 +1417,25 @@
         
         <article class="media">
             
+            <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_VGG_Advance_CNN">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-12T11:57:01.000Z">2020-05-12</time></div>
+                    <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_About_VGG_Advance_CNN</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/07/Pytorch-ImageFolder/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_ImageFolder">
@@ -1610,25 +1510,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/25/%ED%8C%8C%EC%9D%B4%EC%8D%AC-visdom-port-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="파이썬_visdom_port_변경하기">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-25T23:14:37.000Z">2020-04-25</time></div>
-                    <a href="/2020/04/25/%ED%8C%8C%EC%9D%B4%EC%8D%AC-visdom-port-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0/" class="title has-link-black-ter is-size-6 has-text-weight-normal">파이썬_visdom_port_변경하기</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1646,7 +1527,7 @@
                     <span class="level-item">May 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">3</span>
+                    <span class="level-item tag">4</span>
                 </span>
             </a>
         </li>
@@ -1743,14 +1624,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">27</span>
+                        <span class="tag is-grey">28</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">14</span>
+                        <span class="tag is-grey">15</span>
                     </a>
                 </div>
                 
@@ -1799,6 +1680,25 @@
         
         <article class="media">
             
+            <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_VGG_Advance_CNN">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-12T11:57:01.000Z">2020-05-12</time></div>
+                    <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_About_VGG_Advance_CNN</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/07/Pytorch-ImageFolder/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_ImageFolder">
@@ -1873,25 +1773,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/25/%ED%8C%8C%EC%9D%B4%EC%8D%AC-visdom-port-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="파이썬_visdom_port_변경하기">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-25T23:14:37.000Z">2020-04-25</time></div>
-                    <a href="/2020/04/25/%ED%8C%8C%EC%9D%B4%EC%8D%AC-visdom-port-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0/" class="title has-link-black-ter is-size-6 has-text-weight-normal">파이썬_visdom_port_변경하기</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1909,7 +1790,7 @@
                     <span class="level-item">May 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">3</span>
+                    <span class="level-item tag">4</span>
                 </span>
             </a>
         </li>
@@ -2006,14 +1887,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">27</span>
+                        <span class="tag is-grey">28</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">14</span>
+                        <span class="tag is-grey">15</span>
                     </a>
                 </div>
                 
