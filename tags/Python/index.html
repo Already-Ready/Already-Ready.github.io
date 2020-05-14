@@ -143,6 +143,98 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-05-14T18:42:19.000Z">2020-05-14</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    5 minutes read (About 756 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/05/14/Pytorch-VGG-with-CIFAR10/">Pytorch_VGG_with_CIFAR10</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="CIFAR10-데이터셋에-VGG-모델-적용해보기"><a href="#CIFAR10-데이터셋에-VGG-모델-적용해보기" class="headerlink" title="CIFAR10 데이터셋에 VGG 모델 적용해보기"></a>CIFAR10 데이터셋에 VGG 모델 적용해보기</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
+<li><p>VGG는 3x224x224의 input을 기본으로 만들어져 있다. 따라서, 이미지의 크기가 다를경우 이미지 크기를 조정하거나 모델을 수정해서 사용할 수 있다.</p>
+</li>
+<li><p>이번에는 이미지 사이즈는 그대로 사용하며 VGG모델을 조금 수정해서 적용해보자.</p>
+</li>
+<li><p>VGG의 모델이 어떻게 생성되는지는 <a href="https://already-ready.github.io/2020/05/12/Pytorch-About-VGG-Advance-CNN/">이전 포스트 - VGG 모델 생성 살펴보기</a>에서 확인할 수 있다.</p>
+</li>
+<li><p>이번에는 custom convolution layer 을 만들고 이를 <code>maye_layers</code>함수를 통해 생성한 후, 이를 통한 모델을 만들고자 한다.</p>
+</li>
+<li><p>convolution layer 13개와 fully connected layer3개를 가지는 VGG13 configuration을 생성한다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cfg = [<span class="number">32</span>,<span class="number">32</span>,<span class="string">'M'</span>, <span class="number">64</span>,<span class="number">64</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="number">128</span>,<span class="string">'M'</span>,<span class="number">256</span>,<span class="number">256</span>,<span class="number">256</span>,<span class="number">512</span>,<span class="number">512</span>,<span class="number">512</span>,<span class="string">'M'</span>]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>그리고, <a href="https://pytorch.org/docs/stable/_modules/torchvision/models/vgg.html#vgg11">VGG Source Code</a>에서 가져온 VGG class를 다음과 같이 일부 수정한다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">VGG</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, features, num_classes=<span class="number">1000</span>, init_weights=True)</span>:</span></span><br><span class="line">        super(VGG, self).__init__()</span><br><span class="line">        self.features = features</span><br><span class="line">        self.classifier = nn.Sequential(</span><br><span class="line">                                nn.Linear(<span class="number">512</span>*<span class="number">4</span>*<span class="number">4</span>, <span class="number">4096</span>),</span><br><span class="line">                                nn.ReLU(<span class="literal">True</span>),</span><br><span class="line">                                nn.Dropout(),</span><br><span class="line">                                nn.Linear(<span class="number">4096</span>, <span class="number">4096</span>),</span><br><span class="line">                                nn.ReLU(<span class="literal">True</span>),</span><br><span class="line">                                nn.Dropout(),</span><br><span class="line">                                nn.Linear(<span class="number">4096</span>, num_classes)</span><br><span class="line">                                        )</span><br><span class="line">        <span class="keyword">if</span> init_weights:</span><br><span class="line">            self._initialize_weights()</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        x = self.features(x)</span><br><span class="line">        x = x.view(x.size(<span class="number">0</span>), <span class="number">-1</span>)</span><br><span class="line">        x = self.classifier(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_initialize_weights</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> m <span class="keyword">in</span> self.modules():</span><br><span class="line">            <span class="keyword">if</span> isinstance(m, nn.Conv2d):</span><br><span class="line">                nn.init.kaiming_normal_(m.weight, mode=<span class="string">'fan_out'</span>, nonlinearity=<span class="string">'relu'</span>)</span><br><span class="line">                <span class="keyword">if</span> m.bias <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">                    nn.init.constant_(m.bias, <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">elif</span> isinstance(m, nn.BatchNorm2d):</span><br><span class="line">                nn.init.constant_(m.weight, <span class="number">1</span>)</span><br><span class="line">                nn.init.constant_(m.bias, <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">elif</span> isinstance(m, nn.Linear):</span><br><span class="line">                nn.init.normal_(m.weight, <span class="number">0</span>, <span class="number">0.01</span>)</span><br><span class="line">                nn.init.constant_(m.bias, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>위의 코드는 Source Code에서 아래와 같은 두 가지 사항을 변경했다</p>
+<ul>
+<li><p>a. <code>nn.AdaptiveAvgPool2d</code>를 삭제했다.</p>
+<ul>
+<li>왜냐하면, features layer를 통과하고 우리의 이미지 사이즈는 4x4이므로 <code>nn.AdaptiveAvgPool2d((7, 7))</code>을 통해 사이즈를 키워줄 필요가 없었다.</li>
+</ul>
+</li>
+<li><p>b. classifier layer의 fully connected layer의 input size가 (batch size x 4 x 4) 로 수정되었다.</p>
+<ul>
+<li>왜냐하면, 위와 마찬가지로 features를 통과한 이미지의 사이즈가 4x4이기 때문이다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>이처럼, input size가 다를 경우 기존의 모델을 수정해서 사용할 수 있다. </p>
+</li>
+<li><p>중요한점은, layer를 통과하면서 image의 size가 어떻게 변하는지를 알고 fully connected layer까지 수정해야 size에러가 발생하지 않는다는 점이다.</p>
+</li>
+<li><p>이를 위해서, 직접 공식을 통해 계산할 수도 있으며 아래와 같이 <code>forward</code>함수에서 shape를 프린트하며 확인할 수도 있다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">VGG</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        x = self.features(x)</span><br><span class="line">	print(x.shape) <span class="comment"># features layer를 통과하고 shape을 확인해보자.</span></span><br><span class="line">        x = x.view(x.size(<span class="number">0</span>), <span class="number">-1</span>)</span><br><span class="line">        x = self.classifier(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>이처럼, 사이즈가 다른 CIFAR10 이미지를 수정한 VGG모델에 넣어서 학습시켜볼 수 있었다.</li>
+</ul>
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/Advance_CNN_VGG_with_CIFAR10.ipynb">Full Code</a></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-05-12T11:57:01.000Z">2020-05-12</time>
                 
                 <div class="level-item">
@@ -1024,112 +1116,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-14T16:26:50.000Z">2020-04-14</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    6 minutes read (About 930 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/04/14/Pytorch-ReLU/">Pytorch_ReLU</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="Pytorch-ReLU에-대하여"><a href="#Pytorch-ReLU에-대하여" class="headerlink" title="Pytorch ReLU에 대하여"></a>Pytorch ReLU에 대하여</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
-<li><p><a href="https://already-ready.github.io/2020/04/08/Pytorch-Logistic-regression/">이전 포스팅</a>에서 두 가지 클래스를 분류하는 모델을 만들때 sigmoid함수를 사용했습니다.</p>
-</li>
-<li><p>하지만, sigmoid함수에는 모델이 깊어질수록 vanishing Gradient문제가 발생하게 됩니다.</p>
-</li>
-<li><p>vanishing Gradient란, 역전파를 통해 gradient를 전파받을 때, 0에 근접한 값들이 곱해짐에 따라 앞단으로 갈수록 gradient가 사라지게 되는 문제입니다.</p>
-</li>
-<li><p>이러한 문제가 생기는 이유는 sigmoid 함수 그래프를 통해 확인할 수 있습니다.</p>
-</li>
-<li><p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Logistic-curve.svg/320px-Logistic-curve.svg.png" alt="sigmoid 그래프"></p>
-</li>
-<li><p>sigmoid 그래프의 양 극단으로 갈수록 기울기는 0에 수렴하게 되는것을 볼 수 있고, 이때문에 역전파를 통해 gradient가 곱해질 때마다 그 값 또한 0으로 수렴하게 됩니다.</p>
-</li>
-<li><p>따라서 아래 그림과 같이 역전파가 깊이 전달될수록 gradient가 사라지는 vanishing gradient 문제가 발생하게 됩니다.</p>
-</li>
-<li><p><img src="https://www.googleapis.com/download/storage/v1/b/kaggle-user-content/o/inbox%2F278186%2Fd158ec3585bc1551d9f3a03ae13a3a73%2Fvanishing%20gradient%20problem.png?generation=1574233763365617&alt=media" alt="vanishing Gradient"></p>
-</li>
-<li><p>이러한 문제를 해결하기 위해 Hinton교수님이 찾아낸 방법이 바로 ReLU 입니다.</p>
-</li>
-<li><p>ReLU를 수식으로 나타내면 다음과 같습니다.</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(x) = max(<span class="number">0</span>, x)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>입력값 x가 들어왔을때, 0보다 크다면 자기자신을 그렇지 않다면 0을 되돌려주는것이 바로 ReLU입니다.</p>
-</li>
-<li><p>코드에서 활성화 함수만 sigmoid에서 ReLU로 바꾸면 되기때문에 ReLU를 이용한 MNIST classifier 를 만들어보겠습니다.</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># nn Linear layer 만들기</span></span><br><span class="line">linear1 = torch.nn.Linear(<span class="number">784</span>, <span class="number">256</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear2 = torch.nn.Linear(<span class="number">256</span>, <span class="number">256</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear3 = torch.nn.Linear(<span class="number">256</span>, <span class="number">10</span>, bias=<span class="literal">True</span>)</span><br><span class="line">relu = torch.nn.ReLU()</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>Linear layer와 활성화 함수로 사용할 ReLU를 정의해주고, Linear layer의 weight를 normalization 합니다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Linear layer의 weight를 normalization시켜주기</span></span><br><span class="line">torch.nn.init.normal_(linear1.weight)</span><br><span class="line">torch.nn.init.normal_(linear2.weight)</span><br><span class="line">torch.nn.init.normal_(linear3.weight)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>위를 이용해 모델을 정의하고,</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 모델 정의</span></span><br><span class="line">model = torch.nn.Sequential(linear1, relu, linear2, relu, linear3).to(device)</span><br><span class="line"><span class="comment">###&gt;&gt;&gt; 왜 linear3다음에는 relu를 하지않는가</span></span><br><span class="line"><span class="comment">###&gt;&gt;&gt; 우리가 사용할 criterion은 CrossEntropyLoss인데 여기에는 마지막에 softmax activation이 포함되어 있기 때문이다.</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>loss / optimizer 를 정의합니다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># loss / optimizer 정의</span></span><br><span class="line">criterion = torch.nn.CrossEntropyLoss().to(device)</span><br><span class="line">optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>정한 epoch수만큼 모델을 학습시킵니다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">total_batch = len(data_loader)</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs):</span><br><span class="line">    avg_loss = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> X, Y <span class="keyword">in</span> data_loader:</span><br><span class="line">        X = X.view(<span class="number">-1</span>, <span class="number">28</span>*<span class="number">28</span>).to(device)</span><br><span class="line">        Y = Y.to(device)</span><br><span class="line"></span><br><span class="line">        hypothesis = model(X)</span><br><span class="line">        loss = criterion(hypothesis, Y)</span><br><span class="line"></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step()</span><br><span class="line"></span><br><span class="line">        avg_loss += loss / total_batch</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'Epoch:'</span>, <span class="string">'%04d'</span> % (epoch + <span class="number">1</span>), <span class="string">'cost ='</span>, <span class="string">'&#123;:.9f&#125;'</span>.format(avg_loss))</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>학습이 끝났다면 테스트 데이터에서 하나를 선택해 예측값과 실제값을 비교해 결과를 확인해봅니다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> torch.no_grad(): <span class="comment"># --&gt; 여기에서는(test에서는) gradient를 계산하지 않고 진행한다는 뜻이다.</span></span><br><span class="line">    X_test = mnist_test.test_data.view(<span class="number">-1</span>, <span class="number">28</span>*<span class="number">28</span>).float().to(device)</span><br><span class="line">    Y_test = mnist_test.test_labels.to(device)</span><br><span class="line"></span><br><span class="line">    prediction = model(X_test)</span><br><span class="line">    correct_prediction = torch.argmax(prediction, dim=<span class="number">1</span>) == Y_test</span><br><span class="line">    accuracy = correct_prediction.float().mean()</span><br><span class="line">    print(<span class="string">'Accuracy:'</span>, accuracy.item())</span><br><span class="line"></span><br><span class="line">    r = random.randint(<span class="number">0</span>, len(mnist_test) - <span class="number">1</span>)</span><br><span class="line">    X_single_data = mnist_test.test_data[r:r + <span class="number">1</span>].view(<span class="number">-1</span>, <span class="number">28</span> * <span class="number">28</span>).float().to(device)</span><br><span class="line">    Y_single_data = mnist_test.test_labels[r:r + <span class="number">1</span>].to(device)</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'Label: '</span>, Y_single_data.item())</span><br><span class="line">    single_prediction = model(X_single_data)</span><br><span class="line">    print(<span class="string">'Prediction: '</span>, torch.argmax(single_prediction, <span class="number">1</span>).item())</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>하나의 데이터를 통해 예측값과 실제값까지 확인해볼 수 있었습니다.</li>
-</ul>
-<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/MNIST_nn_ReLU.py">Full Code</a></p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1196,7 +1182,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            44
+                            45
                         </p>
                     </a>
                 </div>
@@ -1357,7 +1343,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">19</span>
+                <span class="level-item tag">20</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -1373,7 +1359,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">15</span>
+                <span class="level-item tag">16</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -1433,6 +1419,25 @@
         
         <article class="media">
             
+            <a href="/2020/05/14/Pytorch-VGG-with-CIFAR10/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_VGG_with_CIFAR10">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-14T18:42:19.000Z">2020-05-14</time></div>
+                    <a href="/2020/05/14/Pytorch-VGG-with-CIFAR10/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_VGG_with_CIFAR10</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_VGG_Advance_CNN">
@@ -1507,25 +1512,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/30/Pytorch-Convolution-layer/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Convolution_layer">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-30T16:41:25.000Z">2020-04-30</time></div>
-                    <a href="/2020/04/30/Pytorch-Convolution-layer/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Convolution_layer</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1543,7 +1529,7 @@
                     <span class="level-item">May 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">4</span>
+                    <span class="level-item tag">5</span>
                 </span>
             </a>
         </li>
@@ -1640,14 +1626,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">28</span>
+                        <span class="tag is-grey">29</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">15</span>
+                        <span class="tag is-grey">16</span>
                     </a>
                 </div>
                 
@@ -1696,6 +1682,25 @@
         
         <article class="media">
             
+            <a href="/2020/05/14/Pytorch-VGG-with-CIFAR10/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_VGG_with_CIFAR10">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-14T18:42:19.000Z">2020-05-14</time></div>
+                    <a href="/2020/05/14/Pytorch-VGG-with-CIFAR10/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_VGG_with_CIFAR10</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_VGG_Advance_CNN">
@@ -1770,25 +1775,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/30/Pytorch-Convolution-layer/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Convolution_layer">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-30T16:41:25.000Z">2020-04-30</time></div>
-                    <a href="/2020/04/30/Pytorch-Convolution-layer/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Convolution_layer</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1806,7 +1792,7 @@
                     <span class="level-item">May 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">4</span>
+                    <span class="level-item tag">5</span>
                 </span>
             </a>
         </li>
@@ -1903,14 +1889,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">28</span>
+                        <span class="tag is-grey">29</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">15</span>
+                        <span class="tag is-grey">16</span>
                     </a>
                 </div>
                 
