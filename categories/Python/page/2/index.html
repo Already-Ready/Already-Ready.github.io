@@ -144,6 +144,116 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-04-16T19:56:28.000Z">2020-04-16</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 minutes read (About 624 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/04/16/Pytorch-weight-initialization/">Pytorch_weight_initialization</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="Pytorch-Weight-initialization에-대하여"><a href="#Pytorch-Weight-initialization에-대하여" class="headerlink" title="Pytorch Weight initialization에 대하여"></a>Pytorch Weight initialization에 대하여</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
+<li><p>모델을 학습하기 이전에 weight의 초기값을 설정하는 문제는 모델의 학습에 굉장히 중요한 문제였습니다.</p>
+</li>
+<li><p>초기에 이 문제를 해결하기 위해서 사용했던 방법은 RBM(restricted boltzmann machine)이었습니다.</p>
+</li>
+<li><p>RBM은 layer1과 다음 레이어 layer2를 통해 weight1을 학습한 후 w1을 고정한 상태에서 layer2와 layer3를 통해 weight2를 학습하는 과정을 반복하는 방법입니다.</p>
+</li>
+<li><p><img src="http://www.todaysoftmag.ro/tsm/images/articles/tsm20/a22.png" alt="RBM"></p>
+</li>
+<li><p>하지만, 요즘에는 새로운 initialization 방법들이 제안되면서 RBM을 많이 사용하지 않고 있습니다.</p>
+</li>
+<li><p>대표적으로 간단히 initialization할 수 있는 두 가지 방법인 Xavier / He initialization 에 대해 알아보겠습니다.</p>
+</li>
+<li><p><a href="https://pytorch.org/docs/stable/nn.init.html#torch.nn.init.xavier_uniform_"><strong>Xavier initialization</strong></a></p>
+<ul>
+<li><p>Xavier / He initialization 모두 Normal initialization 방법과 Uniform initialization 방법을 가지고 있으며 모두 간단한 수식을 통해 이루어집니다.</p>
+</li>
+<li><p>Xavier Normal initialization</p>
+<script type="math/tex; mode=display">W\sim N({ 0 }, Var(W))</script>
+
+<script type="math/tex; mode=display">Var(W)=\sqrt{\frac { 2 }{ { n }_{ in }+{ n }_{ out } } }</script>
+</li>
+<li><p>n<sub>in</sub>은 layer의 input수, n<sub>out</sub>은 layer의 output수를 뜻합니다.<br><br></br></p>
+</li>
+<li><p>Xavier Uniform initialization</p>
+<script type="math/tex; mode=display">W\sim U(- \sqrt{\frac { 6 }{ { n }_{ in }+{ n }_{ out } } } , \space\space + \sqrt{\frac { 6 }{ { n }_{ in }+{ n }_{ out } } } )</script>
+</li>
+<li><p>n<sub>in</sub>은 layer의 input수, n<sub>out</sub>은 layer의 output수를 뜻합니다.<br><br></br></p>
+</li>
+</ul>
+</li>
+<li><p><a href="https://pytorch.org/docs/stable/nn.init.html#torch.nn.init.kaiming_uniform_"><strong>He initialization</strong></a></p>
+<ul>
+<li><p>He Normal initialization</p>
+<script type="math/tex; mode=display">W\sim N({ 0 }, Var(W))</script>
+
+<script type="math/tex; mode=display">Var(W)=\sqrt{\frac { 2 }{ { n }_{ in } } }</script> 
+</li>
+<li><p>n<sub>in</sub>은 layer의 input수를 뜻합니다.<br><br></br></p>
+</li>
+<li><p>He Uniform initialization</p>
+<script type="math/tex; mode=display">W\sim U(- \sqrt{\frac { 6 }{ { n }_{ in } } } , \space\space + \sqrt{\frac { 6 }{ { n }_{ in } } } )</script>
+</li>
+<li><p>n<sub>in</sub>은 layer의 input수를 뜻합니다.  </p>
+</li>
+</ul>
+</li>
+<li><p>Pytorch에서는 <code>torch.nn.init</code>패키지를 통해서 사용할 수 있습니다.</p>
+</li>
+<li><p><a href="https://already-ready.github.io/2020/04/14/Pytorch-ReLU/">ReLU</a>에 관해서 작성한 포스트에서 작성한 코드와 달라진 점은 weight를 초기화해주는 부분뿐입니다.</p>
+</li>
+<li><p>먼저 linear layer를 만들고,</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">linear1 = torch.nn.Linear(<span class="number">784</span>, <span class="number">256</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear2 = torch.nn.Linear(<span class="number">256</span>, <span class="number">256</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear3 = torch.nn.Linear(<span class="number">256</span>, <span class="number">10</span>, bias=<span class="literal">True</span>)</span><br><span class="line">relu = torch.nn.ReLU()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>다음과 같이 xavier_uniform으로 초기화 할 수 있습니다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">torch.nn.init.xavier_uniform_(linear1.weight)</span><br><span class="line">torch.nn.init.xavier_uniform_(linear2.weight)</span><br><span class="line">torch.nn.init.xavier_uniform_(linear3.weight)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a href="https://already-ready.github.io/2020/04/14/Pytorch-ReLU/">ReLU</a> 포스트의 코드와 다른점은 weight initialization뿐이지만 Accuracy가 상승된것을 확인할 수 있습니다.</li>
+</ul>
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/xavier_initialization_MNIST.py">Full Code</a></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-04-14T16:26:50.000Z">2020-04-14</time>
                 
                 <div class="level-item">
@@ -1078,80 +1188,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-17T22:50:33.000Z">2020-03-17</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 minutes read (About 459 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/03/17/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-missing-%EB%A9%94%EC%84%9C%EB%93%9C%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC/">파이썬_딕셔너리___missing___메서드에_관하여.</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="파이썬-딕셔너리-missing-메서드에-관하여"><a href="#파이썬-딕셔너리-missing-메서드에-관하여" class="headerlink" title="파이썬 딕셔너리 missing 메서드에 관하여"></a>파이썬 딕셔너리 <strong>missing</strong> 메서드에 관하여</h1><ul>
-<li>파이썬 딕셔너리를 사용할 때 찾는 key값이 없는 경우 다음과 같은 에러가 발생한다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mine2 = dict()</span><br><span class="line">mine2[<span class="string">"dog"</span>] = [<span class="string">"Na"</span>, <span class="string">"Mg"</span>]</span><br><span class="line">print(mine2[<span class="string">"cat"</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">### print &gt;&gt; KeyError: 'cat'</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>이러한 KeyError 를 딕셔너리를 상속받는 자기만의 딕셔너리 클래스를 만들어서 해결할 수 있는 방법이 있다.</p>
-<ul>
-<li><p>missing 메서드는 딕셔너리의 key 값을 찾고싶다는 입력을 보냈을 때 키 값이 존재하지 않을 경우 어떤 값을 return 할까를 작성할 수 있다. (정확히는 getitem 에서 key가 없을 경우 정의된 missing 을 호출한다.)</p>
-</li>
-<li><p>다음과 같은 나만의 딕셔너리를 만들어보자.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">mydict</span><span class="params">(dict)</span>:</span></span><br><span class="line">   	<span class="function"><span class="keyword">def</span> <span class="title">__missing__</span><span class="params">(self, key)</span>:</span></span><br><span class="line">       	<span class="keyword">return</span> []</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>딕셔너리를 상속받은 나의 mydict에 다음과 같은 데이터를 넣어보자.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mine = mydict()</span><br><span class="line"></span><br><span class="line">mine[<span class="string">"dog"</span>] = [<span class="string">"H"</span>]</span><br><span class="line">mine[<span class="string">"tiger"</span>] = [<span class="string">"He, Li"</span>]</span><br><span class="line">mine[<span class="string">"wolf"</span>] = [<span class="string">"Be"</span>, <span class="string">"B"</span>, <span class="string">"C"</span>]</span><br><span class="line"></span><br><span class="line">print(mine)</span><br><span class="line"></span><br><span class="line"><span class="comment">### print &gt;&gt; &#123;'dog': ['H'], 'tiger': ['He, Li'], 'wolf': ['Be', 'B', 'C']&#125;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>위와 같은 mine 딕셔너리에서 처음과 같이 “cat” 을 찾으려고 한다면 어떻게 될까?</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(mine[&quot;cat&quot;])</span><br><span class="line"></span><br><span class="line">### print &gt;&gt; []</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>KeyError 가 발생하지 않았다. 왜냐하면 나만의 딕셔너리에 정의한 missing 메서드를 통해 key값이 없다면 빈 리스트를 return하게 만들었기 때문이다!</p>
-</li>
-<li><p>이를 이용하면 다음과 같이 데이터를 다룰 수도 있다.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mine[&quot;cat&quot;] +&#x3D; [&quot;N&quot;, &quot;O&quot;, &quot;F&quot;, &quot;Ne&quot;]</span><br><span class="line"></span><br><span class="line">print(mine)</span><br><span class="line"></span><br><span class="line">### print &gt;&gt; &#123;&#39;dog&#39;: [&#39;H&#39;], &#39;tiger&#39;: [&#39;He, Li&#39;], &#39;wolf&#39;: [&#39;Be&#39;, &#39;B&#39;, &#39;C&#39;], &#39;cat&#39;: [&#39;N&#39;, &#39;O&#39;, &#39;F&#39;, &#39;Ne&#39;]&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>그냥 처음과 같이 데이터를 입력하면 되는것이 아닌가? 라고 생각할 수 있지만 큐나 스텍을 이용해 순차적으로 모든 데이터를 순회하는 경우에는 이와같은 방법이 유용하게 쓰일 수 있다.</p>
-</li>
-</ul>
-</li>
-</ul>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1159,7 +1195,7 @@
         <div class="pagination-previous">
             <a class="is-flex-grow has-text-black-ter" href="/categories/Python/">Previous</a>
         </div>
-        <div class="pagination-next is-invisible is-hidden-mobile">
+        <div class="pagination-next">
             <a class="is-flex-grow has-text-black-ter" href="/categories/Python/page/3/">Next</a>
         </div>
         <ul class="pagination-list is-hidden-mobile">
@@ -1167,6 +1203,8 @@
             <li><a class="pagination-link has-text-black-ter" href="/categories/Python/">1</a></li>
             
             <li><a class="pagination-link is-current" href="/categories/Python/page/2/">2</a></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/categories/Python/page/3/">3</a></li>
             
         </ul>
     </nav>
@@ -1216,7 +1254,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            45
+                            46
                         </p>
                     </a>
                 </div>
@@ -1377,7 +1415,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">20</span>
+                <span class="level-item tag">21</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -1393,7 +1431,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">16</span>
+                <span class="level-item tag">17</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -1453,6 +1491,25 @@
         
         <article class="media">
             
+            <a href="/2020/05/24/Pytorch-About-SGD/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_SGD">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-24T14:30:43.000Z">2020-05-24</time></div>
+                    <a href="/2020/05/24/Pytorch-About-SGD/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_About_SGD</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/14/Pytorch-VGG-with-CIFAR10/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_VGG_with_CIFAR10">
@@ -1527,25 +1584,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/01/Pytorch-MNIST-CNN/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_MNIST_CNN">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-01T21:01:13.000Z">2020-05-01</time></div>
-                    <a href="/2020/05/01/Pytorch-MNIST-CNN/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_MNIST_CNN</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1563,7 +1601,7 @@
                     <span class="level-item">May 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">5</span>
+                    <span class="level-item tag">6</span>
                 </span>
             </a>
         </li>
@@ -1660,14 +1698,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">29</span>
+                        <span class="tag is-grey">30</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">16</span>
+                        <span class="tag is-grey">17</span>
                     </a>
                 </div>
                 
@@ -1716,6 +1754,25 @@
         
         <article class="media">
             
+            <a href="/2020/05/24/Pytorch-About-SGD/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_SGD">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-24T14:30:43.000Z">2020-05-24</time></div>
+                    <a href="/2020/05/24/Pytorch-About-SGD/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_About_SGD</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/14/Pytorch-VGG-with-CIFAR10/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_VGG_with_CIFAR10">
@@ -1790,25 +1847,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/01/Pytorch-MNIST-CNN/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_MNIST_CNN">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-01T21:01:13.000Z">2020-05-01</time></div>
-                    <a href="/2020/05/01/Pytorch-MNIST-CNN/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_MNIST_CNN</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1826,7 +1864,7 @@
                     <span class="level-item">May 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">5</span>
+                    <span class="level-item tag">6</span>
                 </span>
             </a>
         </li>
@@ -1923,14 +1961,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">29</span>
+                        <span class="tag is-grey">30</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">16</span>
+                        <span class="tag is-grey">17</span>
                     </a>
                 </div>
                 
