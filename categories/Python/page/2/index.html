@@ -144,6 +144,112 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-04-18T22:57:35.000Z">2020-04-18</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 minutes read (About 1108 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/04/18/Pytorch-Dropout/">Pytorch_Dropout</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="Pytorch-Dropout에-대하여"><a href="#Pytorch-Dropout에-대하여" class="headerlink" title="Pytorch Dropout에 대하여"></a>Pytorch Dropout에 대하여</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
+<li><p>Dropout은 모델의 layer가 많아질때 생기는 overfitting문제를 해결하기 위해 사용된다.  </p>
+</li>
+<li><p>overfitting이란 train데이터를 모델이 지나치게 정확히 학습하는 바람에 모델이 test데이터에서는 좋은 결과를 내놓지 못하는 경우이다.  </p>
+</li>
+<li><p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Overfitting.svg/300px-Overfitting.svg.png" alt="overfitting">  </p>
+</li>
+<li><p>위 그림에서 초록색선을 보면 빨간점과 파란점을 완벽하게 분류하는 것을 확인할 수 있다. 이렇게 train 데이터에 지나치게 학습된 경우를 overfitting이라하며, 적절한 학습의 정도를 까만선이 나타내고 있다.  </p>
+</li>
+<li><p>이러한 overfitting문제를 해결하기 위해 dropout을 사용하게 된다.  </p>
+</li>
+<li><p>dropout이란 forward함수를 통해 train데이터가 layer를 지날때 뉴런 일부를 생략하고 학습을 진행하는것이다.  </p>
+</li>
+<li><p><img src="https://miro.medium.com/max/1400/1*iWQzxhVlvadk6VAJjsgXgg.png" alt="dropout">  </p>
+</li>
+<li><p>위의 우측 그림과 같이 layer마다 임의의 뉴런을 생략하고 학습을 진행하는 것을 볼 수 있다.  </p>
+</li>
+<li><p>사용자가 정의한 비율만큼의 뉴런을 생략하고 학습을 진행할 때, 매 epoch마다 다른 뉴런들이 꺼졌다가 켜지기를 반복하게 된다.  </p>
+</li>
+<li><p>이는 매번 다른 모델을 학습하는것과 유사하기 때문에 Ensemble(앙상블)효과를 기대할 수도 있다.  </p>
+</li>
+<li><p>dropout을 사용할 때는 non-linear 활성화 함수 다음에 사용하게 된다.  </p>
+</li>
+<li><p>MNIST 데이터셋을 이용해 활용법을 살펴보자.  </p>
+</li>
+<li><p>통과할 linear 와 relu 그리고 dropout을 설정해준다.  </p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># nn Linear layer / relu / dropout 만들기</span></span><br><span class="line">linear1 = torch.nn.Linear(<span class="number">784</span>, <span class="number">512</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear2 = torch.nn.Linear(<span class="number">512</span>, <span class="number">512</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear3 = torch.nn.Linear(<span class="number">512</span>, <span class="number">512</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear4 = torch.nn.Linear(<span class="number">512</span>, <span class="number">512</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear5 = torch.nn.Linear(<span class="number">512</span>, <span class="number">10</span>, bias=<span class="literal">True</span>)</span><br><span class="line">relu = torch.nn.ReLU()</span><br><span class="line">dropout = torch.nn.Dropout(p=drop_prob) <span class="comment"># drop_prob = 0.3 in my code</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>이를 이용해 모델을 만들때 선형함수를 통과하고 활성화 함수를 지난 뒤에 dropout을 적용해준다.  </li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">model = torch.nn.Sequential(linear1, relu, dropout, linear2, relu, dropout,</span><br><span class="line">                            linear3, relu, dropout, linear4, relu, dropout,</span><br><span class="line">                            linear5).to(device)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>이렇게 만들어진 모델로 학습과 평가를 똑같이 진행할 수 없다.  </p>
+</li>
+<li><p>왜냐하면 학습 이후 평가할 때 dropout이 켜져있다면 모든 weight를 사용하지 않고 output을 내게 되기 때문이다.  </p>
+</li>
+<li><p>이렇게 dropout은 학습할때는 사용하고, 평가를 위해서는 사용하지 말아야한다.  </p>
+</li>
+<li><p>이를 조절할 수 있는 함수가 <code>train()</code>함수와 <code>eval()</code>함수이다.  </p>
+</li>
+<li><p>다음고 같이 <code>train()</code>함수를 통해 dropout을 사용하겠다는 표시를 한 후, 학습을 진행해야 한다.  </p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">model.train() <span class="comment"># train() 함수를 사용하면 dropout=True로 설정된다.</span></span><br><span class="line"><span class="comment"># 즉 학습할때 사용해야하고 추후 모델을 평가할때는 eval()함수를 꼭 설정해줘야한다.</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs):</span><br><span class="line">    avg_loss = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> X, Y <span class="keyword">in</span> data_loader:</span><br><span class="line">        X = X.view(<span class="number">-1</span>, <span class="number">28</span>*<span class="number">28</span>).to(device)</span><br><span class="line">        Y = Y.to(device)</span><br><span class="line"></span><br><span class="line">        hypothesis = model(X)</span><br><span class="line">        loss = criterion(hypothesis, Y)</span><br><span class="line"></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step()</span><br><span class="line"></span><br><span class="line">        avg_loss += loss / total_batch</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'Epoch:'</span>, <span class="string">'%04d'</span> % (epoch + <span class="number">1</span>), <span class="string">'cost ='</span>, <span class="string">'&#123;:.9f&#125;'</span>.format(avg_loss))</span><br><span class="line"></span><br><span class="line">print(<span class="string">'Learning finished'</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>학습을 마친 후, 랜덤한 하나의 데이터를 통해 결과를 확인해 보고 싶다면 다음과 같이 <code>eval()</code>함수를 통해 dropout을 사용하지 않겠다고 표시한 후 평가를 진행해야 한다.  </li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> torch.no_grad(): <span class="comment"># --&gt; 여기에서는(test에서는) gradient를 계산하지 않고 진행한다는 뜻이다.</span></span><br><span class="line">    model.eval() <span class="comment"># --&gt; eval() 함수를 사용하면 dropout=False 로 설정되서 모든 노드를 사용해 모델을 평가하게된다.</span></span><br><span class="line">    X_test = mnist_test.test_data.view(<span class="number">-1</span>, <span class="number">28</span>*<span class="number">28</span>).float().to(device)</span><br><span class="line">    Y_test = mnist_test.test_labels.to(device)</span><br><span class="line"></span><br><span class="line">    prediction = model(X_test)</span><br><span class="line">    correct_prediction = torch.argmax(prediction, dim=<span class="number">1</span>) == Y_test</span><br><span class="line">    accuracy = correct_prediction.float().mean()</span><br><span class="line">    print(<span class="string">'Accuracy:'</span>, accuracy.item())</span><br><span class="line"></span><br><span class="line">    r = random.randint(<span class="number">0</span>, len(mnist_test) - <span class="number">1</span>)</span><br><span class="line">    X_single_data = mnist_test.test_data[r:r + <span class="number">1</span>].view(<span class="number">-1</span>, <span class="number">28</span> * <span class="number">28</span>).float().to(device)</span><br><span class="line">    Y_single_data = mnist_test.test_labels[r:r + <span class="number">1</span>].to(device)</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'Label: '</span>, Y_single_data.item())</span><br><span class="line">    single_prediction = model(X_single_data)</span><br><span class="line">    print(<span class="string">'Prediction: '</span>, torch.argmax(single_prediction, <span class="number">1</span>).item())</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>첫째로, dropout은 non-linear 활성화 함수 다음에 사용한다는 점</p>
+</li>
+<li><p>둘째로, 학습과 평가를 위해서는 <code>train()</code>함수와 <code>eval()</code>함수를 반드시 사용해야 된다는 것을 기억해야겠다.</p>
+</li>
+</ul>
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/dropout_MNIST.py">Full Code</a></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-04-16T19:56:28.000Z">2020-04-16</time>
                 
                 <div class="level-item">
@@ -1067,127 +1173,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-24T11:55:20.000Z">2020-03-24</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 minutes read (About 510 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/03/24/%ED%8C%8C%EC%9D%B4%EC%8D%AC-dataframe-function-apply-%EB%B0%A9%EB%B2%95-without-iterrrows/">파이썬_dataframe_function_apply_방법_without_iterrrows</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="파이썬-dataframe-각-row에-function을-apply하는-방법에-대하여"><a href="#파이썬-dataframe-각-row에-function을-apply하는-방법에-대하여" class="headerlink" title="파이썬 dataframe 각 row에 function을 apply하는 방법에 대하여."></a>파이썬 dataframe 각 row에 function을 apply하는 방법에 대하여.</h1><ul>
-<li><p>dataframe을 다루다보면 각 행(row)에 대해 특정 값에 대한 결과를 얻거나 과정을 수행하고 싶을 때가 있다.</p>
-</li>
-<li><p>이럴때 가장먼저 떠오르는것은 <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.iterrows.html">pd.iterrows()</a> 였다.</p>
-</li>
-<li><p>하지만 천만건이 넘어가는 데이터를 다루려 하다보니 iterrows는 너무나 느리다는 것을 알게 되었다.</p>
-</li>
-<li><p>이를 해결하기 위해 찾아낸 방법이 수행할 작업을 function으로 만들고 각 행에 <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html">apply</a>하는 것이다.</p>
-</li>
-<li><p>간단한 dataframe 을 만들어서 살펴보자.</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">rectangles = [</span><br><span class="line">    &#123; <span class="string">'Name'</span>: <span class="string">"A"</span>, <span class="string">'Age'</span>: <span class="number">17</span> &#125;,</span><br><span class="line">    &#123; <span class="string">'Name'</span>: <span class="string">"B"</span>, <span class="string">'Age'</span>: <span class="number">20</span> &#125;,</span><br><span class="line">    &#123; <span class="string">'Name'</span>: <span class="string">"C"</span>, <span class="string">'Age'</span>: <span class="number">27</span> &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">rectangles_df = pd.DataFrame(rectangles)</span><br><span class="line">print(rectangles_df)</span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Age</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>A</td>
-<td>17</td>
-</tr>
-<tr>
-<td>B</td>
-<td>20</td>
-</tr>
-<tr>
-<td>C</td>
-<td>27</td>
-</tr>
-</tbody></table>
-<ul>
-<li><p>이름과 성별이 주어진 dataframe이 있을 때 각 행을 살펴보며 어떤 사람이 투표권을 행사할 수 있을지 판단해보려고 한다.</p>
-</li>
-<li><p>각 행을 입력받아 Age 가 18세 이상이라면 True를 그렇지 않다면 False를 반환하는 함수를 만든뒤 datafrmae에 <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html">apply</a>한다.</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">vote</span><span class="params">(row)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> row[<span class="string">'Age'</span>] &gt;= <span class="number">18</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">else</span>: <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">rectangles_df[<span class="string">"vote"</span>] = rectangles_df.apply(vote, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">print(rectangles_df)</span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Age</th>
-<th>vote</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>A</td>
-<td>17</td>
-<td>False</td>
-</tr>
-<tr>
-<td>B</td>
-<td>20</td>
-<td>True</td>
-</tr>
-<tr>
-<td>C</td>
-<td>27</td>
-<td>True</td>
-</tr>
-</tbody></table>
-<ul>
-<li><p>위와 같이 각 행의 Age 를 판단해 vote라는 새로운 칼럼을 만들어낸 것을 볼 수 있다.</p>
-</li>
-<li><p>이와같이 함수를 dataframe에 apply할 때 각 행(row)에 대하여 적용하고 싶다면 df.apply(func, axis=1) 로 axis=1 을 잊지말아야 한다.</p>
-</li>
-<li><p>위의 예제는 행이 3개라 iterrows로 실습해도 차이를 느낄순 없을것이다. 하지만 데이터 크기가 커질수록 iterrows를 사용하는것은 자제하고 apply를 적용하는 방법을 알아야한다.</p>
-</li>
-<li><p>apply 외에도 몇가지 다른 방법을 알고 싶다면 <a href="https://medium.com/@rtjeannier/pandas-101-cont-9d061cb73bfc">참고</a>해보자.</p>
-</li>
-</ul>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1254,7 +1239,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            46
+                            47
                         </p>
                     </a>
                 </div>
@@ -1415,7 +1400,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">21</span>
+                <span class="level-item tag">22</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -1431,7 +1416,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">17</span>
+                <span class="level-item tag">18</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -1491,6 +1476,25 @@
         
         <article class="media">
             
+            <a href="/2020/06/08/Pytorch-About-RESNET/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_RESNET">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-08T21:15:31.000Z">2020-06-08</time></div>
+                    <a href="/2020/06/08/Pytorch-About-RESNET/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_About_RESNET</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/24/Pytorch-About-SGD/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_SGD">
@@ -1565,25 +1569,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/06/Pytorch-visdom%EC%9C%BC%EB%A1%9C-Loss-plot%EA%B7%B8%EB%A6%AC%EA%B8%B0/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_visdom으로_Loss_plot그리기">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T16:14:42.000Z">2020-05-06</time></div>
-                    <a href="/2020/05/06/Pytorch-visdom%EC%9C%BC%EB%A1%9C-Loss-plot%EA%B7%B8%EB%A6%AC%EA%B8%B0/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_visdom으로_Loss_plot그리기</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1594,6 +1579,17 @@
             Archives
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2020/05/">
@@ -1698,14 +1694,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">30</span>
+                        <span class="tag is-grey">31</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">17</span>
+                        <span class="tag is-grey">18</span>
                     </a>
                 </div>
                 
@@ -1754,6 +1750,25 @@
         
         <article class="media">
             
+            <a href="/2020/06/08/Pytorch-About-RESNET/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_RESNET">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-08T21:15:31.000Z">2020-06-08</time></div>
+                    <a href="/2020/06/08/Pytorch-About-RESNET/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_About_RESNET</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/24/Pytorch-About-SGD/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_SGD">
@@ -1828,25 +1843,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/06/Pytorch-visdom%EC%9C%BC%EB%A1%9C-Loss-plot%EA%B7%B8%EB%A6%AC%EA%B8%B0/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_visdom으로_Loss_plot그리기">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T16:14:42.000Z">2020-05-06</time></div>
-                    <a href="/2020/05/06/Pytorch-visdom%EC%9C%BC%EB%A1%9C-Loss-plot%EA%B7%B8%EB%A6%AC%EA%B8%B0/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_visdom으로_Loss_plot그리기</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1857,6 +1853,17 @@
             Archives
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2020/05/">
@@ -1961,14 +1968,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">30</span>
+                        <span class="tag is-grey">31</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">17</span>
+                        <span class="tag is-grey">18</span>
                     </a>
                 </div>
                 

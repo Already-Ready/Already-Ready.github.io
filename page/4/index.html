@@ -133,6 +133,103 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-01-16T22:15:45.000Z">2020-01-16</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/Go/">Go</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 minutes read (About 349 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/01/16/%EA%B4%84%ED%98%B8-9012%EB%B2%88/">괄호_9012번</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="Python-Go-백준-9012번-풀이"><a href="#Python-Go-백준-9012번-풀이" class="headerlink" title="[Python, Go] 백준 9012번 풀이"></a>[Python, Go] 백준 9012번 풀이</h1><h3 id="괄호"><a href="#괄호" class="headerlink" title="괄호"></a>괄호</h3><ul>
+<li><p>괄호의 쌍이 맞게 이루어져있는지 찾아내는 문제이다.</p>
+</li>
+<li><p>“(“괄호와 “)” 괄호의 개수를 세는것에서 끝나면 안된다.</p>
+</li>
+<li><p>스택에 “(“ 가 들어왔을때 저장하고 “)” 와 만나면 스택에서 하나를 제거하는 방법으로 쌍을 맞춰주었다.</p>
+</li>
+<li><p>가장 먼저 들어오는 문자열이  “)” 이라면 쌍이 맞을 수 없으므로 NO 를 리턴하며, 문자열 모두를 파악한 후 stack이 비어있다면 YES 그렇지 않다면 NO 이다</p>
+</li>
+<li><p>Python 풀이</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">n = int(sys.stdin.readline())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">vps</span><span class="params">(li)</span>:</span></span><br><span class="line">    stack = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> li[<span class="number">0</span>] == <span class="string">")"</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"NO"</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">for</span> s <span class="keyword">in</span> li:</span><br><span class="line">            <span class="keyword">if</span> s == <span class="string">"("</span>:</span><br><span class="line">                stack.append(s)</span><br><span class="line">            <span class="keyword">elif</span> s == <span class="string">")"</span> <span class="keyword">and</span> stack != []:</span><br><span class="line">                stack.pop()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="string">"NO"</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> stack == []:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"YES"</span></span><br><span class="line">        <span class="keyword">else</span>: <span class="keyword">return</span> <span class="string">"NO"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    order = list(sys.stdin.readline().rstrip())</span><br><span class="line">    print(vps(order))</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li><p>Go 풀이</p>
+<ul>
+<li>Go 를 사용할때는 파이썬의 pop과같은 내장함수가 없으므로 “)”를 만났을때 슬라이스의 길이가 1인 경우와 그렇지 않은 경우를 나눠서 판단했다.</li>
+</ul>
+</li>
+</ul>
+<pre><code class="Go"><span class="function"><span class="keyword">func</span> <span class="title">vps</span><span class="params">(x <span class="keyword">string</span>)</span> <span class="title">string</span></span> {
+    <span class="keyword">var</span> stack []<span class="keyword">string</span>
+
+    <span class="keyword">for</span> idx, ch := <span class="keyword">range</span> x {
+        s := <span class="keyword">string</span>(ch)
+        <span class="keyword">if</span> idx == <span class="number">0</span> &amp;&amp; s == <span class="string">")"</span> {
+            <span class="keyword">return</span> <span class="string">"NO"</span>
+        } <span class="keyword">else</span> {
+            <span class="keyword">if</span> s == <span class="string">"("</span> {
+                stack = <span class="built_in">append</span>(stack, s)
+            } <span class="keyword">else</span> <span class="keyword">if</span> s == <span class="string">")"</span> &amp;&amp; stack != <span class="literal">nil</span> {
+                length := <span class="built_in">len</span>(stack)
+                <span class="keyword">if</span> length == <span class="number">1</span> {
+                    stack = <span class="literal">nil</span>
+                } <span class="keyword">else</span> {
+                    stack = stack[:length<span class="number">-1</span>]
+                }
+            } <span class="keyword">else</span> {
+                <span class="keyword">return</span> <span class="string">"NO"</span>
+            }
+        }
+    }
+    <span class="keyword">if</span> stack == <span class="literal">nil</span> {
+        <span class="keyword">return</span> <span class="string">"YES"</span>
+    } <span class="keyword">else</span> {
+        <span class="keyword">return</span> <span class="string">"NO"</span>
+    }
+}</code></pre>
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/baekjoon/blob/master/9012.py">Full Code - Python</a>  </p>
+<p><a href="https://github.com/Already-Ready/baekjoon/blob/master/Go_solutions/9012.go">Full Code - Go</a>  </p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-01-15T13:55:53.000Z">2020-01-15</time>
                 
                 <div class="level-item">
@@ -952,58 +1049,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-01-03T13:15:00.000Z">2020-01-03</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    a minute read (About 204 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/01/03/%ED%83%9D%EC%8B%9C%EA%B8%B0%ED%95%98%ED%95%99-3053%EB%B2%88/">택시기하학_3053번</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="Python-백준-3053번-풀이"><a href="#Python-백준-3053번-풀이" class="headerlink" title="[Python] 백준 3053번 풀이"></a>[Python] 백준 3053번 풀이</h1><h3 id="택시-기하학"><a href="#택시-기하학" class="headerlink" title="택시 기하학"></a>택시 기하학</h3><p>1.택시 기하학에서 원이 어떻게 정의되는지 이해하면 매우 간단한 문제이다.<br>&nbsp;&nbsp;&nbsp; 아래의 그림을 통해 택시 기하학에서의 원을 살펴볼 수 있다.</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/d/de/TaxicabGeometryCircle.svg" alt="tax"></p>
-<p><strong>직교 좌표계</strong>에서 같은 거리에 있는 점들의 집합을 원이라고 정의하므로 위와같이 나타낼 수 있다.</p>
-<p>따라서 빨간 점들을 살펴보면 정사각형을 이루는것을 알 수 있고 정사각형의 넓이는 반지름 r이 주어졌을때 다음과 같이 구할 수 있다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">k = <span class="number">2</span>*(r**<span class="number">2</span>) <span class="comment">## 피타고라스 정리에 의해 c^2 = a^2 + b^2 = a^2 + a^2 = 2*a^2</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/baekjoon/blob/master/3053.py">Full Code</a></p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1074,7 +1119,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            46
+                            47
                         </p>
                     </a>
                 </div>
@@ -1235,7 +1280,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">21</span>
+                <span class="level-item tag">22</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -1251,7 +1296,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">17</span>
+                <span class="level-item tag">18</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -1311,6 +1356,25 @@
         
         <article class="media">
             
+            <a href="/2020/06/08/Pytorch-About-RESNET/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_RESNET">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-08T21:15:31.000Z">2020-06-08</time></div>
+                    <a href="/2020/06/08/Pytorch-About-RESNET/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_About_RESNET</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/24/Pytorch-About-SGD/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_SGD">
@@ -1385,25 +1449,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/06/Pytorch-visdom%EC%9C%BC%EB%A1%9C-Loss-plot%EA%B7%B8%EB%A6%AC%EA%B8%B0/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_visdom으로_Loss_plot그리기">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T16:14:42.000Z">2020-05-06</time></div>
-                    <a href="/2020/05/06/Pytorch-visdom%EC%9C%BC%EB%A1%9C-Loss-plot%EA%B7%B8%EB%A6%AC%EA%B8%B0/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_visdom으로_Loss_plot그리기</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1414,6 +1459,17 @@
             Archives
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2020/05/">
@@ -1518,14 +1574,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">30</span>
+                        <span class="tag is-grey">31</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">17</span>
+                        <span class="tag is-grey">18</span>
                     </a>
                 </div>
                 
@@ -1574,6 +1630,25 @@
         
         <article class="media">
             
+            <a href="/2020/06/08/Pytorch-About-RESNET/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_RESNET">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-08T21:15:31.000Z">2020-06-08</time></div>
+                    <a href="/2020/06/08/Pytorch-About-RESNET/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_About_RESNET</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/24/Pytorch-About-SGD/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_SGD">
@@ -1648,25 +1723,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/06/Pytorch-visdom%EC%9C%BC%EB%A1%9C-Loss-plot%EA%B7%B8%EB%A6%AC%EA%B8%B0/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_visdom으로_Loss_plot그리기">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T16:14:42.000Z">2020-05-06</time></div>
-                    <a href="/2020/05/06/Pytorch-visdom%EC%9C%BC%EB%A1%9C-Loss-plot%EA%B7%B8%EB%A6%AC%EA%B8%B0/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_visdom으로_Loss_plot그리기</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1677,6 +1733,17 @@
             Archives
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2020/05/">
@@ -1781,14 +1848,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">30</span>
+                        <span class="tag is-grey">31</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">17</span>
+                        <span class="tag is-grey">18</span>
                     </a>
                 </div>
                 

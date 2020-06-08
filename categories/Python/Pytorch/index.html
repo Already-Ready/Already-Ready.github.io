@@ -146,6 +146,98 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-06-08T21:15:31.000Z">2020-06-08</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    10 minutes read (About 1501 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/06/08/Pytorch-About-RESNET/">Pytorch_About_RESNET</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="RESNET-모델의-생성과정-살펴보기"><a href="#RESNET-모델의-생성과정-살펴보기" class="headerlink" title="RESNET 모델의 생성과정 살펴보기"></a>RESNET 모델의 생성과정 살펴보기</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
+<li><p>CNN advanced model중 하나인 RESNET의 모델 생성과정을 소스코드를 보며 살펴보고자 한다.</p>
+</li>
+<li><p><a href="https://pytorch.org/docs/stable/_modules/torchvision/models/resnet.html#resnet50">RESNET</a>에서 파이토치 소스코드를 볼 수 있으며 이를 기준으로 모델 생성 과정을 따라가보았다.</p>
+</li>
+<li><p>RESNET은 RESNET Class외에 BasicBlock과 Bottleneck class를 통해 모델이 생성된다.</p>
+</li>
+<li><p>RESNET 모델의 생성과정에서 downsample을 이용해 output의 shape을 맞춰주게 된다.</p>
+</li>
+<li><p>예를 들어, BasicBlock에 stride=2 로 설정해 3x64x64의 이미지가 들어갔을때 아래의 forward함수를 살펴보자.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BasicBlock</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    expansion = <span class="number">1</span></span><br><span class="line">	<span class="comment"># stride값으로 2가 들어갔을 때를 살펴보자</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, inplanes, planes, stride=<span class="number">2</span>, downsample=None, groups=<span class="number">1</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                 base_width=<span class="number">64</span>, dilation=<span class="number">1</span>, norm_layer=None)</span>:</span></span><br><span class="line">        super(BasicBlock, self).__init__()</span><br><span class="line">        self.conv1 = conv3x3(inplanes, planes, stride)</span><br><span class="line">        self.bn1 = norm_layer(planes)</span><br><span class="line">        self.relu = nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line">        self.conv2 = conv3x3(planes, planes)</span><br><span class="line">        self.bn2 = norm_layer(planes)</span><br><span class="line">        self.downsample = downsample</span><br><span class="line">        self.stride = stride</span><br><span class="line"></span><br><span class="line">	<span class="comment"># x로 3x64x64의 input이 들어갔을때 각 output의 shape을 생각해보자.</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        identity = x</span><br><span class="line">		<span class="comment"># identity shape = 3x64x64</span></span><br><span class="line">		</span><br><span class="line">        out = self.conv1(x) </span><br><span class="line">		<span class="comment"># out shape = 3x32x32</span></span><br><span class="line">        out = self.bn1(out)</span><br><span class="line">        out = self.relu(out)</span><br><span class="line"></span><br><span class="line">        out = self.conv2(out)</span><br><span class="line">		<span class="comment">#out shape = 3x32x32</span></span><br><span class="line">        out = self.bn2(out)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.downsample <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            identity = self.downsample(x)</span><br><span class="line">		</span><br><span class="line">        <span class="comment"># stride를 2로 적용하니 out의 shape과 identity의 shape이 맞지 않아서 </span></span><br><span class="line">		<span class="comment"># 둘을 아래와 같이 더해줄 수 없는 문제가 발생한다.</span></span><br><span class="line">		<span class="comment"># 이러한 문젤르 해결해 shape를 맞춰주도록 사용하는게 downsample 이다.</span></span><br><span class="line">		</span><br><span class="line">		out += identity</span><br><span class="line">		</span><br><span class="line">        out = self.relu(out)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> out</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>파이토치에서는 resnet18~152까지 지원하는데 이번에는 resnet50의 생성과정을 살펴보자.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_resnet</span><span class="params">(arch, block, layers, pretrained, progress, **kwargs)</span>:</span></span><br><span class="line">    model = ResNet(block, layers, **kwargs)</span><br><span class="line">    <span class="keyword">if</span> pretrained:</span><br><span class="line">        state_dict = load_state_dict_from_url(model_urls[arch],</span><br><span class="line">                                              progress=progress)</span><br><span class="line">        model.load_state_dict(state_dict)</span><br><span class="line">    <span class="keyword">return</span> model</span><br><span class="line">	</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">resnet50</span><span class="params">(pretrained=False, progress=True, **kwargs)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> _resnet(<span class="string">'resnet50'</span>, Bottleneck, [<span class="number">3</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">3</span>], pretrained, progress,</span><br><span class="line">                   **kwargs)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>resnet50은 Bottleneck class를 ResNet class가 받으며 만들어지며 layers로 [3,4,6,3]의 리스트를 받는다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ResNet</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_forward_impl</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="comment"># See note [TorchScript super()]</span></span><br><span class="line">        x = self.conv1(x)</span><br><span class="line">        x = self.bn1(x)</span><br><span class="line">        x = self.relu(x)</span><br><span class="line">        x = self.maxpool(x)</span><br><span class="line"></span><br><span class="line">        x = self.layer1(x)</span><br><span class="line">        x = self.layer2(x)</span><br><span class="line">        x = self.layer3(x)</span><br><span class="line">        x = self.layer4(x)</span><br><span class="line"></span><br><span class="line">        x = self.avgpool(x)</span><br><span class="line">        x = torch.flatten(x, <span class="number">1</span>)</span><br><span class="line">        x = self.fc(x)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>기본적으로 앞의 conv1, bn1, relu, maxpool를 지난뒤 layer1~4까지를 통과하게 된다. 이때 각 layer는 VGG와 비슷하게 make_layer함수를 통해 이루어지게 되며 다음과 같은 값을 받게 된다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ResNet</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">	<span class="comment"># _resnet('resnet50', Bottleneck, [3, 4, 6, 3], pretrained, progress, **kwargs)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, block, layers, num_classes=<span class="number">1000</span>, zero_init_residual=False,</span></span></span><br><span class="line"><span class="function"><span class="params">                 groups=<span class="number">1</span>, width_per_group=<span class="number">64</span>, replace_stride_with_dilation=None,</span></span></span><br><span class="line"><span class="function"><span class="params">                 norm_layer=None)</span>:</span></span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.	</span><br><span class="line">		<span class="comment"># layers값으로 [3,4,6,3]의 리스트를 받았으므로 아래의 layer1~4는 각각 3,4,6,3을 받게된다.</span></span><br><span class="line">		self.layer1 = self._make_layer(block, <span class="number">64</span>, layers[<span class="number">0</span>]) </span><br><span class="line">        self.layer2 = self._make_layer(block, <span class="number">128</span>, layers[<span class="number">1</span>], stride=<span class="number">2</span>,</span><br><span class="line">                                       dilate=replace_stride_with_dilation[<span class="number">0</span>])</span><br><span class="line">        self.layer3 = self._make_layer(block, <span class="number">256</span>, layers[<span class="number">2</span>], stride=<span class="number">2</span>,</span><br><span class="line">                                       dilate=replace_stride_with_dilation[<span class="number">1</span>])</span><br><span class="line">        self.layer4 = self._make_layer(block, <span class="number">512</span>, layers[<span class="number">3</span>], stride=<span class="number">2</span>,</span><br><span class="line">                                       dilate=replace_stride_with_dilation[<span class="number">2</span>])</span><br><span class="line">		<span class="comment"># make_layer함수가 block를 Bottleneck으로, planes로 64 그리고 blocks로 3을 입력받게 된다.</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>make_layer에서 layer1이 생성되는 과정은 다음과 같다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_make_layer</span><span class="params">(self, block, planes, blocks, stride=<span class="number">1</span>, dilate=False)</span>:</span></span><br><span class="line">	norm_layer = self._norm_layer</span><br><span class="line">	downsample = <span class="literal">None</span></span><br><span class="line">	previous_dilation = self.dilation</span><br><span class="line">	<span class="keyword">if</span> dilate:</span><br><span class="line">		self.dilation *= stride</span><br><span class="line">		stride = <span class="number">1</span></span><br><span class="line">	<span class="keyword">if</span> stride != <span class="number">1</span> <span class="keyword">or</span> self.inplanes != planes * block.expansion:</span><br><span class="line">		downsample = nn.Sequential(</span><br><span class="line">			conv1x1(self.inplanes, planes * block.expansion, stride),</span><br><span class="line">			norm_layer(planes * block.expansion),</span><br><span class="line">		)</span><br><span class="line"></span><br><span class="line">	layers = []</span><br><span class="line">	layers.append(block(self.inplanes, planes, stride, downsample, self.groups,</span><br><span class="line">						self.base_width, previous_dilation, norm_layer))</span><br><span class="line">	self.inplanes = planes * block.expansion</span><br><span class="line">	<span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">1</span>, blocks):</span><br><span class="line">		layers.append(block(self.inplanes, planes, groups=self.groups,</span><br><span class="line">							base_width=self.base_width, dilation=self.dilation,</span><br><span class="line">							norm_layer=norm_layer))</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> nn.Sequential(*layers)</span><br><span class="line"></span><br><span class="line"><span class="comment"># layer1 = _make_layer(Bottleneck, 64, 3)</span></span><br><span class="line"><span class="comment"># Bottleneck.expansion = 4</span></span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> (self.inplanes = <span class="number">64</span>) != (planes = <span class="number">64</span>) * (Bottleneck.expansion = <span class="number">4</span>) 이므로 downsample이 실행된다.</span><br><span class="line">이때 downsample은 채널의 수를 맞춰주기 위해서 실행되는 과정이다.</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> 이제 layers 리스트에 block()이 하나씩 추가되게 되는데 처음으로 Bottleneck(<span class="number">64</span>, <span class="number">64</span>, <span class="number">1</span>, downsample)이 추가된다.</span><br><span class="line"></span><br><span class="line">layers = [</span><br><span class="line">		Bottleneck(<span class="number">64</span>, <span class="number">64</span>, <span class="number">1</span>, downsample)	</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span> 그리고 self.inplanes값이 planes * block.expansion = <span class="number">64</span> * <span class="number">4</span> = <span class="number">256</span>으로 변한다.</span><br><span class="line"></span><br><span class="line"><span class="number">4.</span> 다음으로 blocks의 값이 <span class="number">3</span>을 입력받았으므로 두번의 <span class="keyword">for</span> loop를 돌며 두 개의 Bottleneck()이 추가된다.</span><br><span class="line"></span><br><span class="line">layers = [</span><br><span class="line">		Bottleneck(<span class="number">64</span>, <span class="number">64</span>, <span class="number">1</span>, downsample)	</span><br><span class="line">		Bottleneck(<span class="number">256</span>, <span class="number">64</span>)	</span><br><span class="line">		Bottleneck(<span class="number">256</span>, <span class="number">64</span>)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>위와 같은 과정을 통해 layer1이 만들어졌는데 실제 ResNet50을 불러서 위에서 계산한 값과 동일하게 Bottleneck()을 통해 생성되었는지 확인해 볼 수 있다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line">resnet = torchvision.models.resnet50()</span><br><span class="line">print(resnet)</span><br><span class="line"><span class="comment">#&gt;&gt;&gt;</span></span><br><span class="line">ResNet(</span><br><span class="line">  (conv1): Conv2d(<span class="number">3</span>, <span class="number">64</span>, kernel_size=(<span class="number">7</span>, <span class="number">7</span>), stride=(<span class="number">2</span>, <span class="number">2</span>), padding=(<span class="number">3</span>, <span class="number">3</span>), bias=<span class="literal">False</span>)</span><br><span class="line">  (bn1): BatchNorm2d(<span class="number">64</span>, eps=<span class="number">1e-05</span>, momentum=<span class="number">0.1</span>, affine=<span class="literal">True</span>, track_running_stats=<span class="literal">True</span>)</span><br><span class="line">  (relu): ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line">  (maxpool): MaxPool2d(kernel_size=<span class="number">3</span>, stride=<span class="number">2</span>, padding=<span class="number">1</span>, dilation=<span class="number">1</span>, ceil_mode=<span class="literal">False</span>)</span><br><span class="line">  (layer1): Sequential(</span><br><span class="line">    (<span class="number">0</span>): Bottleneck(</span><br><span class="line">      (conv1): Conv2d(<span class="number">64</span>, <span class="number">64</span>, kernel_size=(<span class="number">1</span>, <span class="number">1</span>), stride=(<span class="number">1</span>, <span class="number">1</span>), bias=<span class="literal">False</span>)</span><br><span class="line">      (bn1): BatchNorm2d(<span class="number">64</span>, eps=<span class="number">1e-05</span>, momentum=<span class="number">0.1</span>, affine=<span class="literal">True</span>, track_running_stats=<span class="literal">True</span>)</span><br><span class="line">      (conv2): Conv2d(<span class="number">64</span>, <span class="number">64</span>, kernel_size=(<span class="number">3</span>, <span class="number">3</span>), stride=(<span class="number">1</span>, <span class="number">1</span>), padding=(<span class="number">1</span>, <span class="number">1</span>), bias=<span class="literal">False</span>)</span><br><span class="line">      (bn2): BatchNorm2d(<span class="number">64</span>, eps=<span class="number">1e-05</span>, momentum=<span class="number">0.1</span>, affine=<span class="literal">True</span>, track_running_stats=<span class="literal">True</span>)</span><br><span class="line">      (conv3): Conv2d(<span class="number">64</span>, <span class="number">256</span>, kernel_size=(<span class="number">1</span>, <span class="number">1</span>), stride=(<span class="number">1</span>, <span class="number">1</span>), bias=<span class="literal">False</span>)</span><br><span class="line">      (bn3): BatchNorm2d(<span class="number">256</span>, eps=<span class="number">1e-05</span>, momentum=<span class="number">0.1</span>, affine=<span class="literal">True</span>, track_running_stats=<span class="literal">True</span>)</span><br><span class="line">      (relu): ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line">      (downsample): Sequential(</span><br><span class="line">        (<span class="number">0</span>): Conv2d(<span class="number">64</span>, <span class="number">256</span>, kernel_size=(<span class="number">1</span>, <span class="number">1</span>), stride=(<span class="number">1</span>, <span class="number">1</span>), bias=<span class="literal">False</span>)</span><br><span class="line">        (<span class="number">1</span>): BatchNorm2d(<span class="number">256</span>, eps=<span class="number">1e-05</span>, momentum=<span class="number">0.1</span>, affine=<span class="literal">True</span>, track_running_stats=<span class="literal">True</span>)</span><br><span class="line">      )</span><br><span class="line">    )</span><br><span class="line">    (<span class="number">1</span>): Bottleneck(</span><br><span class="line">      (conv1): Conv2d(<span class="number">256</span>, <span class="number">64</span>, kernel_size=(<span class="number">1</span>, <span class="number">1</span>), stride=(<span class="number">1</span>, <span class="number">1</span>), bias=<span class="literal">False</span>)</span><br><span class="line">      (bn1): BatchNorm2d(<span class="number">64</span>, eps=<span class="number">1e-05</span>, momentum=<span class="number">0.1</span>, affine=<span class="literal">True</span>, track_running_stats=<span class="literal">True</span>)</span><br><span class="line">      (conv2): Conv2d(<span class="number">64</span>, <span class="number">64</span>, kernel_size=(<span class="number">3</span>, <span class="number">3</span>), stride=(<span class="number">1</span>, <span class="number">1</span>), padding=(<span class="number">1</span>, <span class="number">1</span>), bias=<span class="literal">False</span>)</span><br><span class="line">      (bn2): BatchNorm2d(<span class="number">64</span>, eps=<span class="number">1e-05</span>, momentum=<span class="number">0.1</span>, affine=<span class="literal">True</span>, track_running_stats=<span class="literal">True</span>)</span><br><span class="line">      (conv3): Conv2d(<span class="number">64</span>, <span class="number">256</span>, kernel_size=(<span class="number">1</span>, <span class="number">1</span>), stride=(<span class="number">1</span>, <span class="number">1</span>), bias=<span class="literal">False</span>)</span><br><span class="line">      (bn3): BatchNorm2d(<span class="number">256</span>, eps=<span class="number">1e-05</span>, momentum=<span class="number">0.1</span>, affine=<span class="literal">True</span>, track_running_stats=<span class="literal">True</span>)</span><br><span class="line">      (relu): ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line">    )</span><br><span class="line">    (<span class="number">2</span>): Bottleneck(</span><br><span class="line">      (conv1): Conv2d(<span class="number">256</span>, <span class="number">64</span>, kernel_size=(<span class="number">1</span>, <span class="number">1</span>), stride=(<span class="number">1</span>, <span class="number">1</span>), bias=<span class="literal">False</span>)</span><br><span class="line">      (bn1): BatchNorm2d(<span class="number">64</span>, eps=<span class="number">1e-05</span>, momentum=<span class="number">0.1</span>, affine=<span class="literal">True</span>, track_running_stats=<span class="literal">True</span>)</span><br><span class="line">      (conv2): Conv2d(<span class="number">64</span>, <span class="number">64</span>, kernel_size=(<span class="number">3</span>, <span class="number">3</span>), stride=(<span class="number">1</span>, <span class="number">1</span>), padding=(<span class="number">1</span>, <span class="number">1</span>), bias=<span class="literal">False</span>)</span><br><span class="line">      (bn2): BatchNorm2d(<span class="number">64</span>, eps=<span class="number">1e-05</span>, momentum=<span class="number">0.1</span>, affine=<span class="literal">True</span>, track_running_stats=<span class="literal">True</span>)</span><br><span class="line">      (conv3): Conv2d(<span class="number">64</span>, <span class="number">256</span>, kernel_size=(<span class="number">1</span>, <span class="number">1</span>), stride=(<span class="number">1</span>, <span class="number">1</span>), bias=<span class="literal">False</span>)</span><br><span class="line">      (bn3): BatchNorm2d(<span class="number">256</span>, eps=<span class="number">1e-05</span>, momentum=<span class="number">0.1</span>, affine=<span class="literal">True</span>, track_running_stats=<span class="literal">True</span>)</span><br><span class="line">      (relu): ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line">    )</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>실제 resnet50에서도 layer1에서 총 3개의 Bottleneck이 생성된것을 확인할 수 있다. 각 Bottleneck의 convolution layer값 또한 확인해 볼 수 있었다.</p>
+</li>
+<li><p>위와 같은 방식으로 총 4개의 layer가 구성되며 각 layer의 깊이는 입력받는 blocks수로 결정된다.</p>
+</li>
+<li><p>이와같은 ResNet모델의 기본 입력은 3x224x224이다. 하지만 우리가 입력하고자 하는 이미지의 크기가 다를 수 있는데 이와 같은 상황일 때 어떻게 모델을 수정하고 적용할 수 있는지 다음 포스트에서 살펴보고자 한다.</p>
+</li>
+</ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-05-24T14:33:43.000Z">2020-05-24</time>
                 
                 <div class="level-item">
@@ -1006,116 +1098,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-16T19:56:28.000Z">2020-04-16</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 minutes read (About 624 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/04/16/Pytorch-weight-initialization/">Pytorch_weight_initialization</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="Pytorch-Weight-initialization에-대하여"><a href="#Pytorch-Weight-initialization에-대하여" class="headerlink" title="Pytorch Weight initialization에 대하여"></a>Pytorch Weight initialization에 대하여</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
-<li><p>모델을 학습하기 이전에 weight의 초기값을 설정하는 문제는 모델의 학습에 굉장히 중요한 문제였습니다.</p>
-</li>
-<li><p>초기에 이 문제를 해결하기 위해서 사용했던 방법은 RBM(restricted boltzmann machine)이었습니다.</p>
-</li>
-<li><p>RBM은 layer1과 다음 레이어 layer2를 통해 weight1을 학습한 후 w1을 고정한 상태에서 layer2와 layer3를 통해 weight2를 학습하는 과정을 반복하는 방법입니다.</p>
-</li>
-<li><p><img src="http://www.todaysoftmag.ro/tsm/images/articles/tsm20/a22.png" alt="RBM"></p>
-</li>
-<li><p>하지만, 요즘에는 새로운 initialization 방법들이 제안되면서 RBM을 많이 사용하지 않고 있습니다.</p>
-</li>
-<li><p>대표적으로 간단히 initialization할 수 있는 두 가지 방법인 Xavier / He initialization 에 대해 알아보겠습니다.</p>
-</li>
-<li><p><a href="https://pytorch.org/docs/stable/nn.init.html#torch.nn.init.xavier_uniform_"><strong>Xavier initialization</strong></a></p>
-<ul>
-<li><p>Xavier / He initialization 모두 Normal initialization 방법과 Uniform initialization 방법을 가지고 있으며 모두 간단한 수식을 통해 이루어집니다.</p>
-</li>
-<li><p>Xavier Normal initialization</p>
-<script type="math/tex; mode=display">W\sim N({ 0 }, Var(W))</script>
-
-<script type="math/tex; mode=display">Var(W)=\sqrt{\frac { 2 }{ { n }_{ in }+{ n }_{ out } } }</script>
-</li>
-<li><p>n<sub>in</sub>은 layer의 input수, n<sub>out</sub>은 layer의 output수를 뜻합니다.<br><br></br></p>
-</li>
-<li><p>Xavier Uniform initialization</p>
-<script type="math/tex; mode=display">W\sim U(- \sqrt{\frac { 6 }{ { n }_{ in }+{ n }_{ out } } } , \space\space + \sqrt{\frac { 6 }{ { n }_{ in }+{ n }_{ out } } } )</script>
-</li>
-<li><p>n<sub>in</sub>은 layer의 input수, n<sub>out</sub>은 layer의 output수를 뜻합니다.<br><br></br></p>
-</li>
-</ul>
-</li>
-<li><p><a href="https://pytorch.org/docs/stable/nn.init.html#torch.nn.init.kaiming_uniform_"><strong>He initialization</strong></a></p>
-<ul>
-<li><p>He Normal initialization</p>
-<script type="math/tex; mode=display">W\sim N({ 0 }, Var(W))</script>
-
-<script type="math/tex; mode=display">Var(W)=\sqrt{\frac { 2 }{ { n }_{ in } } }</script> 
-</li>
-<li><p>n<sub>in</sub>은 layer의 input수를 뜻합니다.<br><br></br></p>
-</li>
-<li><p>He Uniform initialization</p>
-<script type="math/tex; mode=display">W\sim U(- \sqrt{\frac { 6 }{ { n }_{ in } } } , \space\space + \sqrt{\frac { 6 }{ { n }_{ in } } } )</script>
-</li>
-<li><p>n<sub>in</sub>은 layer의 input수를 뜻합니다.  </p>
-</li>
-</ul>
-</li>
-<li><p>Pytorch에서는 <code>torch.nn.init</code>패키지를 통해서 사용할 수 있습니다.</p>
-</li>
-<li><p><a href="https://already-ready.github.io/2020/04/14/Pytorch-ReLU/">ReLU</a>에 관해서 작성한 포스트에서 작성한 코드와 달라진 점은 weight를 초기화해주는 부분뿐입니다.</p>
-</li>
-<li><p>먼저 linear layer를 만들고,</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">linear1 = torch.nn.Linear(<span class="number">784</span>, <span class="number">256</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear2 = torch.nn.Linear(<span class="number">256</span>, <span class="number">256</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear3 = torch.nn.Linear(<span class="number">256</span>, <span class="number">10</span>, bias=<span class="literal">True</span>)</span><br><span class="line">relu = torch.nn.ReLU()</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>다음과 같이 xavier_uniform으로 초기화 할 수 있습니다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">torch.nn.init.xavier_uniform_(linear1.weight)</span><br><span class="line">torch.nn.init.xavier_uniform_(linear2.weight)</span><br><span class="line">torch.nn.init.xavier_uniform_(linear3.weight)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><a href="https://already-ready.github.io/2020/04/14/Pytorch-ReLU/">ReLU</a> 포스트의 코드와 다른점은 weight initialization뿐이지만 Accuracy가 상승된것을 확인할 수 있습니다.</li>
-</ul>
-<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/xavier_initialization_MNIST.py">Full Code</a></p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1180,7 +1162,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            46
+                            47
                         </p>
                     </a>
                 </div>
@@ -1341,7 +1323,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">21</span>
+                <span class="level-item tag">22</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -1357,7 +1339,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">17</span>
+                <span class="level-item tag">18</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -1417,6 +1399,25 @@
         
         <article class="media">
             
+            <a href="/2020/06/08/Pytorch-About-RESNET/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_RESNET">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-08T21:15:31.000Z">2020-06-08</time></div>
+                    <a href="/2020/06/08/Pytorch-About-RESNET/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_About_RESNET</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/24/Pytorch-About-SGD/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_SGD">
@@ -1491,25 +1492,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/06/Pytorch-visdom%EC%9C%BC%EB%A1%9C-Loss-plot%EA%B7%B8%EB%A6%AC%EA%B8%B0/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_visdom으로_Loss_plot그리기">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T16:14:42.000Z">2020-05-06</time></div>
-                    <a href="/2020/05/06/Pytorch-visdom%EC%9C%BC%EB%A1%9C-Loss-plot%EA%B7%B8%EB%A6%AC%EA%B8%B0/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_visdom으로_Loss_plot그리기</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1520,6 +1502,17 @@
             Archives
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2020/05/">
@@ -1624,14 +1617,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">30</span>
+                        <span class="tag is-grey">31</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">17</span>
+                        <span class="tag is-grey">18</span>
                     </a>
                 </div>
                 
@@ -1680,6 +1673,25 @@
         
         <article class="media">
             
+            <a href="/2020/06/08/Pytorch-About-RESNET/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_RESNET">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-08T21:15:31.000Z">2020-06-08</time></div>
+                    <a href="/2020/06/08/Pytorch-About-RESNET/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_About_RESNET</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/24/Pytorch-About-SGD/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_SGD">
@@ -1754,25 +1766,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/06/Pytorch-visdom%EC%9C%BC%EB%A1%9C-Loss-plot%EA%B7%B8%EB%A6%AC%EA%B8%B0/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_visdom으로_Loss_plot그리기">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T16:14:42.000Z">2020-05-06</time></div>
-                    <a href="/2020/05/06/Pytorch-visdom%EC%9C%BC%EB%A1%9C-Loss-plot%EA%B7%B8%EB%A6%AC%EA%B8%B0/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_visdom으로_Loss_plot그리기</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1783,6 +1776,17 @@
             Archives
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2020/05/">
@@ -1887,14 +1891,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">30</span>
+                        <span class="tag is-grey">31</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">17</span>
+                        <span class="tag is-grey">18</span>
                     </a>
                 </div>
                 
