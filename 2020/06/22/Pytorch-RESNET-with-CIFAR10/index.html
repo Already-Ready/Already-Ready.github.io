@@ -7,19 +7,19 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>Pytorch_Multi_Layer_Perceptron_MLP - Hexo</title>
+<title>Pytorch_RESNET_with_CIFAR10 - Hexo</title>
 
 
-    <meta name="description" content="Pytorch Multi Layer Perceptron(MLP)에 관하여 with code모두를 위한 딥러닝 - 파이토치 강의 참고  perceptron은 입력값 x에 대해 weight를 곱하고 bias를 더한 후 activation function을 거쳐서 나온 output을 통해 두가지의 class를 가지는 AND, OR 문제를 해결하기 위해 고안되었습">
+    <meta name="description" content="CIFAR10에 RESNET모델 적용해보기모두를 위한 딥러닝 - 파이토치 강의 참고 RESNET은 3X224X224를 기본 input으로 만들어졌다. 이 모델에 다른 크기를 가진 CIFAR10 이미지를 적용시키고자 한다.  BasicBlock과 Bottleneck class 부분은 그대로 유지하면 RESNET Class만 수정해서 사용하고자 한다.   12">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Pytorch_Multi_Layer_Perceptron_MLP">
-<meta property="og:url" content="http://yoursite.com/2020/04/10/Pytorch-Multi-Layer-Perceptron-MLP/index.html">
+<meta property="og:title" content="Pytorch_RESNET_with_CIFAR10">
+<meta property="og:url" content="http://yoursite.com/2020/06/22/Pytorch-RESNET-with-CIFAR10/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Pytorch Multi Layer Perceptron(MLP)에 관하여 with code모두를 위한 딥러닝 - 파이토치 강의 참고  perceptron은 입력값 x에 대해 weight를 곱하고 bias를 더한 후 activation function을 거쳐서 나온 output을 통해 두가지의 class를 가지는 AND, OR 문제를 해결하기 위해 고안되었습">
+<meta property="og:description" content="CIFAR10에 RESNET모델 적용해보기모두를 위한 딥러닝 - 파이토치 강의 참고 RESNET은 3X224X224를 기본 input으로 만들어졌다. 이 모델에 다른 크기를 가진 CIFAR10 이미지를 적용시키고자 한다.  BasicBlock과 Bottleneck class 부분은 그대로 유지하면 RESNET Class만 수정해서 사용하고자 한다.   12">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="article:published_time" content="2020-04-10T01:20:19.000Z">
-<meta property="article:modified_time" content="2020-04-09T16:18:23.263Z">
+<meta property="article:published_time" content="2020-06-22T15:46:49.000Z">
+<meta property="article:modified_time" content="2020-06-22T06:46:40.746Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="Pytorch">
@@ -82,7 +82,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="Pytorch_Multi_Layer_Perceptron_MLP" height="28">
+                <img src="/images/logo.svg" alt="Pytorch_RESNET_with_CIFAR10" height="28">
             
             </a>
         </div>
@@ -138,7 +138,7 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-10T01:20:19.000Z">2020-04-10</time>
+                <time class="level-item has-text-grey" datetime="2020-06-22T15:46:49.000Z">2020-06-22</time>
                 
                 <div class="level-item">
                 <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
@@ -148,7 +148,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    6 minutes read (About 961 words)
+                    3 minutes read (About 462 words)
                 </span>
                 
                 
@@ -157,175 +157,30 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                Pytorch_Multi_Layer_Perceptron_MLP
+                Pytorch_RESNET_with_CIFAR10
             
         </h1>
         <div class="content">
-            <h1 id="Pytorch-Multi-Layer-Perceptron-MLP-에-관하여-with-code"><a href="#Pytorch-Multi-Layer-Perceptron-MLP-에-관하여-with-code" class="headerlink" title="Pytorch Multi Layer Perceptron(MLP)에 관하여 with code"></a>Pytorch Multi Layer Perceptron(MLP)에 관하여 with code</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><hr>
-<ul>
-<li><p>perceptron은 입력값 x에 대해 weight를 곱하고 bias를 더한 후 activation function을 거쳐서 나온 output을 통해 두가지의 class를 가지는 AND, OR 문제를 해결하기 위해 고안되었습니다.</p>
+            <h1 id="CIFAR10에-RESNET모델-적용해보기"><a href="#CIFAR10에-RESNET모델-적용해보기" class="headerlink" title="CIFAR10에 RESNET모델 적용해보기"></a>CIFAR10에 RESNET모델 적용해보기</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
+<li><p>RESNET은 3X224X224를 기본 input으로 만들어졌다. 이 모델에 다른 크기를 가진 CIFAR10 이미지를 적용시키고자 한다.</p>
 </li>
-<li><p>AND gate는 다음과 같이 표로 나타낼 수 있습니다.</p>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>A</th>
-<th>B</th>
-<th>Output</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-</tr>
-</tbody></table>
-<ul>
-<li><p>위의 표는 매우 익숙하지만 이를 그래프로 나타내면 다음과 같이도 나타낼 수 있습니다.</p>
-</li>
-<li><p><img src="https://www.simonho.ca/wp-content/uploads/2018/02/AND_gate.png" alt="AND gate"></p>
-</li>
-<li><p>위의 그래프에서 0과 1을(off와 on)을 선 하나를 통해서 구분할 수 있는 방법은 빨간 점선으로 표시되어 있습니다. 즉, 하나의 선으로 두 가지의 class를 구분할 수 있습니다.</p>
-</li>
-<li><p>OR gate도 마찬가지 입니다.</p>
+<li><p>BasicBlock과 Bottleneck class 부분은 그대로 유지하면 RESNET Class만 수정해서 사용하고자 한다.</p>
 </li>
 </ul>
-<table>
-<thead>
-<tr>
-<th>A</th>
-<th>B</th>
-<th>Output</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-</tr>
-</tbody></table>
-<ul>
-<li><p>위와 같은 OR gate표를 그래프로 나타내면 다음과 같습니다.</p>
-</li>
-<li><p><img src="https://www.simonho.ca/wp-content/uploads/2018/02/OR_gate.png" alt="OR gate"></p>
-</li>
-<li><p>OR gate 그래프에서도 0과 1(off와 on)을 하나의 선으로 구분할 수 있습니다. 즉, AND gate와 마찬가지로 하나의 선으로 두 가지의 class를 구분할 수 있다는 뜻입니다.</p>
-</li>
-<li><p>다시 말해, AND 와 OR gate는 하나의 Layer를 가지는 perceptron으로 구분이 가능했습니다. </p>
-</li>
-<li><p>하지만, XOR gate는 달랐습니다.</p>
-</li>
-<li><p>XOR gate를 표로 나타내면 다음과 같습니다.</p>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>A</th>
-<th>B</th>
-<th>Output</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-</tr>
-</tbody></table>
-<ul>
-<li><p>이와같이 입력이 같으면 0을 다르면 1을 되돌려주는 XOR gate를 그래프로 나타내면 다음과 같습니다.</p>
-</li>
-<li><p><img src="https://www.simonho.ca/wp-content/uploads/2018/02/XOR_gate.png" alt="XOR gate"></p>
-</li>
-<li><p>위와 같은 그래프에서 0과 1(off와 on)을 하나의 선으로 구분할 수 없었습니다. 즉, 하나의 perceptron으로는 AND/OR gate 문제는 해결할 수 있었지만 XOR gate 문제를 해결할 수 없었습니다.</p>
-</li>
-<li><p>이렇게 하나의 perceptron으로 해결할 수 없는 문제를 해결하기 위해 등장한것이 Multi Layer Perceptron입니다.</p>
-</li>
-<li><p>다시 한번 위의 그래프를 봤을때, 하나의 선이 아니라 두개의 선으로는 0과 1(off와 on)을 구분할 수 있을까요?</p>
-</li>
-<li><p>답은 YES입니다. 즉, 두개 이상의 perceptron으로는 XOR gate문제를 해결할 수 있었습니다.</p>
-</li>
-<li><p>4개의 Layer를 갖는 모델을 구현해 확인해 보겠습니다.</p>
-</li>
-<li><p>먼저 XOR gate에 해당하는 데이터를 만들고,</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># XOR 데이터</span></span><br><span class="line">X = torch.FloatTensor([[<span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">1</span>], [<span class="number">1</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">1</span>]]).to(device)</span><br><span class="line">Y = torch.FloatTensor([[<span class="number">0</span>], [<span class="number">1</span>], [<span class="number">1</span>], [<span class="number">0</span>]]).to(device)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ResNet</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="comment"># CIFAR10 이미지 --&gt; 32x32 크기의 이미지가 입력이므로 기본 resnet을 일부 수정해서 사용</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, block, layers, num_classes=<span class="number">1000</span>, zero_init_residual=False)</span>:</span></span><br><span class="line">        super(ResNet, self).__init__()</span><br><span class="line">        self.inplanes = <span class="number">16</span></span><br><span class="line">        self.conv1 = nn.Conv2d(<span class="number">3</span>, <span class="number">16</span>, kernel_size=<span class="number">3</span>, stride=<span class="number">1</span>, padding=<span class="number">1</span>,</span><br><span class="line">                               bias=<span class="literal">False</span>)</span><br><span class="line">        self.bn1 = nn.BatchNorm2d(<span class="number">16</span>)</span><br><span class="line">        self.relu = nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line">        </span><br><span class="line">        self.layer1 = self._make_layer(block, <span class="number">16</span>, layers[<span class="number">0</span>], stride=<span class="number">1</span>)</span><br><span class="line">        self.layer2 = self._make_layer(block, <span class="number">32</span>, layers[<span class="number">1</span>], stride=<span class="number">1</span>)</span><br><span class="line">        self.layer3 = self._make_layer(block, <span class="number">64</span>, layers[<span class="number">2</span>], stride=<span class="number">2</span>)</span><br><span class="line">        self.layer4 = self._make_layer(block, <span class="number">128</span>, layers[<span class="number">3</span>], stride=<span class="number">2</span>)</span><br><span class="line">        </span><br><span class="line">        self.avgpool = nn.AdaptiveAvgPool2d((<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line">        self.fc = nn.Linear(<span class="number">128</span> * block.expansion, num_classes)</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>4개의 layer를 생성해 모델을 정의해줍니다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 4개의 레이어가 있는 MLP(Multi Layer Perceptron)</span></span><br><span class="line">linear1 = torch.nn.Linear(<span class="number">2</span>, <span class="number">10</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear2 = torch.nn.Linear(<span class="number">10</span>, <span class="number">10</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear3 = torch.nn.Linear(<span class="number">10</span>, <span class="number">10</span>, bias=<span class="literal">True</span>)</span><br><span class="line">linear4 = torch.nn.Linear(<span class="number">10</span>, <span class="number">1</span>, bias=<span class="literal">True</span>)</span><br><span class="line">sigmoid = torch.nn.Sigmoid()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 모델 정의</span></span><br><span class="line">model = torch.nn.Sequential(linear1, sigmoid, linear2, sigmoid, linear3, sigmoid,</span><br><span class="line">                            linear4, sigmoid).to(device)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>이후 loss와 optimizer를 정의해주고,</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  loss / optimizer 정의</span></span><br><span class="line">criterion = torch.nn.BCELoss().to(device)</span><br><span class="line">optimizer = torch.optim.SGD(model.parameters(), lr=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>모델을 통해 weight와 bias를 학습합니다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 학습</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">10001</span>):</span><br><span class="line">    optimizer.zero_grad()</span><br><span class="line">    hypothesis = model(X)</span><br><span class="line"></span><br><span class="line">    loss = criterion(hypothesis, Y)</span><br><span class="line">    loss.backward()</span><br><span class="line">    optimizer.step()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> epoch % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">        print(epoch, loss.item())</span><br><span class="line"><span class="comment">#&gt;&gt;&gt; print</span></span><br><span class="line"><span class="number">0</span> <span class="number">0.6948983669281006</span></span><br><span class="line"><span class="number">100</span> <span class="number">0.6931558847427368</span></span><br><span class="line"><span class="number">200</span> <span class="number">0.6931535005569458</span></span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line"><span class="number">9800</span> <span class="number">0.00016415018762927502</span></span><br><span class="line"><span class="number">9900</span> <span class="number">0.00016021561168599874</span></span><br><span class="line"><span class="number">10000</span> <span class="number">0.0001565046259202063</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>학습이 끝나면 실제값과 예측값이 잘 맞아 떨어지는지 확인합니다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 학습 후 실제값과 예측값 비교해보기</span></span><br><span class="line"><span class="keyword">with</span> torch.no_grad():</span><br><span class="line">    hypothesis = model(X)</span><br><span class="line">    predict = (hypothesis &gt; <span class="number">0.5</span>).float()</span><br><span class="line">    accuracy = (predict == Y).float().mean()</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'Hyptthesis : '</span>, hypothesis.detach().cpu().numpy(),</span><br><span class="line">          <span class="string">'\nCorrect : '</span>,predict.detach().cpu().numpy(),</span><br><span class="line">          <span class="string">'\nAccuracy : '</span>,accuracy.item())</span><br><span class="line"><span class="comment">#&gt;&gt;&gt; print</span></span><br><span class="line">Hyptthesis :  [[<span class="number">1.1168354e-04</span>]</span><br><span class="line"> [<span class="number">9.9982882e-01</span>]</span><br><span class="line"> [<span class="number">9.9984241e-01</span>]</span><br><span class="line"> [<span class="number">1.8533420e-04</span>]] </span><br><span class="line">Correct :  [[<span class="number">0.</span>]</span><br><span class="line"> [<span class="number">1.</span>]</span><br><span class="line"> [<span class="number">1.</span>]</span><br><span class="line"> [<span class="number">0.</span>]] </span><br><span class="line">Accuracy :  <span class="number">1.0</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>위의 결과를 통해 Multi Layer Perceptron을 사용하면 XOR gate문제를 해결할 수 있음을 확인했습니다.</p>
+<li><p>위와 같이 layer1~4에서 output의 채널수와 layer2의 strid를 2에서 1로 수정하였고 각 layer를 통과하기전의 max pooling을 삭제하였다.</p>
 </li>
-<li><p><a href="https://www.simonho.ca/machine-learning/xor-logic-gate-neural-networks/">참고</a></p>
+<li><p>위와같이 수정했을 때 forward함수에서 각 layer를 통과한 output의 shape을 예상해 볼 수 있다.</p>
 </li>
 </ul>
-<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/perceptron_XOR_problem.py">Full Code</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ResNet</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	<span class="comment"># 3x32x32 이미지를 input으로 넣었을 때, 각 layer를 통과한 후의 output shape</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        x = self.conv1(x)</span><br><span class="line">        <span class="comment">#x.shape =[1, 16, 32,32]</span></span><br><span class="line">        x = self.bn1(x)</span><br><span class="line">        x = self.relu(x)</span><br><span class="line"></span><br><span class="line">        x = self.layer1(x)</span><br><span class="line">        <span class="comment">#x.shape =[1, 128, 32,32]</span></span><br><span class="line">        x = self.layer2(x)</span><br><span class="line">        <span class="comment">#x.shape =[1, 256, 32,32]</span></span><br><span class="line">        x = self.layer3(x)</span><br><span class="line">        <span class="comment">#x.shape =[1, 512, 16,16]</span></span><br><span class="line">        x = self.layer4(x)</span><br><span class="line">        <span class="comment">#x.shape =[1, 1024, 8,8]</span></span><br><span class="line">        </span><br><span class="line">        x = self.avgpool(x)</span><br><span class="line">        x = x.view(x.size(<span class="number">0</span>), <span class="number">-1</span>)</span><br><span class="line">        x = self.fc(x)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>이후 bottleneck을 통한 resnet모델을 정의하고 학습시킬 수 있다. 이렇게 크기가 다른 이미지를 모델에 적용하고자 할 때 resnet class를 수정해서 사용할 수 있었다.</li>
+</ul>
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/Advanced_CNN_RESNET_with_CIFAR10.ipynb">Full Code</a></p>
 
         </div>
         
@@ -359,17 +214,10 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/04/13/Pytorch-Softmax-classification/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">Pytorch_Softmax_classification</span>
-            </a>
-        </div>
-        
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2020/04/08/Pytorch-Logistic-regression/">
-                <span class="level-item">Pytorch_Logistic_regression</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/06/08/Pytorch-About-RESNET/">
+                <span class="level-item">Pytorch_About_RESNET</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -385,8 +233,8 @@
         
 <script>
     var disqus_config = function () {
-        this.page.url = 'http://yoursite.com/2020/04/10/Pytorch-Multi-Layer-Perceptron-MLP/';
-        this.page.identifier = '2020/04/10/Pytorch-Multi-Layer-Perceptron-MLP/';
+        this.page.url = 'http://yoursite.com/2020/06/22/Pytorch-RESNET-with-CIFAR10/';
+        this.page.identifier = '2020/06/22/Pytorch-RESNET-with-CIFAR10/';
     };
     (function() {
         var d = document, s = d.createElement('script');  
@@ -1225,7 +1073,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="Pytorch_Multi_Layer_Perceptron_MLP" height="28">
+                    <img src="/images/logo.svg" alt="Pytorch_RESNET_with_CIFAR10" height="28">
                 
                 </a>
                 <p class="is-size-7">

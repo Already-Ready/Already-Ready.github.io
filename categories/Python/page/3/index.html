@@ -144,6 +144,100 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-03-29T20:31:22.000Z">2020-03-29</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 minutes read (About 566 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/03/29/%ED%8C%8C%EC%9D%B4%EC%8D%AC-dataframe-loc-iloc-%EC%9D%B8%EB%8D%B1%EC%8B%B1/">파이썬_dataframe_loc_iloc_인덱싱</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="파이썬-dataframe-인덱싱하기"><a href="#파이썬-dataframe-인덱싱하기" class="headerlink" title="파이썬 dataframe 인덱싱하기"></a>파이썬 dataframe 인덱싱하기</h1><ul>
+<li><p>dataframe을 인덱싱할때 loc과 iloc을 사용할 수 있다.</p>
+</li>
+<li><p>다음과 같은 데이터 프레임을 예시로 두 가지를 살펴보자.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.DataFrame(&#123;</span><br><span class="line">    <span class="string">'age'</span> :     [<span class="number">13</span>,<span class="number">17</span>,<span class="number">19</span>,<span class="number">21</span>,<span class="number">23</span>],</span><br><span class="line">    <span class="string">'class'</span> : [<span class="string">'math'</span>,<span class="string">'science'</span>,<span class="string">'english'</span>,<span class="string">'math'</span>,<span class="string">'science'</span>],</span><br><span class="line">    <span class="string">'city'</span> :    [<span class="string">'A'</span>,<span class="string">'B'</span>,<span class="string">'A'</span>,<span class="string">'C'</span>,<span class="string">'B'</span>],</span><br><span class="line">    <span class="string">'gender'</span> :  [ <span class="string">'M'</span>, <span class="string">'F'</span>, <span class="string">'F'</span>, <span class="string">'M'</span>, <span class="string">'M'</span>],</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">print(df)</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">   age    <span class="class"><span class="keyword">class</span> <span class="title">city</span> <span class="title">gender</span></span></span><br><span class="line"><span class="class">0   13     <span class="title">math</span>    <span class="title">A</span>      <span class="title">M</span></span></span><br><span class="line"><span class="class">1   17  <span class="title">science</span>    <span class="title">B</span>      <span class="title">F</span></span></span><br><span class="line"><span class="class">2   19  <span class="title">english</span>    <span class="title">A</span>      <span class="title">F</span></span></span><br><span class="line"><span class="class">3   21     <span class="title">math</span>    <span class="title">C</span>      <span class="title">M</span></span></span><br><span class="line"><span class="class">4   23  <span class="title">science</span>    <span class="title">B</span>      <span class="title">M</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+
+<ul>
+<li><p><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.loc.html">loc</a>을 사용하여 인덱싱하기</p>
+<ul>
+<li><p>loc 인덱싱은 두 가지 사용법이 있다.</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">df.loc[행 인덱스값]</span><br><span class="line"></span><br><span class="line"><span class="keyword">or</span></span><br><span class="line"></span><br><span class="line">df.loc[행 인덱스값, 열 인덱스값]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>이를 이용해 둘째, 셋째 행만을 가져오면 다음과 같다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ex1 = print(df.loc[<span class="number">1</span>:<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line">print(ex1)</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">   age    <span class="class"><span class="keyword">class</span> <span class="title">city</span> <span class="title">gender</span></span></span><br><span class="line"><span class="class">1   17  <span class="title">science</span>    <span class="title">B</span>      <span class="title">F</span></span></span><br><span class="line"><span class="class">2   19  <span class="title">english</span>    <span class="title">A</span>      <span class="title">F</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>boolean 시리즈를 행을 선택하는 인덱스값으로 사용할 수 있다.</p>
+</li>
+<li><p>이를 이용하여 A 도시에 사는 행을 선택하면 다음과 같다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ex2 = df.loc[df.city == <span class="string">'A'</span>]</span><br><span class="line"></span><br><span class="line">print(ex2)</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">   age    <span class="class"><span class="keyword">class</span> <span class="title">city</span> <span class="title">gender</span></span></span><br><span class="line"><span class="class">0   13     <span class="title">math</span>    <span class="title">A</span>      <span class="title">M</span></span></span><br><span class="line"><span class="class">2   19  <span class="title">english</span>    <span class="title">A</span>      <span class="title">F</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>한 걸음 더 나가서 A 도시에 사는 사람들의 성별을 나타내는 시리즈를 알고 싶다.</p>
+</li>
+<li><p>이럴때는 열 인덱스값을 추가해서 다음과 같이 얻어낼 수 있다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ex3 = df.loc[df.city == <span class="string">'A'</span>, <span class="string">'gender'</span>]</span><br><span class="line"></span><br><span class="line">print(ex3)</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line"><span class="number">0</span>    M</span><br><span class="line"><span class="number">2</span>    F</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>이렇게 열 인덱스값을 추가하여 다음과 같이 나이와 성별만을 갖는 두개의 행으로 datframe을 슬라이싱 할 수도 있다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ex4 = df.loc[<span class="number">1</span>:<span class="number">2</span>,[<span class="string">'age'</span>,<span class="string">'gender'</span>]]</span><br><span class="line"></span><br><span class="line">print(ex4)</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">   age gender</span><br><span class="line"><span class="number">1</span>   <span class="number">17</span>      F</span><br><span class="line"><span class="number">2</span>   <span class="number">19</span>      F</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.iloc.html">iloc</a>을 사용하여 인덱싱하기</p>
+<ul>
+<li><p>iloc은 integer-location based indexing 로서 정수(integer)를 인덱스값으로 받는다는 점이 loc과의 차이점이다.</p>
+</li>
+<li><p>loc의 마지막 예제를 iloc을 통해 나타내면 다음과 같다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ex5 = df.iloc[<span class="number">1</span>:<span class="number">3</span>,[<span class="number">0</span>,<span class="number">3</span>]]</span><br><span class="line"></span><br><span class="line">print(ex5)</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">   age gender</span><br><span class="line"><span class="number">1</span>   <span class="number">17</span>      F</span><br><span class="line"><span class="number">2</span>   <span class="number">19</span>      F</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ex4와 ex5의 코드를 살펴보면 단순히 정수값을 받는다는 점 이외에도 차이점이 있다.</p>
+</li>
+<li><p>loc 은 행 인덱스값을 1:2 까지로 나타내면 마지막 행까지 모두 포함한 결과를 내놓지만, iloc은 행 인덱스값의 마지막 행을 포함하지 않기 때문에 1:3 으로 나타내줬다.</p>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-03-24T11:55:20.000Z">2020-03-24</time>
                 
                 <div class="level-item">
@@ -398,7 +492,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            47
+                            48
                         </p>
                     </a>
                 </div>
@@ -559,7 +653,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">22</span>
+                <span class="level-item tag">23</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -575,7 +669,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">18</span>
+                <span class="level-item tag">19</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -635,6 +729,25 @@
         
         <article class="media">
             
+            <a href="/2020/06/22/Pytorch-RESNET-with-CIFAR10/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_RESNET_with_CIFAR10">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-22T15:46:49.000Z">2020-06-22</time></div>
+                    <a href="/2020/06/22/Pytorch-RESNET-with-CIFAR10/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_RESNET_with_CIFAR10</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/06/08/Pytorch-About-RESNET/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_RESNET">
@@ -709,25 +822,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/07/Pytorch-ImageFolder/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_ImageFolder">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-07T20:40:48.000Z">2020-05-07</time></div>
-                    <a href="/2020/05/07/Pytorch-ImageFolder/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_ImageFolder</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -745,7 +839,7 @@
                     <span class="level-item">June 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -853,14 +947,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">31</span>
+                        <span class="tag is-grey">32</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">18</span>
+                        <span class="tag is-grey">19</span>
                     </a>
                 </div>
                 
@@ -909,6 +1003,25 @@
         
         <article class="media">
             
+            <a href="/2020/06/22/Pytorch-RESNET-with-CIFAR10/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_RESNET_with_CIFAR10">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-22T15:46:49.000Z">2020-06-22</time></div>
+                    <a href="/2020/06/22/Pytorch-RESNET-with-CIFAR10/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_RESNET_with_CIFAR10</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/06/08/Pytorch-About-RESNET/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_RESNET">
@@ -983,25 +1096,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/07/Pytorch-ImageFolder/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_ImageFolder">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-07T20:40:48.000Z">2020-05-07</time></div>
-                    <a href="/2020/05/07/Pytorch-ImageFolder/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_ImageFolder</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1019,7 +1113,7 @@
                     <span class="level-item">June 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -1127,14 +1221,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">31</span>
+                        <span class="tag is-grey">32</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">18</span>
+                        <span class="tag is-grey">19</span>
                     </a>
                 </div>
                 
