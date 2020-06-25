@@ -133,6 +133,98 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-06-25T16:38:18.000Z">2020-06-25</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 minutes read (About 983 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/06/25/Pytorch-Activation-plot/">Pytorch_Activation_plot</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="conv-layer의-output을-그려보자"><a href="#conv-layer의-output을-그려보자" class="headerlink" title="conv layer의 output을 그려보자"></a>conv layer의 output을 그려보자</h1><ul>
+<li><p>파이토치를 메모리를 아끼기위해 모델에서 나오는 마지막 output만을 저장한다.</p>
+</li>
+<li><p>그렇다면, 각 conv layer를 통과한 output이 궁금하다면 어떻게 해야할까??</p>
+</li>
+<li><p>hook을 이용하면 forward와 backward에서 각 레이어의 output을 가져올 수 있다.</p>
+</li>
+<li><p>여기서는 forward hook을 이용하는 class를 만들어서 이용해보고자 한다.</p>
+</li>
+<li><p>사용할 모델은 pretrain vgg16모델이며 input으로는 인터넷에서 아무 고양이 사진을 사용해보자.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 이미지 불러와서 tensor로 변환 및 사이즈 조정</span></span><br><span class="line">simple_transform = transforms.Compose([transforms.Resize((<span class="number">224</span>,<span class="number">224</span>))</span><br><span class="line">                                       ,transforms.ToTensor()</span><br><span class="line">                                       ,transforms.Normalize([<span class="number">0.485</span>, <span class="number">0.456</span>, <span class="number">0.406</span>], [<span class="number">0.229</span>, <span class="number">0.224</span>, <span class="number">0.225</span>])</span><br><span class="line">                                      ])</span><br><span class="line">img = Image.open(<span class="string">'../image/cat_1.jpg'</span>)</span><br><span class="line">img = simple_transform(img)</span><br><span class="line"></span><br><span class="line"><span class="comment"># unsqueeze_를 통해 shape에 (1,3,224,224) 로 변경 --&gt; batch_size를 추가한것 --&gt; 모델에 넣기위해</span></span><br><span class="line">img.unsqueeze_(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># pretrained 모델을 불러와서 사용한다. --&gt; 직접 train시킨 모델도 상관없지만 현재 목표는 모델 학습이 아니기 때문에 pretrained모델 사용</span></span><br><span class="line">vgg = models.vgg16(pretrained=<span class="literal">True</span>).cuda()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>이제 <a href="https://pytorch.org/docs/stable/nn.html#torch.nn.Module.register_forward_hook">register_forward_hook</a>을 이용해 입력한 layer에 hook을 등록할 수 있게 만든다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LayerActivations</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="comment"># layer의 output을 저장할 공간을 만들자.</span></span><br><span class="line">    features=<span class="literal">None</span></span><br><span class="line">    </span><br><span class="line">	<span class="comment"># hook을 정의하고 정한 layer_num에 hook을 등록할 수 있게 만든다.</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,model,layer_num)</span>:</span></span><br><span class="line">        self.hook = model[layer_num].register_forward_hook(self.hook_fn)</span><br><span class="line">    </span><br><span class="line">	<span class="comment"># 정해진 layer에서 forward함수가 실행되면 output을 저장할 수 있는 함수를 만든다.</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hook_fn</span><span class="params">(self,module,input,output)</span>:</span></span><br><span class="line">        self.features = output.cpu().data.numpy()</span><br><span class="line">		</span><br><span class="line">	<span class="comment"># 등록된 hook을 없애줄 수 있는 함수를 만든다.</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">remove</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.hook.remove()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>이제 모델에서 첫번째 conv layer를 통과한 후 나오는 output을 <code>LayerActivations</code>객체에 저장하고 이미지를 그려보자</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vgg.features의 첫번째(0) 에 hook을 등록하고 output을 conv_out에 받도록 한다.</span></span><br><span class="line">conv_out = LayerActivations(vgg.features,<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 가장 처음 가져온 이미지를 vgg모델에 넣어보자.</span></span><br><span class="line"><span class="comment"># 이미지가 모델을 통과할때 위에서 정의한 conv_out에 첫번째 conv layer를 통과하며 내놓은 output을 저장했을 것이다.</span></span><br><span class="line">o = vgg(Variable(img.cuda()))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 등록된 hook을 제거해준다.</span></span><br><span class="line">conv_out.remove()</span><br><span class="line"></span><br><span class="line"><span class="comment"># conv_out객체의 features값을 가져오면 우리가 알고싶은 첫번째 conv layer를 통과했을때의 output을 알 수 있다.</span></span><br><span class="line">act = conv_out.features</span><br><span class="line"></span><br><span class="line"><span class="comment"># 30개의 채널만을 plot으로 그려보자.</span></span><br><span class="line">fig = plt.figure(figsize=(<span class="number">20</span>,<span class="number">50</span>))</span><br><span class="line">fig.subplots_adjust(left=<span class="number">0</span>,right=<span class="number">1</span>,bottom=<span class="number">0</span>,top=<span class="number">0.8</span>,hspace=<span class="number">0</span>,wspace=<span class="number">0.2</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">30</span>):</span><br><span class="line">    ax = fig.add_subplot(<span class="number">12</span>,<span class="number">5</span>,i+<span class="number">1</span>,xticks=[],yticks=[])</span><br><span class="line">    ax.imshow(act[<span class="number">0</span>][i])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>첫번째 conv layer를 통과한 output을 그려보면 다음과 같다.</p>
+</li>
+<li><p><img src="https://github.com/Already-Ready/Already-Ready.github.io/blob/master/images/activation_conv_first.png?raw=true" alt="output conv first"></p>
+</li>
+<li><p>첫 번째 conv layer는 윤곽선에 집중되는 모습을 확인할 수 있다.</p>
+</li>
+<li><p>이를 이용해 마지막 conv layer 통과한 결과도 확인해보자.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 마지막 conv layer는 28번째 feature이다.</span></span><br><span class="line"><span class="comment"># 모든 feature를 확인해보고자 한다면 </span></span><br><span class="line"><span class="comment"># vgg.features 를 입력해서 확인해보자.</span></span><br><span class="line">conv_out = LayerActivations(vgg.features,<span class="number">28</span>)</span><br><span class="line"></span><br><span class="line">o = vgg(Variable(img.cuda()))</span><br><span class="line"></span><br><span class="line">conv_out.remove()</span><br><span class="line"></span><br><span class="line">act = conv_out.features</span><br><span class="line"></span><br><span class="line">fig = plt.figure(figsize=(<span class="number">20</span>,<span class="number">50</span>))</span><br><span class="line">fig.subplots_adjust(left=<span class="number">0</span>,right=<span class="number">1</span>,bottom=<span class="number">0</span>,top=<span class="number">0.8</span>,hspace=<span class="number">0</span>,wspace=<span class="number">0.2</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">30</span>):</span><br><span class="line">    ax = fig.add_subplot(<span class="number">12</span>,<span class="number">5</span>,i+<span class="number">1</span>,xticks=[],yticks=[])</span><br><span class="line">    ax.imshow(act[<span class="number">0</span>][i])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><img src="https://github.com/Already-Ready/Already-Ready.github.io/blob/master/images/activation_conv_last.png?raw=true" alt="output conv last"></p>
+</li>
+<li><p>위는 마지막 conv layer를 통과한 output을 시각화한 것이다.</p>
+</li>
+<li><p>마지막 레이어는 첫번째 레이어와 다르게 해석하기 어려운 특성을 학습하는 것으로 파악할 수 있었다.</p>
+</li>
+<li><p>이처럼 필요에 따라서 각 레이어의 output을 hook을 이용해 시각화하는 방법을 공부해 볼 수 있었으며 이를 통해 모델의 각 layer가 집중하는 부분도 확인할 수 있을것이라 생각한다.</p>
+</li>
+</ul>
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/deep_with_pytorch/blob/master/Activation_plot_2.ipynb">Full Code</a></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-06-22T15:46:49.000Z">2020-06-22</time>
                 
                 <div class="level-item">
@@ -951,104 +1043,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-25T23:14:37.000Z">2020-04-25</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 minutes read (About 484 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/04/25/%ED%8C%8C%EC%9D%B4%EC%8D%AC-visdom-port-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0/">파이썬_visdom_port_변경하기</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="파이썬-visdom의-port-변경하기"><a href="#파이썬-visdom의-port-변경하기" class="headerlink" title="파이썬 visdom의 port 변경하기"></a>파이썬 visdom의 port 변경하기</h1><ul>
-<li><p>visdom의 기본포트는 8097포트이다.</p>
-</li>
-<li><p>CNN모델 학습 Loss그래프를 그리기 위해 visdom을 사용하려 했으나 다음과 같은 에러가 발생했다.</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">액세스 권한에 의해 숨겨진 소켓에 액세스를 시도했습니다</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>이는 이미 8097포트를 다른 프로세스에서 사용하고 있기 때문에 발생한다.</p>
-</li>
-<li><p>따라서, 해당 프로세스를 찾아야하는데 cmd에 다음과 같은 명령어로 사용중인 포트와 프로세스를 확인할 수 있다.</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -ano</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>해당 프로세스를 찾았으면 좌측 끝의 PID를 확인하고 작업 관리자를 열어주자.</p>
-</li>
-<li><p>작업 관리자 –&gt; 서비스 탭에 들어가면 PID로 프로세스를 정렬할 수 있다.</p>
-</li>
-<li><p>그곳에서 포트를 사용중인 프로세르를 선택하고 서비스 센터로 접근해 작업을 종료하면 된다.</p>
-</li>
-<li><p>이후 다시,</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m visdom.server</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>명령어로 visdom 로컬 서버를 키면된다.</p>
-</li>
-<li><p>하지만, 8097 포트를 사용하는 프로세스를 찾을 수가 없었다.</p>
-</li>
-<li><p>방화벽 문제인지 공유기 문제인지 확실하지는 못했지만 원인을 찾을수가 없었기에 visdom의 포트를 변경해서 사용하기로 결정했다.</p>
-</li>
-<li><p>visdom의 포트는 다음과 같이 변경할 수 있다.</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m visdom.server -port [포트번호]</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>예를들어, 포트번호를 9000으로 옮긴다면 다음과 같이 바꿀 수 있다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m visdom.server -port <span class="number">9000</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>이제 코드에서 visdom 객체를 불러올 때 다음과 같이 정한 포트 번호를 사용해서 불러오기만 하면 된다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vis = visdom.Visdom(port=<span class="number">9000</span>)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>아래 예제를 실행해서 올바르게 출력되는것을 확인할 수 있다.</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vis.text(<span class="string">'hello world'</span>, env=<span class="string">"main"</span>)</span><br></pre></td></tr></table></figure>
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1117,7 +1111,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            48
+                            49
                         </p>
                     </a>
                 </div>
@@ -1278,7 +1272,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">23</span>
+                <span class="level-item tag">24</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -1294,7 +1288,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">19</span>
+                <span class="level-item tag">20</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -1354,6 +1348,25 @@
         
         <article class="media">
             
+            <a href="/2020/06/25/Pytorch-Activation-plot/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Activation_plot">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-25T16:38:18.000Z">2020-06-25</time></div>
+                    <a href="/2020/06/25/Pytorch-Activation-plot/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Activation_plot</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/06/22/Pytorch-RESNET-with-CIFAR10/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_RESNET_with_CIFAR10">
@@ -1428,25 +1441,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_VGG_Advance_CNN">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-12T11:57:01.000Z">2020-05-12</time></div>
-                    <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_About_VGG_Advance_CNN</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1464,7 +1458,7 @@
                     <span class="level-item">June 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -1572,14 +1566,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">32</span>
+                        <span class="tag is-grey">33</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">19</span>
+                        <span class="tag is-grey">20</span>
                     </a>
                 </div>
                 
@@ -1628,6 +1622,25 @@
         
         <article class="media">
             
+            <a href="/2020/06/25/Pytorch-Activation-plot/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Activation_plot">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-25T16:38:18.000Z">2020-06-25</time></div>
+                    <a href="/2020/06/25/Pytorch-Activation-plot/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Activation_plot</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/06/22/Pytorch-RESNET-with-CIFAR10/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_RESNET_with_CIFAR10">
@@ -1702,25 +1715,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_VGG_Advance_CNN">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-12T11:57:01.000Z">2020-05-12</time></div>
-                    <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_About_VGG_Advance_CNN</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1738,7 +1732,7 @@
                     <span class="level-item">June 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -1846,14 +1840,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">32</span>
+                        <span class="tag is-grey">33</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">19</span>
+                        <span class="tag is-grey">20</span>
                     </a>
                 </div>
                 

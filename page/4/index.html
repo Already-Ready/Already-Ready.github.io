@@ -133,6 +133,172 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-01-23T15:03:44.000Z">2020-01-23</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/CS-basic/">CS basic</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    8 minutes read (About 1251 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/01/23/%EC%8B%9C%EA%B0%84%EB%B3%B5%EC%9E%A1%EB%8F%84-big-O/">시간복잡도_big-O</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="시간-복잡도-big-O"><a href="#시간-복잡도-big-O" class="headerlink" title="시간 복잡도(big-O)"></a>시간 복잡도(big-O)</h1><h3 id="코딩-인터뷰-완전-분석-저-게일-라크만-맥도웰-참조"><a href="#코딩-인터뷰-완전-분석-저-게일-라크만-맥도웰-참조" class="headerlink" title="코딩 인터뷰 완전 분석(저 : 게일 라크만 맥도웰) 참조"></a><a href="https://www.google.com/search?sxsrf=ACYBGNSEu2Z1xUz3cvyO7UGKy9e6sPD-Vg%3A1579746820188&source=hp&ei=BAYpXqSdCdP7wAOsrIHwBg&q=%EC%BD%94%EB%94%A9+%EC%9D%B8%ED%84%B0%EB%B7%B0+%EC%99%84%EC%A0%84+%EB%B6%84%EC%84%9D&oq=%EC%BD%94%EB%94%A9+%EC%9D%B8%ED%84%B0%EB%B7%B0&gs_l=psy-ab.3.0.0l10.411.2315..3295...3.0..2.169.1521.0j13......0....1..gws-wiz.......35i39j0i131.182vM3XJZPY">코딩 인터뷰 완전 분석(저 : 게일 라크만 맥도웰) 참조</a></h3><ul>
+<li><p>실행 시간을 나타내기 위해 사용되는 개념이 시간 복잡도이다.  </p>
+</li>
+<li><p>변수 N을 통해 O(logN), O(NlogN),… 등과 같이 표현하기도 하지만 이외에도 다양한 변수가 포함될 수 있다.  </p>
+<ul>
+<li>예를 들어, 너비가 w이고 높이가 h인 울타리를 칠한다고 할 때 소요 시간은 O(wh)로 표현할 수 있고 p번 덧칠한다면 O(pwh)로 표현할 수 있다.    </li>
+</ul>
+</li>
+<li><p>상수항과 지배적이지 않은 항은 무시하자.  </p>
+<ul>
+<li><p>big-O는 단순히 증가하는 비율을 나타내는 개념으로 수행 시간에 지배적이지 않은 항은 무시할 수 있다.  </p>
+</li>
+<li><p>두 개의 중첩되지 않은 루프로 이루어진 코드의 수행 시간을 O(2N) 과 같이 표현할 수도 있지만 이는 결국 O(N)과 같은 의미이다.  </p>
+</li>
+<li><p>마찬가지로, O(N^2 + N)과 같은 수행 시간이 있을 때, N^2이 지배적인 항이므로(N에 비해 빠르게 증가하기 떄문) O(N^2 + N) 은 O(N^2) 이 된다.  </p>
+</li>
+<li><p>즉, big-O 는 수행 시간이 어떻게 변화하는지를 표현해주는 도구이다.  </p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>덧셈? 곱셈??  </p>
+<ul>
+<li><p>두 단계로 이루어진 알고리즘이 있을 경우, 수행 시간을 어떤 경우에는 더하고 혹은 곱해야 하는걸까?  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">### 덧셈 수행 시간 : O(A+B)</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> a : arrA) &#123;</span><br><span class="line">	print(a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> b : arrB) &#123;</span><br><span class="line">	print(b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>위와 같이 A의 일을 모두 끝마친 후 B의 일을 시행하는 형태라면 A와 B의 수행 시간을 <strong>더해야</strong> 한다.  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">### 곱셈 수행 시간 : O(A*B)</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> a : arrA) &#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> b : arrB) &#123;</span><br><span class="line">		print(a + <span class="string">","</span> + b);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>위와 같이 A의 일을 할 때마다 B의 일을 시행하는 형태라면 A와 B의 수행 시간을 <strong>곱해야</strong> 한다.</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>log N 수행 시간</p>
+<ul>
+<li><p>logN 수행 시간이 어떻게 나오는지 알기 위해 이진 탐색을 생각해보자. 이진 탐색은 N개의 정렬된 원소가 들어있는 배열에서 원소 x를 찾을 때, 배열의 중간값과 x의 값을 비교하여 배열의 부분을 재탐색하는 것이다.</p>
+</li>
+<li><p>예를 들어, 16개의 원소를 가진 배열을 생각해보자. N = 16</p>
+</li>
+<li><p>이진 탐색을 통해 각 단계별로 탐색해야 하는 원소의 개수는 다음과 같다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">N &#x3D; 16 # 처음</span><br><span class="line">N &#x3D; 8  # 나누기 2</span><br><span class="line">N &#x3D; 4  # 나누기 2</span><br><span class="line">N &#x3D; 2  # 나누기 2</span><br><span class="line">N &#x3D; 1  # 나누기 2, 찾고자하는 원소 x를 찾았다.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>즉, 총 수행 시간은 N을 절반씩 나누는 과정을 몇단계 거쳐서 1이 되는지에 따라서 결정된다.</p>
+</li>
+<li><p>위의 경우를 반대로 생각해보자. 1에서 16으로 증가하려면 1에서 2를 몇번 곱해야 할까?</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">N &#x3D; 1  # 처음</span><br><span class="line">N &#x3D; 2  # 곱하기 2</span><br><span class="line">N &#x3D; 4  # 곱하기 2</span><br><span class="line">N &#x3D; 8  # 곱하기 2</span><br><span class="line">N &#x3D; 16 # 곱하기 2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>다시 말해, 절반씩 나누는 과정(나누기2)을 1에서 2를 곱해가는 과정으로도 표현할 수 있다는 뜻이다.</p>
+</li>
+<li><p>이는, 2를 k번 곱해서 N이 된다고 말할 수 있으며 다음과 같은 수식으로 나타낼 수 있다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2^k &#x3D; N</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>위 수식을 만족하는 k는 무엇인가? k를 찾기 위해 양 변에 밑이 2인 로그를 취해주자.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">### &lt;밑이 2인 로그입니다.&gt;</span><br><span class="line">---&gt; log(2^k) &#x3D; logN</span><br><span class="line">---&gt; k * log2 &#x3D; logN</span><br><span class="line">---&gt; k &#x3D; logN (∵ log2 &#x3D; 1)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>big-O 에서는 로그의 밑을 고려할 필요가 없다. 위에서 밑이 10인 로그를 취했다 할지라도 이는 상수항일 뿐이다. 시작할 때 말했듯이 big-O 에서 상수항은 무시할 수 있다.</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>재귀함수의 수행 시간</p>
+<ul>
+<li><p>다음과 같은 재귀함수의 수행 시간은 어떻게 될까?</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (n&lt;=<span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> f(n<span class="number">-1</span>) + f(n<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>함수 f가 두번 호출되는것을 보고 O(N^2)이라고 생각할 수 있지만 틀렸다.</p>
+</li>
+<li><p>f(4) 일때 위와 같이 f(3)을 두번 호출하고 f(3)은 f(2)를 거쳐 f(1)까지 호출한다.</p>
+</li>
+<li><p>위와 같이 두 개의 자식 노트를 가진 경우 총 호출 횟수는 얼마인가? 호출 횟수를 표로 나타내보자.</p>
+</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>깊이</th>
+<th>노드의 개수</th>
+<th>2^N 표현</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>1</td>
+<td>2<sup>0</sup></td>
+</tr>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>2<sup>1</sup></td>
+</tr>
+<tr>
+<td>2</td>
+<td>4</td>
+<td>2<sup>2</sup></td>
+</tr>
+<tr>
+<td>3</td>
+<td>8</td>
+<td>2<sup>3</sup></td>
+</tr>
+<tr>
+<td>4</td>
+<td>16</td>
+<td>2<sup>4</sup></td>
+</tr>
+</tbody></table>
+<ul>
+<li><ul>
+<li><p>따라서, 전체 노드의 개수는 2<sup>0</sup> + 2<sup>1</sup> + 2<sup>2</sup> + 2<sup>3</sup> + … + 2<sup>N</sup> = 2<sup>N+1</sup> - 1 이다.</p>
+</li>
+<li><p>즉, 위와 같은 재귀 함수의 수행 시간은 O(2<sup>N</sup>)이 된다.</p>
+</li>
+<li><p>보통 다수의 호출로 이루어진 재귀 함수의 수행 시간은 O(분기<sup>깊이</sup>) 로 표현할 수 있다. 여기서 분기란 재귀 함수가 자신을 재호출 하는 횟수를 뜻한다.</p>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-01-19T19:27:01.000Z">2020-01-19</time>
                 
                 <div class="level-item">
@@ -938,139 +1104,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-01-06T12:34:54.000Z">2020-01-06</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Go/">Go</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Go/tutorial/">tutorial</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    5 minutes read (About 706 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/01/06/Golang-%EC%A0%95%EB%A6%AC%ED%95%98%EA%B8%B0-1/">Golang_정리하기-1</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="Go-tutorial-Go-정리하기-1"><a href="#Go-tutorial-Go-정리하기-1" class="headerlink" title="[Go tutorial] Go 정리하기 - 1"></a>[Go tutorial] Go 정리하기 - 1</h1><h3 id="Go-tour-참조"><a href="#Go-tour-참조" class="headerlink" title="Go-tour 참조"></a><a href="https://go-tour-kr.appspot.com/#1">Go-tour 참조</a></h3><ul>
-<li><p>익스포트</p>
-<ul>
-<li>Go 에서는 첫 문자가 대문자로 시작하면 특정 패키지를 사용하는 곳에서 접근할 수 있는 exported name이 됨</li>
-</ul>
-</li>
-<li><p>함수</p>
-<ul>
-<li><p>Go 는 코드를 왼쪽부터 자연스럽게 읽기 위해 매개변수 타입은 변수명 <strong>뒤에</strong> 명시.</p>
-</li>
-<li><p>두 개 이상의 매개변수가 같은 타입일 때, 같은 타입을 취하는 마지막 매개변수에만 타입을 지정할 수 있음.</p>
-  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x <span class="keyword">int</span>, y <span class="keyword">int</span></span><br><span class="line"></span><br><span class="line">#를 아래와 같이도 사용 가능</span><br><span class="line"></span><br><span class="line">x, y <span class="keyword">int</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>하나의 함수는 여러 개의 결과를 반환할 수 있음.</p>
-  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">swap</span><span class="params">(x, y <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">string</span>, <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> y, x</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>변수</p>
-<ul>
-<li><p>var 을 통해 변수를 선언.  </p>
-</li>
-<li><p>변수 선언과 함꼐 초기화 가능, 초기화를 하는 경우 타입 생략 가능. 이 경우, 초기화하고자 하는 값에 따라 타입이 결정됨.  </p>
-  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a, b, c <span class="keyword">int</span> = <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>함수 내에서</strong> := 을 사용하면 var와 명시적인 타입을 생략할 수 있음.</p>
-</li>
-</ul>
-</li>
-<li><p>상수</p>
-<ul>
-<li><p>const 키워드와 함께 변수처럼 선언.  </p>
-</li>
-<li><p>상수는 <strong>문자, 문자열, boolean, 숫자 타입</strong> 중의 하나가 될 수 있음  </p>
-</li>
-<li><p>숫자형 상수는 정밀한 값을 표현할 수 있음. Go-tour 사이트에서 제공하는 예제를 이해하기 위해서는 Go의 &lt;&lt; 와 &gt;&gt; 연산자의 이해가 필요하다.</p>
-</li>
-<li><p>&lt;&lt;, &gt;&gt; 연산자에 대해</p>
-<ul>
-<li>&lt;&lt; 와 &gt;&gt; 연산자는 비트 이동 연산자로 Left shift, Right shift 라고 함.  </li>
-<li>Left shift 는 현재 값의 비트를 주어진 값만큼 왼쪽으로 Right shift는 현재 값의 비트를 주어진 값만큼 오른쪽으로 옮깁니다.<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> (</span><br><span class="line">a = <span class="number">1</span></span><br><span class="line">b = a &lt;&lt; <span class="number">1</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(a)				### <span class="number">1</span> 출력</span><br><span class="line">	fmt.Printf(<span class="string">"%08b\n"</span>, a)		### <span class="number">00000001</span> 출력</span><br><span class="line">	fmt.Println(b)				### <span class="number">2</span> 출력</span><br><span class="line">	fmt.Printf(<span class="string">"%08b"</span>, b)		### <span class="number">00000010</span> 출력</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>반복문 for</p>
-<ul>
-<li><p>Go 에는 반복문으로 for 하나만 존재.</p>
-</li>
-<li><p>조건문만 표현해서 루프를 표현 가능.</p>
-  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">   	sum := <span class="number">1</span></span><br><span class="line">   	<span class="keyword">for</span> sum &lt; <span class="number">1000</span> &#123;</span><br><span class="line">       sum += sum</span><br><span class="line">   	&#125;</span><br><span class="line">   	fmt.Println(sum)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>위와 같이 표현하면 while을 사용하듯 for을 사용할 수 있다.</p>
-</li>
-<li><p>조건문을 생략하는것으로 무한 루프를 만들 수 있다.</p>
-  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">   	<span class="keyword">for</span> &#123;</span><br><span class="line">   	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>조건문 if </p>
-<ul>
-<li><p>반복문과 마찬가지로 실행문을 위한  { } 만 필요.</p>
-</li>
-<li><p>for 처럼 조건문 앞에 문장을 실행할 수 있음.</p>
-  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">pow</span><span class="params">(x, n, lim <span class="keyword">float64</span>)</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">   	<span class="keyword">if</span> v := math.Pow(x, n); v &lt; lim &#123;</span><br><span class="line">       <span class="keyword">return</span> v</span><br><span class="line">	&#125;</span><br><span class="line">   <span class="keyword">return</span> lim</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>위의 예를 보면, v &lt; lim 을 통한 조건문 앞에 v := math.Pow(x,n) 을 실행했다.</p>
-</li>
-<li><p>이렇게 선언된 변수(위에서는 v)는 if 안쪽 범위에서만(else 블럭 안에서도 가능) 사용할 수 있다.</p>
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><a href="https://go-tour-kr.appspot.com/#23">연습 : 루프와 함수</a> &gt;&gt;&gt; <a href="https://github.com/Already-Ready/go_tour/blob/master/go_tour_solutions/loop.go">solution</a></li>
-</ul>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1141,7 +1174,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            48
+                            49
                         </p>
                     </a>
                 </div>
@@ -1302,7 +1335,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">23</span>
+                <span class="level-item tag">24</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -1318,7 +1351,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">19</span>
+                <span class="level-item tag">20</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -1378,6 +1411,25 @@
         
         <article class="media">
             
+            <a href="/2020/06/25/Pytorch-Activation-plot/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Activation_plot">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-25T16:38:18.000Z">2020-06-25</time></div>
+                    <a href="/2020/06/25/Pytorch-Activation-plot/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Activation_plot</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/06/22/Pytorch-RESNET-with-CIFAR10/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_RESNET_with_CIFAR10">
@@ -1452,25 +1504,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_VGG_Advance_CNN">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-12T11:57:01.000Z">2020-05-12</time></div>
-                    <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_About_VGG_Advance_CNN</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1488,7 +1521,7 @@
                     <span class="level-item">June 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -1596,14 +1629,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">32</span>
+                        <span class="tag is-grey">33</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">19</span>
+                        <span class="tag is-grey">20</span>
                     </a>
                 </div>
                 
@@ -1652,6 +1685,25 @@
         
         <article class="media">
             
+            <a href="/2020/06/25/Pytorch-Activation-plot/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Activation_plot">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-25T16:38:18.000Z">2020-06-25</time></div>
+                    <a href="/2020/06/25/Pytorch-Activation-plot/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Activation_plot</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/06/22/Pytorch-RESNET-with-CIFAR10/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_RESNET_with_CIFAR10">
@@ -1726,25 +1778,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_VGG_Advance_CNN">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-12T11:57:01.000Z">2020-05-12</time></div>
-                    <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_About_VGG_Advance_CNN</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1762,7 +1795,7 @@
                     <span class="level-item">June 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -1870,14 +1903,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">32</span>
+                        <span class="tag is-grey">33</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">19</span>
+                        <span class="tag is-grey">20</span>
                     </a>
                 </div>
                 

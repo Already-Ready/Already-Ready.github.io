@@ -133,6 +133,139 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-01-06T12:34:54.000Z">2020-01-06</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Go/">Go</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Go/tutorial/">tutorial</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    5 minutes read (About 706 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/01/06/Golang-%EC%A0%95%EB%A6%AC%ED%95%98%EA%B8%B0-1/">Golang_정리하기-1</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="Go-tutorial-Go-정리하기-1"><a href="#Go-tutorial-Go-정리하기-1" class="headerlink" title="[Go tutorial] Go 정리하기 - 1"></a>[Go tutorial] Go 정리하기 - 1</h1><h3 id="Go-tour-참조"><a href="#Go-tour-참조" class="headerlink" title="Go-tour 참조"></a><a href="https://go-tour-kr.appspot.com/#1">Go-tour 참조</a></h3><ul>
+<li><p>익스포트</p>
+<ul>
+<li>Go 에서는 첫 문자가 대문자로 시작하면 특정 패키지를 사용하는 곳에서 접근할 수 있는 exported name이 됨</li>
+</ul>
+</li>
+<li><p>함수</p>
+<ul>
+<li><p>Go 는 코드를 왼쪽부터 자연스럽게 읽기 위해 매개변수 타입은 변수명 <strong>뒤에</strong> 명시.</p>
+</li>
+<li><p>두 개 이상의 매개변수가 같은 타입일 때, 같은 타입을 취하는 마지막 매개변수에만 타입을 지정할 수 있음.</p>
+  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x <span class="keyword">int</span>, y <span class="keyword">int</span></span><br><span class="line"></span><br><span class="line">#를 아래와 같이도 사용 가능</span><br><span class="line"></span><br><span class="line">x, y <span class="keyword">int</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>하나의 함수는 여러 개의 결과를 반환할 수 있음.</p>
+  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">swap</span><span class="params">(x, y <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">string</span>, <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> y, x</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>변수</p>
+<ul>
+<li><p>var 을 통해 변수를 선언.  </p>
+</li>
+<li><p>변수 선언과 함꼐 초기화 가능, 초기화를 하는 경우 타입 생략 가능. 이 경우, 초기화하고자 하는 값에 따라 타입이 결정됨.  </p>
+  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a, b, c <span class="keyword">int</span> = <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>함수 내에서</strong> := 을 사용하면 var와 명시적인 타입을 생략할 수 있음.</p>
+</li>
+</ul>
+</li>
+<li><p>상수</p>
+<ul>
+<li><p>const 키워드와 함께 변수처럼 선언.  </p>
+</li>
+<li><p>상수는 <strong>문자, 문자열, boolean, 숫자 타입</strong> 중의 하나가 될 수 있음  </p>
+</li>
+<li><p>숫자형 상수는 정밀한 값을 표현할 수 있음. Go-tour 사이트에서 제공하는 예제를 이해하기 위해서는 Go의 &lt;&lt; 와 &gt;&gt; 연산자의 이해가 필요하다.</p>
+</li>
+<li><p>&lt;&lt;, &gt;&gt; 연산자에 대해</p>
+<ul>
+<li>&lt;&lt; 와 &gt;&gt; 연산자는 비트 이동 연산자로 Left shift, Right shift 라고 함.  </li>
+<li>Left shift 는 현재 값의 비트를 주어진 값만큼 왼쪽으로 Right shift는 현재 값의 비트를 주어진 값만큼 오른쪽으로 옮깁니다.<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> (</span><br><span class="line">a = <span class="number">1</span></span><br><span class="line">b = a &lt;&lt; <span class="number">1</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(a)				### <span class="number">1</span> 출력</span><br><span class="line">	fmt.Printf(<span class="string">"%08b\n"</span>, a)		### <span class="number">00000001</span> 출력</span><br><span class="line">	fmt.Println(b)				### <span class="number">2</span> 출력</span><br><span class="line">	fmt.Printf(<span class="string">"%08b"</span>, b)		### <span class="number">00000010</span> 출력</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>반복문 for</p>
+<ul>
+<li><p>Go 에는 반복문으로 for 하나만 존재.</p>
+</li>
+<li><p>조건문만 표현해서 루프를 표현 가능.</p>
+  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">   	sum := <span class="number">1</span></span><br><span class="line">   	<span class="keyword">for</span> sum &lt; <span class="number">1000</span> &#123;</span><br><span class="line">       sum += sum</span><br><span class="line">   	&#125;</span><br><span class="line">   	fmt.Println(sum)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>위와 같이 표현하면 while을 사용하듯 for을 사용할 수 있다.</p>
+</li>
+<li><p>조건문을 생략하는것으로 무한 루프를 만들 수 있다.</p>
+  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">   	<span class="keyword">for</span> &#123;</span><br><span class="line">   	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>조건문 if </p>
+<ul>
+<li><p>반복문과 마찬가지로 실행문을 위한  { } 만 필요.</p>
+</li>
+<li><p>for 처럼 조건문 앞에 문장을 실행할 수 있음.</p>
+  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">pow</span><span class="params">(x, n, lim <span class="keyword">float64</span>)</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">   	<span class="keyword">if</span> v := math.Pow(x, n); v &lt; lim &#123;</span><br><span class="line">       <span class="keyword">return</span> v</span><br><span class="line">	&#125;</span><br><span class="line">   <span class="keyword">return</span> lim</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>위의 예를 보면, v &lt; lim 을 통한 조건문 앞에 v := math.Pow(x,n) 을 실행했다.</p>
+</li>
+<li><p>이렇게 선언된 변수(위에서는 v)는 if 안쪽 범위에서만(else 블럭 안에서도 가능) 사용할 수 있다.</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a href="https://go-tour-kr.appspot.com/#23">연습 : 루프와 함수</a> &gt;&gt;&gt; <a href="https://github.com/Already-Ready/go_tour/blob/master/go_tour_solutions/loop.go">solution</a></li>
+</ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-01-03T22:33:38.000Z">2020-01-03</time>
                 
                 <div class="level-item">
@@ -764,7 +897,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            48
+                            49
                         </p>
                     </a>
                 </div>
@@ -925,7 +1058,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">23</span>
+                <span class="level-item tag">24</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -941,7 +1074,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">19</span>
+                <span class="level-item tag">20</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -1001,6 +1134,25 @@
         
         <article class="media">
             
+            <a href="/2020/06/25/Pytorch-Activation-plot/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Activation_plot">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-25T16:38:18.000Z">2020-06-25</time></div>
+                    <a href="/2020/06/25/Pytorch-Activation-plot/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Activation_plot</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/06/22/Pytorch-RESNET-with-CIFAR10/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_RESNET_with_CIFAR10">
@@ -1075,25 +1227,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_VGG_Advance_CNN">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-12T11:57:01.000Z">2020-05-12</time></div>
-                    <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_About_VGG_Advance_CNN</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1111,7 +1244,7 @@
                     <span class="level-item">June 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -1219,14 +1352,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">32</span>
+                        <span class="tag is-grey">33</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">19</span>
+                        <span class="tag is-grey">20</span>
                     </a>
                 </div>
                 
@@ -1275,6 +1408,25 @@
         
         <article class="media">
             
+            <a href="/2020/06/25/Pytorch-Activation-plot/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Activation_plot">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-25T16:38:18.000Z">2020-06-25</time></div>
+                    <a href="/2020/06/25/Pytorch-Activation-plot/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Activation_plot</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/06/22/Pytorch-RESNET-with-CIFAR10/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_RESNET_with_CIFAR10">
@@ -1349,25 +1501,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_VGG_Advance_CNN">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-12T11:57:01.000Z">2020-05-12</time></div>
-                    <a href="/2020/05/12/Pytorch-About-VGG-Advance-CNN/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_About_VGG_Advance_CNN</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1385,7 +1518,7 @@
                     <span class="level-item">June 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -1493,14 +1626,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">32</span>
+                        <span class="tag is-grey">33</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">19</span>
+                        <span class="tag is-grey">20</span>
                     </a>
                 </div>
                 
