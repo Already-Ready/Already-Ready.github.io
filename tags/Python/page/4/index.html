@@ -143,6 +143,60 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-01-03T22:33:38.000Z">2020-01-03</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    a minute read (About 212 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/01/03/%EB%B8%94%EB%9E%99%EC%9E%AD-2798%EB%B2%88/">블랙잭_2798번</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="Python-백준-2798번-풀이"><a href="#Python-백준-2798번-풀이" class="headerlink" title="[Python] 백준 2798번 풀이"></a>[Python] 백준 2798번 풀이</h1><h3 id="블랙잭"><a href="#블랙잭" class="headerlink" title="블랙잭"></a>블랙잭</h3><p>1.모든 조합의 경우의 수를 따지는 문제이다.<br>파이썬에서는 itertools의 combinations를 이용해 조합을 따질 수 있다.</p>
+<p><a href="https://docs.python.org/2/library/itertools.html#itertools.combinations">itertools.combinations</a>에서 확인할 수 있다.</p>
+<p>2.combinations는 combinations object를 리턴하는데 이를 for루프에 돌려 하나의 조합을 확인하게되면 <strong>튜플</strong> 을 리턴한다.<br>예를들어,</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">li = [<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> itertools.combinations(li,<span class="number">2</span>):</span><br><span class="line">	print(i)</span><br><span class="line"><span class="comment">## &gt;&gt; (3,4) , (3,5) , (4,5) 를 출력한다.</span></span><br></pre></td></tr></table></figure>
+
+<p>3.따라서 입력받은 N개의 숫자 리스트로부터 모든 조합을 따지면서 그 값이 상한값을 넘지않는 경우 새로운 변수에 입력해주면 된다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">com_li = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> itertools.combinations(li,<span class="number">3</span>):</span><br><span class="line">    s = sum(i)</span><br><span class="line">    <span class="keyword">if</span> s &gt; com_li <span class="keyword">and</span> s &lt;= m:</span><br><span class="line">        com_li = s</span><br><span class="line">    <span class="keyword">else</span>: <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/baekjoon/blob/master/2798.py">Full Code</a></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-01-03T13:15:00.000Z">2020-01-03</time>
                 
                 <div class="level-item">
@@ -495,7 +549,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            49
+                            50
                         </p>
                     </a>
                 </div>
@@ -656,7 +710,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">24</span>
+                <span class="level-item tag">25</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -672,7 +726,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">20</span>
+                <span class="level-item tag">21</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -732,6 +786,25 @@
         
         <article class="media">
             
+            <a href="/2020/07/02/Pytorch-RNN-intro/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_RNN_intro">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-02T11:48:28.000Z">2020-07-02</time></div>
+                    <a href="/2020/07/02/Pytorch-RNN-intro/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_RNN_intro</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/06/25/Pytorch-Activation-plot/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Activation_plot">
@@ -740,7 +813,7 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-25T16:38:18.000Z">2020-06-25</time></div>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-25T16:43:18.000Z">2020-06-25</time></div>
                     <a href="/2020/06/25/Pytorch-Activation-plot/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Activation_plot</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
@@ -806,25 +879,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/14/Pytorch-VGG-with-CIFAR10/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_VGG_with_CIFAR10">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-14T18:42:19.000Z">2020-05-14</time></div>
-                    <a href="/2020/05/14/Pytorch-VGG-with-CIFAR10/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_VGG_with_CIFAR10</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -835,6 +889,17 @@
             Archives
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2020/06/">
@@ -950,14 +1015,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">33</span>
+                        <span class="tag is-grey">34</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">20</span>
+                        <span class="tag is-grey">21</span>
                     </a>
                 </div>
                 
@@ -1006,6 +1071,25 @@
         
         <article class="media">
             
+            <a href="/2020/07/02/Pytorch-RNN-intro/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_RNN_intro">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-02T11:48:28.000Z">2020-07-02</time></div>
+                    <a href="/2020/07/02/Pytorch-RNN-intro/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_RNN_intro</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/06/25/Pytorch-Activation-plot/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Activation_plot">
@@ -1014,7 +1098,7 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-25T16:38:18.000Z">2020-06-25</time></div>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-25T16:43:18.000Z">2020-06-25</time></div>
                     <a href="/2020/06/25/Pytorch-Activation-plot/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Activation_plot</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
@@ -1080,25 +1164,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/14/Pytorch-VGG-with-CIFAR10/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_VGG_with_CIFAR10">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-14T18:42:19.000Z">2020-05-14</time></div>
-                    <a href="/2020/05/14/Pytorch-VGG-with-CIFAR10/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_VGG_with_CIFAR10</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1109,6 +1174,17 @@
             Archives
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2020/06/">
@@ -1224,14 +1300,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">33</span>
+                        <span class="tag is-grey">34</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">20</span>
+                        <span class="tag is-grey">21</span>
                     </a>
                 </div>
                 

@@ -143,7 +143,95 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-06-25T16:38:18.000Z">2020-06-25</time>
+                <time class="level-item has-text-grey" datetime="2020-07-02T11:48:28.000Z">2020-07-02</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    5 minutes read (About 725 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/07/02/Pytorch-RNN-intro/">Pytorch_RNN_intro</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="RNN-Intro"><a href="#RNN-Intro" class="headerlink" title="RNN Intro"></a>RNN Intro</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
+<li><p>이미지 데이터가 아니라 순서 정보가 중요한 sequential data를 처리하기 위한 모델</p>
+</li>
+<li><p><img src="https://adventuresinmachinelearning.com/wp-content/uploads/2017/09/Recurrent-neural-network.png" alt="RNN"></p>
+</li>
+<li><p>위 그림에서 왼쪽 그림과 같이 RNN 모델을 나타내며 이를 펼치면 오른쪽과 같다.</p>
+</li>
+<li><p>F 라는 하나의 셀에 입력값 X 가 처리되어 h를 출력하고 다음 셀에 hidden state를 유통한다.</p>
+</li>
+<li><p>이렇게 하나의 셀에서 hidden state를 다음 셀에 넘겨주고 다음 셀이 입력값 X와 함께 계산해 h를 출력한다면, 해당 출력값 h는 이전 셀의 영향을 이어받을 것이다. 따라서 연속적인 데이터의 정보를 기억하는 효과를 나타낼 수 있게된다.</p>
+</li>
+<li><p>RNN은 모든 셀이 parameter를 공유한다. 다시 말해, 위의 그림처럼 셀 F 하나를 공유해서 사용하게 된다.</p>
+</li>
+<li><p>pytorch에서 RNN은 <code>input_size</code>와 <code>hidden_size</code>를 입력받아 정의하고 <code>input_data</code>로 <code>(batch_size, sequential_length, input_size)</code> 형태의 data를 입력한다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rnn = torch.nn.RNN(input_size, hidden_size)</span><br><span class="line">outputs, _status = rnn(input_data)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>이때, RNN셀이 batch_size와 sequential_length는 자동으로 파악해준다.</p>
+</li>
+<li><p>위처럼 RNN을 정의하게 되면 input_data로 <code>(batch_size, sequential_length, input_size)</code>형태를 입력해 <code>(batch_size, sequential_length, hidden_size)</code>형태의 출력값이 나오게 된다.</p>
+</li>
+<li><p>hello 라는 단어를 통한 예제를 살펴보자.</p>
+</li>
+<li><p>hello의 각 알파벳을 4차원의 one hot encoding을 해주고 각 알파벳의 조합으로 만들 수 있는 단어 3개를 하나의 배치로 묶어서 사용해본다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">input_size = <span class="number">4</span></span><br><span class="line">hidden_size = <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4차원의 one hot 벡터로 표현</span></span><br><span class="line">h = [<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line">e = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line">l = [<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>]</span><br><span class="line">o = [<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># input size는 (3,5,4) 가 된다</span></span><br><span class="line"><span class="comment"># 3 --&gt; batch_size</span></span><br><span class="line"><span class="comment"># 5 --&gt; sequence length : 문자열의 길이 = RNN sequence의 길이</span></span><br><span class="line"><span class="comment"># 4 --&gt; input_size : one hot 벡터의 길이 --&gt; embedding 을 한다면 embedding 크기가 될것</span></span><br><span class="line">input_data_np = np.array([[h,e,l,l,o],</span><br><span class="line">                          [e,o,l,l,l],</span><br><span class="line">                          [l,l,e,e,l]], dtype=np.float32)</span><br><span class="line"></span><br><span class="line"><span class="comment"># numpy 데이터 텐서로 변환</span></span><br><span class="line">input_data = torch.Tensor(input_data_np)</span><br><span class="line"></span><br><span class="line"><span class="comment"># RNN셀 정의</span></span><br><span class="line">rnn = torch.nn.RNN(input_size, hidden_size)</span><br><span class="line"></span><br><span class="line"><span class="comment"># input_data rnn셀 통과</span></span><br><span class="line"><span class="comment"># output size는 2이므로 rnn셀을 통과한 output은 (3,5,2) shape을 가질것이고 이를 확인해본다.</span></span><br><span class="line">output, _status = rnn(input_data)</span><br><span class="line"></span><br><span class="line">print(output)</span><br><span class="line">print(output.shape)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>위와같이 RNN 모델을 정의하고 간단한 데이터를 통해 output을 확인할 수 있었다. hidden_state의 size를 RNN에서 정의하면 이것이 output_data의 크기와 동일하다.</p>
+</li>
+<li><p>예제를 통해 RNN을 정의할때의 값이 의미하는 바를 파악할 수 있었고 그에 따라 input_data의 shape을 맞춰서 사용하는 방법을 파악할 수 있었다.</p>
+</li>
+</ul>
+<ul>
+<li><p>참고</p>
+<ul>
+<li><a href="https://adventuresinmachinelearning.com/recurrent-neural-networks-lstm-tutorial-tensorflow/">RNN 이미지 참고</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-06-25T16:43:18.000Z">2020-06-25</time>
                 
                 <div class="level-item">
                 <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
@@ -200,7 +288,7 @@
 <li><p>이를 이용해 마지막 conv layer 통과한 결과도 확인해보자.</p>
 </li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 마지막 conv layer는 28번째 feature이다.</span></span><br><span class="line"><span class="comment"># 모든 feature를 확인해보고자 한다면 </span></span><br><span class="line"><span class="comment"># vgg.features 를 입력해서 확인해보자.</span></span><br><span class="line">conv_out = LayerActivations(vgg.features,<span class="number">28</span>)</span><br><span class="line"></span><br><span class="line">o = vgg(Variable(img.cuda()))</span><br><span class="line"></span><br><span class="line">conv_out.remove()</span><br><span class="line"></span><br><span class="line">act = conv_out.features</span><br><span class="line"></span><br><span class="line">fig = plt.figure(figsize=(<span class="number">20</span>,<span class="number">50</span>))</span><br><span class="line">fig.subplots_adjust(left=<span class="number">0</span>,right=<span class="number">1</span>,bottom=<span class="number">0</span>,top=<span class="number">0.8</span>,hspace=<span class="number">0</span>,wspace=<span class="number">0.2</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">30</span>):</span><br><span class="line">    ax = fig.add_subplot(<span class="number">12</span>,<span class="number">5</span>,i+<span class="number">1</span>,xticks=[],yticks=[])</span><br><span class="line">    ax.imshow(act[<span class="number">0</span>][i])</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 마지막 conv layer는 28번째 feature이다.</span></span><br><span class="line"><span class="comment"># 모든 feature를 확인해보고자 한다면 vgg.features 를 입력해서 확인해보자.</span></span><br><span class="line">conv_out = LayerActivations(vgg.features,<span class="number">28</span>)</span><br><span class="line"></span><br><span class="line">o = vgg(Variable(img.cuda()))</span><br><span class="line"></span><br><span class="line">conv_out.remove()</span><br><span class="line"></span><br><span class="line">act = conv_out.features</span><br><span class="line"></span><br><span class="line">fig = plt.figure(figsize=(<span class="number">20</span>,<span class="number">50</span>))</span><br><span class="line">fig.subplots_adjust(left=<span class="number">0</span>,right=<span class="number">1</span>,bottom=<span class="number">0</span>,top=<span class="number">0.8</span>,hspace=<span class="number">0</span>,wspace=<span class="number">0.2</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">30</span>):</span><br><span class="line">    ax = fig.add_subplot(<span class="number">12</span>,<span class="number">5</span>,i+<span class="number">1</span>,xticks=[],yticks=[])</span><br><span class="line">    ax.imshow(act[<span class="number">0</span>][i])</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><p><img src="https://github.com/Already-Ready/Already-Ready.github.io/blob/master/images/activation_conv_last.png?raw=true" alt="output conv last"></p>
@@ -956,103 +1044,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-30T16:41:25.000Z">2020-04-30</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 minutes read (About 669 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/04/30/Pytorch-Convolution-layer/">Pytorch_Convolution_layer</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="Pytorch-Convolution-layer에-대하여"><a href="#Pytorch-Convolution-layer에-대하여" class="headerlink" title="Pytorch Convolution layer에 대하여"></a>Pytorch Convolution layer에 대하여</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
-<li><p>Convolution layer란 이미지 위에서 filter가 stride값만큼 움직이며 이미지와 filter가 겹쳐지는 부분의 각 원소의 값을 곱하고 모두 더한 값을 출력으로 하는 연산이다.</p>
-</li>
-<li><p>아래와 같은 이미지 위에서 stride가 1인 filter가 움직이며 나타나는 출력을 계산해보자.</p>
-</li>
-<li><p><img src="https://datascienceplus.com/wp-content/uploads/2019/02/convolved-matrix.gif" alt="Convolution"></p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">위의 그림에서 아래와 같은 필터를 사용했을 때 나오는 결과값을 하나 계산해보자</span><br><span class="line"></span><br><span class="line">filter = [[<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>],</span><br><span class="line">		   [<span class="number">0</span>,<span class="number">1</span>, <span class="number">0</span>],</span><br><span class="line">		   [<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>]]</span><br><span class="line"></span><br><span class="line"><span class="number">3</span>x3필터가 이미지와 처음 겹쳐졌을 때 다음과 같은 연산이 수행된다.</span><br><span class="line"></span><br><span class="line">output = (<span class="number">1</span>*<span class="number">1</span>) + (<span class="number">0</span>*<span class="number">1</span>) + (<span class="number">1</span>*<span class="number">1</span>) +</span><br><span class="line">		 (<span class="number">0</span>*<span class="number">0</span>) + (<span class="number">1</span>*<span class="number">1</span>) + (<span class="number">0</span>*<span class="number">1</span>) +</span><br><span class="line">		 (<span class="number">1</span>*<span class="number">0</span>) + (<span class="number">0</span>*<span class="number">0</span>) + (<span class="number">1</span>*<span class="number">1</span>) = <span class="number">4</span></span><br><span class="line"></span><br><span class="line">따라서, 우측 Convolution Feature의 처음 값이 <span class="number">4</span>로 나타나는 것을 확인할 수 있고, 이후에도 stride가 <span class="number">1</span>이므로, 한칸씩 움직이며 같은 연산을 반복한다.</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>zero-padding</p>
-<ul>
-<li><p>zero-padding이란 이미지 주변에 패드를 끼우듯 0으로 채워진 테두리를 둘러 inpute size를 키워주는 것이다.</p>
-</li>
-<li><p>zero-padding을 사용하는 이유는 Convolution layer를 지났을 때 이미지의 크기를 보존해주기 위해서다.</p>
-</li>
-<li><p>위에서 우리는 3x3 의 filter를 사용한 결과, 원래 이미지의 크기가 5x5에서 3x3으로 줄어든 것을 볼 수 있었다.</p>
-</li>
-<li><p>이와같은 Convolution layer를 반복적으로 지날때 이미지의 크기가 작아져서 정보의 손실이 생기게된다.</p>
-</li>
-<li><p>하지만, zero-padding을 이용해 원본 이미지의 size를 키워서 Convolution layer를 지나게 한다면, 원본 이미지의 크기를 보존시켜 정보의 손실을 최소화할 수 있게된다.</p>
-</li>
-<li><p><img src="https://deeplizard.com/images/zero%20padding%20example%202.PNG" alt="Convolution with zero-padding"></p>
-</li>
-<li><p>위의 그림에서 Input size가 Output에서도 보존되는것을 확인할 수 있다.<br><br></br></p>
-</li>
-</ul>
-</li>
-<li><p>Output size 계산하기</p>
-<ul>
-<li><p>Convolution layer를 지나쳤을때 나오는 output size는 input size, filter size, stride, padding에 의해 결정되며, 다음과 같은 공식을 따른다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">output size = ((input size - filter size + (<span class="number">2</span>*padding)) / strid) + <span class="number">1</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>위의 이미지를 예시로 계산해보면 다음과 같다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">output size = ((<span class="number">4</span>x4 - <span class="number">3</span>x3 + (<span class="number">2</span>*<span class="number">1</span>)) / <span class="number">1</span>) + <span class="number">1</span> = (<span class="number">1</span>x1 + <span class="number">2</span>) + <span class="number">1</span> = (<span class="number">3</span>x3)+<span class="number">1</span> = <span class="number">4</span>x4</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>input size의 높이와 넓이가 다를때도 동일하게 계산할 수 있다.</p>
-</li>
-<li><p>이처럼 하나의 Convolution layer를 통과했을 때 나오는 output size를 계산할 수 있고 이를 다음 layer의 입력값으로 활용할 수 있게된다.</p>
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>참고</p>
-<ul>
-<li><a href="https://datascienceplus.com/starting-with-convolutional-neural-network-cnn/">Convolution layer 이미지</a></li>
-<li><a href="https://deeplizard.com/learn/video/qSTv_m-KFk0">padding 이미지</a></li>
-</ul>
-</li>
-</ul>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1121,7 +1112,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            49
+                            50
                         </p>
                     </a>
                 </div>
@@ -1282,7 +1273,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">24</span>
+                <span class="level-item tag">25</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -1298,7 +1289,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">20</span>
+                <span class="level-item tag">21</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -1358,6 +1349,25 @@
         
         <article class="media">
             
+            <a href="/2020/07/02/Pytorch-RNN-intro/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_RNN_intro">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-02T11:48:28.000Z">2020-07-02</time></div>
+                    <a href="/2020/07/02/Pytorch-RNN-intro/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_RNN_intro</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/06/25/Pytorch-Activation-plot/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Activation_plot">
@@ -1366,7 +1376,7 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-25T16:38:18.000Z">2020-06-25</time></div>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-25T16:43:18.000Z">2020-06-25</time></div>
                     <a href="/2020/06/25/Pytorch-Activation-plot/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Activation_plot</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
@@ -1432,25 +1442,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/14/Pytorch-VGG-with-CIFAR10/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_VGG_with_CIFAR10">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-14T18:42:19.000Z">2020-05-14</time></div>
-                    <a href="/2020/05/14/Pytorch-VGG-with-CIFAR10/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_VGG_with_CIFAR10</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1461,6 +1452,17 @@
             Archives
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2020/06/">
@@ -1576,14 +1578,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">33</span>
+                        <span class="tag is-grey">34</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">20</span>
+                        <span class="tag is-grey">21</span>
                     </a>
                 </div>
                 
@@ -1632,6 +1634,25 @@
         
         <article class="media">
             
+            <a href="/2020/07/02/Pytorch-RNN-intro/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_RNN_intro">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-02T11:48:28.000Z">2020-07-02</time></div>
+                    <a href="/2020/07/02/Pytorch-RNN-intro/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_RNN_intro</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/06/25/Pytorch-Activation-plot/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Activation_plot">
@@ -1640,7 +1661,7 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-25T16:38:18.000Z">2020-06-25</time></div>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-25T16:43:18.000Z">2020-06-25</time></div>
                     <a href="/2020/06/25/Pytorch-Activation-plot/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Activation_plot</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
@@ -1706,25 +1727,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/14/Pytorch-VGG-with-CIFAR10/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_VGG_with_CIFAR10">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-14T18:42:19.000Z">2020-05-14</time></div>
-                    <a href="/2020/05/14/Pytorch-VGG-with-CIFAR10/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_VGG_with_CIFAR10</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1735,6 +1737,17 @@
             Archives
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2020/06/">
@@ -1850,14 +1863,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">33</span>
+                        <span class="tag is-grey">34</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">20</span>
+                        <span class="tag is-grey">21</span>
                     </a>
                 </div>
                 

@@ -133,6 +133,84 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-01-25T19:40:14.000Z">2020-01-25</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/baekjoon/">baekjoon</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/baekjoon/python/">python</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 minutes read (About 480 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/01/25/%ED%83%91-2493%EB%B2%88/">탑_2493번</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="Python-백준-2493번-풀이"><a href="#Python-백준-2493번-풀이" class="headerlink" title="[Python] 백준 2493번 풀이"></a>[Python] 백준 2493번 풀이</h1><h3 id="탑"><a href="#탑" class="headerlink" title="탑"></a>탑</h3><ul>
+<li><p>순서대로 주어지는 탑의 높이를 기준으로 전파가 닿는곳을 구하기 혹은 닿지 않는지를 판단하는 스텍 문제이다.</p>
+</li>
+<li><p>입력되는 탑의 높이를 스텍에 담아두고 판별한다.</p>
+</li>
+<li><p>스텍에 특정 높이의 탑이 있을 때, 다음에 들어가는 탑의 높이가 더 높다면 <strong>스텍에서 top을 지우면 된다.</strong></p>
+<ul>
+<li><p>왜냐하면, 스텍의 top보다 높은 높이의 탑을 입력받았다면 그 이후에 입력받는 모든 탑들의 전파는 스텍 top에 있는 탑에는 절대 도달할 수 없기 때문이다.</p>
+</li>
+<li><p>만약 스텍에 판단할 수 있는 top이 없다면 스텍에 입력을 집어넣고 0 을 출력하면 된다.</p>
+</li>
+</ul>
+</li>
+<li><p>스텍에 특정 높이의 탑이 있을 때, 다음에 들어가는 탑의 높이가 더 낮다면 <strong>스텍에 입력받은 탑의 높이를 top으로 입력하고 이전 top의 위치를 출력해준다.</strong></p>
+<ul>
+<li><p>왜냐하면, 이후에 입력받은 탑의 높이까지 판단해야 하기 때문에 출력과 동시에 스텍의 top으로 저장해준다.</p>
+</li>
+<li><p>주의할점은, 이렇게 전파가 가로막혀 위치를 출력했다면 while 루프를 벗어나서 다음에 입력받는 탑의 높이로 돌아가야 한다는 것이다.</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>전파가 가로막혔을 때, 해당 탑의 <strong>위치</strong>를 출력해야 하는 문제이므로 스텍안에 “(인덱스, 탑의 높이)” 를 갖는 튜플을 저장했다.</p>
+</li>
+<li><p>python 풀이</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">n = int(sys.stdin.readline())</span><br><span class="line"></span><br><span class="line">tower = list(map(int, sys.stdin.readline().split()))</span><br><span class="line"></span><br><span class="line">stack = []</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> idx,i <span class="keyword">in</span> enumerate(tower):</span><br><span class="line">	<span class="comment"># print(stack)</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> stack:</span><br><span class="line">		<span class="keyword">if</span> i &gt; stack[<span class="number">-1</span>][<span class="number">1</span>]:</span><br><span class="line">			stack.pop()</span><br><span class="line">		<span class="keyword">elif</span> i &lt; stack[<span class="number">-1</span>][<span class="number">1</span>]:</span><br><span class="line">			print(stack[<span class="number">-1</span>][<span class="number">0</span>], end=<span class="string">" "</span>)</span><br><span class="line">			stack.append((idx+<span class="number">1</span>,i))</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">not</span> stack:</span><br><span class="line">		stack.append((idx+<span class="number">1</span>,i))</span><br><span class="line">		print(<span class="number">0</span>, end=<span class="string">" "</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">else</span>: <span class="keyword">continue</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/baekjoon/blob/master/2493.py">Full Code - Python</a>   </p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-01-23T15:03:44.000Z">2020-01-23</time>
                 
                 <div class="level-item">
@@ -978,132 +1056,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-01-07T15:26:50.000Z">2020-01-07</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Go/">Go</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Go/tutorial/">tutorial</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    6 minutes read (About 940 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/01/07/Golang-%EC%A0%95%EB%A6%AC%ED%95%98%EA%B8%B0-2/">Golang_정리하기_2</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="Go-tutorial-Go-정리하기-2"><a href="#Go-tutorial-Go-정리하기-2" class="headerlink" title="[Go tutorial] Go 정리하기 - 2"></a>[Go tutorial] Go 정리하기 - 2</h1><h3 id="Go-tour-참조"><a href="#Go-tour-참조" class="headerlink" title="Go-tour 참조"></a><a href="https://go-tour-kr.appspot.com/#1">Go-tour 참조</a></h3><h3 id="구름edu-참조"><a href="#구름edu-참조" class="headerlink" title="구름edu 참조"></a><a href="https://edu.goorm.io/learn/lecture/2010/%EB%B0%94%EB%A1%9C-%EC%8B%A4%ED%96%89%ED%95%B4%EB%B3%B4%EB%A9%B4%EC%84%9C-%EB%B0%B0%EC%9A%B0%EB%8A%94-go-lang-%EA%B3%A0%EB%9E%AD/lesson/226422/%EA%B5%AC%EC%A1%B0%EC%B2%B4">구름edu 참조</a></h3><ul>
-<li><p>구조체(Structs)</p>
-<ul>
-<li><p>structs는 데이터들의 조합</p>
-</li>
-<li><p>type선언으로 이름을 지정할 수 있음</p>
-</li>
-<li><p>“객체이름 := 구조체이름{저장할값}”으로 입력해 선언과 동시에 초기화할 수 있다.</p>
-</li>
-<li><p>구조체에 속한 필드(데이터)는 dot(.)으로 접근</p>
-  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> person <span class="keyword">struct</span> &#123;</span><br><span class="line">	name    <span class="keyword">string</span></span><br><span class="line">	age     <span class="keyword">int</span></span><br><span class="line">	contact <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> p1 = person&#123;&#125;</span><br><span class="line">	fmt.Println(p1)</span><br><span class="line"></span><br><span class="line">	p1.name = <span class="string">"kim"</span></span><br><span class="line">	p1.age = <span class="number">25</span></span><br><span class="line">	p1.contact = <span class="string">"01000000000"</span></span><br><span class="line">	fmt.Println(p1)</span><br><span class="line"></span><br><span class="line">	p2 := person&#123;<span class="string">"nam"</span>, <span class="number">31</span>, <span class="string">"01022220000"</span>&#125; <span class="comment">// 필드 이름을 생력할 시 순서대로 저장함</span></span><br><span class="line">	fmt.Println(p2)</span><br><span class="line"></span><br><span class="line">	p3 := person&#123;contact: <span class="string">"01011110000"</span>, name: <span class="string">"park"</span>, age: <span class="number">23</span>&#125; <span class="comment">// 필드 이름을 명시할 시 순서와 상관 없이 저장할 수 있음</span></span><br><span class="line">	fmt.Println(p3)</span><br><span class="line"></span><br><span class="line">	p3.name = <span class="string">"ryu"</span> <span class="comment">//필드에 저장된 값을 수정할 수 있음</span></span><br><span class="line">	fmt.Println(p3)</span><br><span class="line"></span><br><span class="line">	fmt.Println(p3.contact) <span class="comment">//필드 값의 개별 접근도 가능함</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>포인터</p>
-<ul>
-<li><p>포인터 연산은 불가능</p>
-</li>
-<li><p><strong>포인터를 이용한 간접 접근은 실제 구조체에도 영향을 끼침</strong></p>
-</li>
-<li><p>“&amp;” 을 매개변수 앞에 붙여 pass by reference 를 통해 값이 저장된 주소에 직접 접근할 수 있음.</p>
-</li>
-<li><p>구조체 포인터를 생성하는 방법은 두 가지가 있다.</p>
-<ul>
-<li><p>‘new(구조체이름)’ 을 사용하여 객체를 생성</p>
-</li>
-<li><p>구조체 이름 앞에 &amp; 붙이기</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Person <span class="keyword">struct</span> &#123;</span><br><span class="line">	Name <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	c := <span class="built_in">new</span>(Person) <span class="comment">// returns pointer</span></span><br><span class="line">	c.Name = <span class="string">"Catherine"</span></span><br><span class="line">	fmt.Println(c.Name) <span class="comment">// prints: Catherine</span></span><br><span class="line">	</span><br><span class="line">	d := *c</span><br><span class="line">	d.Name = <span class="string">"Daniel"</span></span><br><span class="line">	fmt.Println(d.Name) <span class="comment">// prints: Daniel</span></span><br><span class="line">	</span><br><span class="line">	i := &amp;d</span><br><span class="line">	i.Name = <span class="string">"Ines"</span></span><br><span class="line">	fmt.Println(c.Name) <span class="comment">// prints: Catherine</span></span><br><span class="line">	fmt.Println(d.Name) <span class="comment">// prints: Ines</span></span><br><span class="line">	fmt.Println(i.Name) <span class="comment">// prints: Ines</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>슬라이스(slice)</p>
-<ul>
-<li><p>슬라이스는 참조 타입이다. 따라서, 슬라이스를 복사한다는 것은 같은 주소를 참조한다는 것이다. 복사한 슬라이스의 값을 바꾸면 참조하는 슬라이스의 해당 값도 바뀌게 된다.</p>
-</li>
-<li><p>슬라이스 선언</p>
-<ul>
-<li><p>var a []int = []int{1,2,3,4} 와 같이 선언과 함께 초기화</p>
-</li>
-<li><p>make() 함수를 이용.</p>
-</li>
-<li><p>make(슬라이스 타입, 슬라이스 길이, 슬라이스 용량)</p>
-</li>
-<li><p>ex) s:=make([]int,3,3)</p>
-</li>
-</ul>
-</li>
-<li><p>append() 함수를 통해 슬라이스에 데이터를 추가할 수 있다.</p>
-</li>
-<li><p>슬라이스에 슬라이스를 추가하기 위해서는 슬라이스 뒤에 “…”을 입력    </p>
-  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">   	sliceA := []<span class="keyword">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;</span><br><span class="line">   	sliceB := []<span class="keyword">int</span>&#123;<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>&#125;</span><br><span class="line"></span><br><span class="line">   	sliceA = <span class="built_in">append</span>(sliceA, sliceB...)</span><br><span class="line">   	<span class="comment">//sliceA = append(sliceA, 4, 5, 6)</span></span><br><span class="line"></span><br><span class="line">   	fmt.Println(sliceA)</span><br><span class="line">	fmt.Println(sliceB)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>copy(붙여넣을 슬라이스, 복사할 슬라이스) 를 통해 한 슬라이스를 다른 슬라이스로 복사할 수 있다.</p>
-  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	c := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">0</span>, <span class="number">3</span>) <span class="comment">//용량이 3이고 길이가0인 정수형 슬라이스 선언</span></span><br><span class="line">	c = <span class="built_in">append</span>(c, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>)</span><br><span class="line">	fmt.Println(<span class="built_in">len</span>(c), <span class="built_in">cap</span>(c))</span><br><span class="line"></span><br><span class="line">	l := c[<span class="number">1</span>:<span class="number">3</span>] <span class="comment">//인덱스 1요소부터 2요소까지 복사</span></span><br><span class="line">	fmt.Println(l)</span><br><span class="line"></span><br><span class="line">	l = c[<span class="number">2</span>:] <span class="comment">//인덱스 2요소부터 끝까지 복사</span></span><br><span class="line">	fmt.Println(l)</span><br><span class="line"></span><br><span class="line">	l[<span class="number">0</span>] = <span class="number">6</span></span><br><span class="line"></span><br><span class="line">	fmt.Println(c) <span class="comment">//슬라이스 l의 값을 바꿨는데 c의 값도 바뀜</span></span><br><span class="line"><span class="comment">//값을 복사해온 것이 아니라 기존 슬라이스 주솟값을 참조</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>위의 예제를 실행해보면 slice c의 값도 l 에 의해 바뀌는것을 확인할 수 있다. 왜냐하면, 슬라이스는 배열과 다르게 슬라이스 자체가 참조하고 있는 주소값을 같이 참조하기 때문이다.</p>
-</li>
-<li><p>슬라이스 순회(iterates)</p>
-<ul>
-<li><p>슬라이스는 for 반복문에서 range를 통해 순회할 수 있다.</p>
-</li>
-<li><p>이때, index와 value를 순회하며 필요치 않은 값은 “_” 를 이용해 무시할 수 있다.</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p><a href="https://go-tour-kr.appspot.com/#36">연습 : 슬라이스 - 문제</a></p>
-<ul>
-<li><a href="https://github.com/Already-Ready/go_tour/blob/master/go_tour_solutions/slice.go">연습 : 슬라이스 - solution</a></li>
-</ul>
-</li>
-</ul>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1174,7 +1126,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            49
+                            50
                         </p>
                     </a>
                 </div>
@@ -1335,7 +1287,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">24</span>
+                <span class="level-item tag">25</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -1351,7 +1303,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">20</span>
+                <span class="level-item tag">21</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -1411,6 +1363,25 @@
         
         <article class="media">
             
+            <a href="/2020/07/02/Pytorch-RNN-intro/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_RNN_intro">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-02T11:48:28.000Z">2020-07-02</time></div>
+                    <a href="/2020/07/02/Pytorch-RNN-intro/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_RNN_intro</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/06/25/Pytorch-Activation-plot/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Activation_plot">
@@ -1419,7 +1390,7 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-25T16:38:18.000Z">2020-06-25</time></div>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-25T16:43:18.000Z">2020-06-25</time></div>
                     <a href="/2020/06/25/Pytorch-Activation-plot/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Activation_plot</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
@@ -1485,25 +1456,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/14/Pytorch-VGG-with-CIFAR10/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_VGG_with_CIFAR10">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-14T18:42:19.000Z">2020-05-14</time></div>
-                    <a href="/2020/05/14/Pytorch-VGG-with-CIFAR10/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_VGG_with_CIFAR10</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -1514,6 +1466,17 @@
             Archives
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2020/06/">
@@ -1629,14 +1592,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">33</span>
+                        <span class="tag is-grey">34</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">20</span>
+                        <span class="tag is-grey">21</span>
                     </a>
                 </div>
                 
@@ -1685,6 +1648,25 @@
         
         <article class="media">
             
+            <a href="/2020/07/02/Pytorch-RNN-intro/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_RNN_intro">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-02T11:48:28.000Z">2020-07-02</time></div>
+                    <a href="/2020/07/02/Pytorch-RNN-intro/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_RNN_intro</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/06/25/Pytorch-Activation-plot/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_Activation_plot">
@@ -1693,7 +1675,7 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-25T16:38:18.000Z">2020-06-25</time></div>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-25T16:43:18.000Z">2020-06-25</time></div>
                     <a href="/2020/06/25/Pytorch-Activation-plot/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_Activation_plot</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
@@ -1759,25 +1741,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/14/Pytorch-VGG-with-CIFAR10/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_VGG_with_CIFAR10">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-14T18:42:19.000Z">2020-05-14</time></div>
-                    <a href="/2020/05/14/Pytorch-VGG-with-CIFAR10/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_VGG_with_CIFAR10</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1788,6 +1751,17 @@
             Archives
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2020/06/">
@@ -1903,14 +1877,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">33</span>
+                        <span class="tag is-grey">34</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">20</span>
+                        <span class="tag is-grey">21</span>
                     </a>
                 </div>
                 
