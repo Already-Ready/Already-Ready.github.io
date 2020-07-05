@@ -7,16 +7,22 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>Archives: 2020/3 - Hexo</title>
+<title>Pytorch_RNN_long_sequence - Hexo</title>
 
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2020/03/index.html">
+    <meta name="description" content="RNN Long Sequence 다루기모두를 위한 딥러닝 - 파이토치 강의 참고 RNN intro를 통해 hello 예제를 살펴보았다.  비슷하게 one hot encoding을 통해 hello보다 긴 문장을 다루어보고자 한다.  먼저, 문장으로부터 각 알파벳과 인덱스를 매칭시키는 dict를 만들고 이를 활용하고자 한다.   123456sentence &#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pytorch_RNN_long_sequence">
+<meta property="og:url" content="http://yoursite.com/2020/07/05/Pytorch-RNN-long-sequence/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="RNN Long Sequence 다루기모두를 위한 딥러닝 - 파이토치 강의 참고 RNN intro를 통해 hello 예제를 살펴보았다.  비슷하게 one hot encoding을 통해 hello보다 긴 문장을 다루어보고자 한다.  먼저, 문장으로부터 각 알파벳과 인덱스를 매칭시키는 dict를 만들고 이를 활용하고자 한다.   123456sentence &#x3D;">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2020-07-05T15:00:04.000Z">
+<meta property="article:modified_time" content="2020-07-05T05:59:20.017Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Pytorch">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
 
@@ -76,7 +82,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="Hexo" height="28">
+                <img src="/images/logo.svg" alt="Pytorch_RNN_long_sequence" height="28">
             
             </a>
         </div>
@@ -126,95 +132,141 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-07-05T15:00:04.000Z">2020-07-05</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    5 minutes read (About 822 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                Pytorch_RNN_long_sequence
+            
+        </h1>
+        <div class="content">
+            <h1 id="RNN-Long-Sequence-다루기"><a href="#RNN-Long-Sequence-다루기" class="headerlink" title="RNN Long Sequence 다루기"></a>RNN Long Sequence 다루기</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
+<li><p><a href="https://already-ready.github.io/2020/07/02/Pytorch-RNN-intro/">RNN intro</a>를 통해 hello 예제를 살펴보았다.</p>
+</li>
+<li><p>비슷하게 one hot encoding을 통해 hello보다 긴 문장을 다루어보고자 한다.</p>
+</li>
+<li><p>먼저, 문장으로부터 각 알파벳과 인덱스를 매칭시키는 dict를 만들고 이를 활용하고자 한다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sentence = (<span class="string">"if you want to build a ship, don't drum up people together to "</span></span><br><span class="line">            <span class="string">"collect wood and don't assign them tasks and work, but rather "</span></span><br><span class="line">            <span class="string">"teach them to long for the endless immensity of the sea."</span>)</span><br><span class="line"></span><br><span class="line">char_set = list(set(sentence))</span><br><span class="line">char_dic = &#123;c:i <span class="keyword">for</span> i, c <span class="keyword">in</span> enumerate(char_set)&#125;</span><br></pre></td></tr></table></figure>
 
-<div class="card widget">
+<ul>
+<li>윈도우 크기를 정하고 그에 맞게 문장을 잘라서 input data X로 사용하고 하나의 character만큼 오른쪽으로 쉬프트한 윈도우 크기의 문장을 Y로 사용하고자 한다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">예를 들어, 윈도우 크기가 <span class="number">5</span>라면 처음 X는</span><br><span class="line">X = if yo --&gt; Y = f you</span><br><span class="line">가 되는 방식이다.</span><br><span class="line"></span><br><span class="line">이 방법을 통해 문장 전체를 윈도우 크기로 순회해서 데이터X와 Y를 만든다.</span><br><span class="line"></span><br><span class="line">x_data = []</span><br><span class="line">y_data = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(sentence) - sequence_length):</span><br><span class="line">    x = sentence[i: i+sequence_length]</span><br><span class="line">    y = sentence[i+<span class="number">1</span>: i+sequence_length+<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    x_data.append([char_dic[c] <span class="keyword">for</span> c <span class="keyword">in</span> x])</span><br><span class="line">    y_data.append([char_dic[c] <span class="keyword">for</span> c <span class="keyword">in</span> y])</span><br><span class="line"></span><br><span class="line">x_one_hot = [np.eye(dic_size)[x] <span class="keyword">for</span> x <span class="keyword">in</span> x_data]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">X = torch.FloatTensor(x_one_hot).to(device)</span><br><span class="line">Y = torch.LongTensor(y_data).to(device)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>이제 원핫인코딩된 X로부터 라벨값 Y를 예측하는 문제의 데이터가 만들어졌다.</p>
+</li>
+<li><p>RNN모델을 만들때 이전과는 다르게 두 층의 RNN layer와 fully connected layer를 이용해보고자 한다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Net</span><span class="params">(torch.nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, input_dim, hidden_dim, layers)</span>:</span></span><br><span class="line">        super(Net, self).__init__()</span><br><span class="line">        self.rnn = torch.nn.RNN(input_dim, hidden_dim, num_layers=layers, batch_first=<span class="literal">True</span>)</span><br><span class="line">        <span class="comment"># num_layers를 설정함으로써 RNN layer를 여러겹 쌓을 수 있다.</span></span><br><span class="line">        self.fc = torch.nn.Linear(hidden_dim, hidden_dim, bias=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        x, _status = self.rnn(x)</span><br><span class="line">        x = self.fc(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">net = Net(dic_size, hiddend_size, <span class="number">2</span>).to(device)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>위의 모델을 통해 학습하면서 예측을 통해 완성되는 문장을 확인해본다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">criterion = torch.nn.CrossEntropyLoss().to(device)</span><br><span class="line">optimizer = optim.Adam(net.parameters(), lr=learning_rate)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">    optimizer.zero_grad()</span><br><span class="line">    outputs = net(X)</span><br><span class="line">    loss = criterion(outputs.view(<span class="number">-1</span>,dic_size), Y.view(<span class="number">-1</span>))</span><br><span class="line">    loss.backward()</span><br><span class="line">    optimizer.step()</span><br><span class="line"></span><br><span class="line">    results = outputs.argmax(dim=<span class="number">2</span>)</span><br><span class="line">    predict_str = <span class="string">''</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> j, result <span class="keyword">in</span> enumerate(results):</span><br><span class="line">        <span class="keyword">if</span> j==<span class="number">0</span>:</span><br><span class="line">            predict_str += <span class="string">''</span>.join([char_set[t] <span class="keyword">for</span> t <span class="keyword">in</span> result])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            predict_str += char_set[result[<span class="number">-1</span>]]</span><br><span class="line"></span><br><span class="line">    print(predict_str)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>마지막에 j가 0일때와 아닐때로 나눈 이유는 첫 번째 예측에서 sequence_length만큼의 문장을 만들어주면 그 이후로부터는 result에서 마지막 문자를 제외하고는 이전 문장과 동일하기 때문이다.</p>
+</li>
+<li><p>예를 들어 sequence_length가 5이고 j가 0일때 “if yo” 라는 문장을 만들었고 다음 result에서는 “f you”를 예측했다면 이미 이전 문장과 그 다음 문장에서 “f yo” 라는 단어들은 겹치게된다.</p>
+</li>
+<li><p>따라서, j가 0일때 sequence_length만큼의 문장을 만들고 그 이후로는 result의 마지막 값만을 가져와서 predict_str에 이어붙이게 만들어준다.</p>
+</li>
+</ul>
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/RNN_longseq.py">Full Code</a></p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Python/" rel="tag">Python</a>, <a class="has-link-grey -link" href="/tags/Pytorch/" rel="tag">Pytorch</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
     <div class="card-content">
-        <h3 class="tag is-link">
-        March 2020
-        </h3>
-        <div class="timeline">
-        
-            <article class="media">
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2020-03-29T20:31:22.000Z">2020-03-29</time>
-                        <a href="/2020/03/29/%ED%8C%8C%EC%9D%B4%EC%8D%AC-dataframe-loc-iloc-%EC%9D%B8%EB%8D%B1%EC%8B%B1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">파이썬_dataframe_loc_iloc_인덱싱</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2020-03-24T11:55:20.000Z">2020-03-24</time>
-                        <a href="/2020/03/24/%ED%8C%8C%EC%9D%B4%EC%8D%AC-dataframe-function-apply-%EB%B0%A9%EB%B2%95-without-iterrrows/" class="title has-link-black-ter is-size-6 has-text-weight-normal">파이썬_dataframe_function_apply_방법_without_iterrrows</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2020-03-17T22:50:33.000Z">2020-03-17</time>
-                        <a href="/2020/03/17/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%94%95%EC%85%94%EB%84%88%EB%A6%AC-missing-%EB%A9%94%EC%84%9C%EB%93%9C%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC/" class="title has-link-black-ter is-size-6 has-text-weight-normal">파이썬_딕셔너리___missing___메서드에_관하여.</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/About-Python/">About Python</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
-                
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2020-03-04T16:08:33.000Z">2020-03-04</time>
-                        <a href="/2020/03/04/CtCI-Ch5-%EB%B9%84%ED%8A%B8-%EC%A1%B0%EC%9E%91/" class="title has-link-black-ter is-size-6 has-text-weight-normal">CtCI_Ch5_비트_조작</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/CS-basic/">CS basic</a> / <a class="has-link-grey -link" href="/categories/CS-basic/CtCI/">CtCI</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
         </div>
     </div>
 </div>
 
 
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/07/02/Pytorch-RNN-intro/">
+                <span class="level-item">Pytorch_RNN_intro</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2020/07/05/Pytorch-RNN-long-sequence/';
+        this.page.identifier = '2020/07/05/Pytorch-RNN-long-sequence/';
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'already-ready' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+    </div>
+</div>
 </div>
                 
 
@@ -1060,7 +1112,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="Hexo" height="28">
+                    <img src="/images/logo.svg" alt="Pytorch_RNN_long_sequence" height="28">
                 
                 </a>
                 <p class="is-size-7">

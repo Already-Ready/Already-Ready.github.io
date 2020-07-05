@@ -143,6 +143,75 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-04-06T15:21:16.000Z">2020-04-06</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 minutes read (About 334 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/04/06/Pytorch-Multivariable-Linear-regression/">Pytorch_Multivariable_Linear_regression</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="Pytorch-Multivariable-Linear-regression-기본-정리"><a href="#Pytorch-Multivariable-Linear-regression-기본-정리" class="headerlink" title="Pytorch Multivariable Linear regression 기본 정리"></a>Pytorch Multivariable Linear regression 기본 정리</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
+<li><p>두 개 이상의 x값으로부터 y값을 예측하는 간단한 모델을 만들어보자.</p>
+</li>
+<li><p>간단한 예제를 위해 (5,3) 의 train_x data를, (5,1) 의 train_y 데이터를 만든다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x_train = torch.FloatTensor([[<span class="number">73</span>, <span class="number">80</span>, <span class="number">75</span>],</span><br><span class="line">                             [<span class="number">93</span>, <span class="number">88</span>, <span class="number">83</span>],</span><br><span class="line">                             [<span class="number">89</span>, <span class="number">91</span>, <span class="number">90</span>],</span><br><span class="line">                             [<span class="number">96</span>,<span class="number">98</span>, <span class="number">100</span>],</span><br><span class="line">                             [<span class="number">73</span>, <span class="number">66</span>, <span class="number">70</span>]])</span><br><span class="line">y_train = torch.FloatTensor([[<span class="number">152</span>], [<span class="number">185</span>], [<span class="number">180</span>], [<span class="number">196</span>], [<span class="number">142</span>]])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>선형 회귀 모델을 만들것이므로 우리가 학습해야하는 변수는 w 와 b 두 가지이다. 이를 torch.zeros 를 이용해 만들고 requires_grad=True 로 설정해 학습할 데이터로 설정하자.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">w = torch.zeros((<span class="number">3</span>,<span class="number">1</span>), requires_grad=<span class="literal">True</span>)</span><br><span class="line">b = torch.zeros(<span class="number">1</span>, requires_grad=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>모델을 통해 구한 hypothesis와 실제값의 차이로부터 loss를 구하기 위해 MSE를 사용하고, SGD optimizer를 통해 w 와 b를 개선한다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">optimizer = torch.optim.SGD([w,b], lr=<span class="number">1e-5</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>epochs 수만큼 모델을 학습시킨다.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs+<span class="number">1</span>):</span><br><span class="line"></span><br><span class="line">    hypothesis = x_train.matmul(w) + b <span class="comment"># 모델을 통해 구해지는 predict값</span></span><br><span class="line"></span><br><span class="line">    loss = torch.mean((hypothesis - y_train) ** <span class="number">2</span>) <span class="comment"># predict와 train 데이터로부터 구하는 loss</span></span><br><span class="line"></span><br><span class="line">    optimizer.zero_grad <span class="comment"># gradient 초기화</span></span><br><span class="line">    loss.backward()		<span class="comment"># gradient 계산</span></span><br><span class="line">    optimizer.step()	<span class="comment"># w 와 b 개선</span></span><br><span class="line"></span><br><span class="line">    print(<span class="string">'Epoch &#123;:4d&#125;/&#123;&#125; hypothesis : &#123;&#125; Cost : &#123;:.6f&#125;'</span>. format(</span><br><span class="line">        epoch, epochs, hypothesis.squeeze().detach(), loss.item()</span><br><span class="line">    ))</span><br></pre></td></tr></table></figure>
+
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/Multivariable_Linear_regression.py">Full Code</a></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
                 <time class="level-item has-text-grey" datetime="2020-04-02T23:26:54.000Z">2020-04-02</time>
                 
                 <div class="level-item">
@@ -297,7 +366,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            50
+                            51
                         </p>
                     </a>
                 </div>
@@ -458,7 +527,7 @@
                 <span class="level-item">Python</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">25</span>
+                <span class="level-item tag">26</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/Python/About-Python/">
@@ -474,7 +543,7 @@
                 <span class="level-item">Pytorch</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">21</span>
+                <span class="level-item tag">22</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/baekjoon/">
@@ -534,6 +603,25 @@
         
         <article class="media">
             
+            <a href="/2020/07/05/Pytorch-RNN-long-sequence/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_RNN_long_sequence">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-05T15:00:04.000Z">2020-07-05</time></div>
+                    <a href="/2020/07/05/Pytorch-RNN-long-sequence/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_RNN_long_sequence</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/07/02/Pytorch-RNN-intro/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_RNN_intro">
@@ -608,25 +696,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/24/Pytorch-About-SGD/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_SGD">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-24T14:33:43.000Z">2020-05-24</time></div>
-                    <a href="/2020/05/24/Pytorch-About-SGD/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_About_SGD</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
         
@@ -644,7 +713,7 @@
                     <span class="level-item">July 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -763,14 +832,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">34</span>
+                        <span class="tag is-grey">35</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">21</span>
+                        <span class="tag is-grey">22</span>
                     </a>
                 </div>
                 
@@ -819,6 +888,25 @@
         
         <article class="media">
             
+            <a href="/2020/07/05/Pytorch-RNN-long-sequence/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_RNN_long_sequence">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-05T15:00:04.000Z">2020-07-05</time></div>
+                    <a href="/2020/07/05/Pytorch-RNN-long-sequence/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_RNN_long_sequence</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/07/02/Pytorch-RNN-intro/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_RNN_intro">
@@ -893,25 +981,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/05/24/Pytorch-About-SGD/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Pytorch_About_SGD">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-24T14:33:43.000Z">2020-05-24</time></div>
-                    <a href="/2020/05/24/Pytorch-About-SGD/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Pytorch_About_SGD</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Python/">Python</a> / <a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -929,7 +998,7 @@
                     <span class="level-item">July 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -1048,14 +1117,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Python/">
                         <span class="tag">Python</span>
-                        <span class="tag is-grey">34</span>
+                        <span class="tag is-grey">35</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Pytorch/">
                         <span class="tag">Pytorch</span>
-                        <span class="tag is-grey">21</span>
+                        <span class="tag is-grey">22</span>
                     </a>
                 </div>
                 
