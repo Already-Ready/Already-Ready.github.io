@@ -7,22 +7,22 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>hexo블로그_댓글창만들기_icarus테마 - Hexo</title>
+<title>Pytorch_RNN_timeseries_many_to_one - Hexo</title>
 
 
-    <meta name="description" content="icarus테마 hexo블로그에 disqus 댓글창을 만들어보자icarus테마 블로그에 disqus댓글창을 만들고자 5시간의 삽질을 기록하는 이야기이다.1.disqus사이트에 접속해 아이디를 만들어아합니다.   2.홈 화면에서 get started를 누른다.   3.”I want to install Disqus on My site”를 누릅니다.   4.we">
+    <meta name="description" content="RNN timeseries Many to One 다루기모두를 위한 딥러닝 - 파이토치 강의 참고 이전 포스트에서는 문장의 window 크기만큼을 입력받아 다음 문자를 예측하는 모델을 살펴보았다.  이번 포스트에서는 날마다의 주식 기록인 연속된 데이터를 입력받아 종가를 예측하는 모델을 만들어본다.  7일간의 데이터를 입력으로받아 종가를 예측하는 모델이므로 M">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hexo블로그_댓글창만들기_icarus테마">
-<meta property="og:url" content="http://yoursite.com/2020/01/03/hexo%EB%B8%94%EB%A1%9C%EA%B7%B8-%EB%8C%93%EA%B8%80%EC%B0%BD%EB%A7%8C%EB%93%A4%EA%B8%B0-icarus%ED%85%8C%EB%A7%88/index.html">
+<meta property="og:title" content="Pytorch_RNN_timeseries_many_to_one">
+<meta property="og:url" content="http://yoursite.com/2020/07/09/Pytorch-RNN-timeseries-many-to-one/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="icarus테마 hexo블로그에 disqus 댓글창을 만들어보자icarus테마 블로그에 disqus댓글창을 만들고자 5시간의 삽질을 기록하는 이야기이다.1.disqus사이트에 접속해 아이디를 만들어아합니다.   2.홈 화면에서 get started를 누른다.   3.”I want to install Disqus on My site”를 누릅니다.   4.we">
+<meta property="og:description" content="RNN timeseries Many to One 다루기모두를 위한 딥러닝 - 파이토치 강의 참고 이전 포스트에서는 문장의 window 크기만큼을 입력받아 다음 문자를 예측하는 모델을 살펴보았다.  이번 포스트에서는 날마다의 주식 기록인 연속된 데이터를 입력받아 종가를 예측하는 모델을 만들어본다.  7일간의 데이터를 입력으로받아 종가를 예측하는 모델이므로 M">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="article:published_time" content="2020-01-03T01:10:41.000Z">
-<meta property="article:modified_time" content="2020-01-02T16:49:39.344Z">
+<meta property="article:published_time" content="2020-07-09T16:52:26.000Z">
+<meta property="article:modified_time" content="2020-07-09T07:51:54.554Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="github.io">
-<meta property="article:tag" content="블로그">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Pytorch">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
 
@@ -82,7 +82,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="hexo블로그_댓글창만들기_icarus테마" height="28">
+                <img src="/images/logo.svg" alt="Pytorch_RNN_timeseries_many_to_one" height="28">
             
             </a>
         </div>
@@ -138,17 +138,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-01-03T01:10:41.000Z">2020-01-03</time>
+                <time class="level-item has-text-grey" datetime="2020-07-09T16:52:26.000Z">2020-07-09</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/github-io/">github.io</a>
+                <a class="has-link-grey -link" href="/categories/Python/">Python</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Python/Pytorch/">Pytorch</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    5 minutes read (About 812 words)
+                    4 minutes read (About 611 words)
                 </span>
                 
                 
@@ -157,36 +157,39 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                hexo블로그_댓글창만들기_icarus테마
+                Pytorch_RNN_timeseries_many_to_one
             
         </h1>
         <div class="content">
-            <h1 id="icarus테마-hexo블로그에-disqus-댓글창을-만들어보자"><a href="#icarus테마-hexo블로그에-disqus-댓글창을-만들어보자" class="headerlink" title="icarus테마 hexo블로그에 disqus 댓글창을 만들어보자"></a>icarus테마 hexo블로그에 disqus 댓글창을 만들어보자</h1><h3 id="icarus테마-블로그에-disqus댓글창을-만들고자-5시간의-삽질을-기록하는-이야기이다"><a href="#icarus테마-블로그에-disqus댓글창을-만들고자-5시간의-삽질을-기록하는-이야기이다" class="headerlink" title="icarus테마 블로그에 disqus댓글창을 만들고자 5시간의 삽질을 기록하는 이야기이다."></a>icarus테마 블로그에 disqus댓글창을 만들고자 5시간의 삽질을 기록하는 이야기이다.</h3><p>1.<a href="https://disqus.com/">disqus사이트</a>에 접속해 아이디를 만들어아합니다.  </p>
-<p>2.홈 화면에서 get started를 누른다.  </p>
-<p>3.”I want to install Disqus on My site”를 누릅니다.  </p>
-<p>4.website이름을 만들고자하는 이름으로 입력하고 카테고리 언어를 설정한 후 create site를 클릭합니다.  </p>
-<p>5.여러 유료모델이 있지만 트래픽이 높지 않은 개인 블로그이므로(높을수도 있지만?!) Basic 모델아래에 Subscribe Now를 눌러줍니다.  </p>
-<p>6.어떤 플랫폼을 사용하는지 물어보지만 우리는 github.io를 사용하기때문에 제일 아래쪽의 I dont’ see my platform listed….을 눌러줍니다.  </p>
-<p>7.Universal Code install instructions창이 뜹니다.  </p>
-<p>8.해당 창에서 제일 위의 settings을 눌러줍니다.  </p>
-<p>9.새로 열리는 창의 두번째칸에 Shortname이 있습니다. Your website shortname is XXXXX라고 나옵니다. shortname을 기억하시면됩니다.  </p>
-<p>이제 github.io블로그를 꾸미는 터미널로 들어갑니다!<br>테마마다 설정하는 법이 모두 다르기때문에 icarus테마를 기준으로 설명하겠습니다.<br>icarus테마의 <a href="https://blog.zhangruipeng.me/hexo-theme-icarus/Plugins/Comment/disqus-comment-plugin/">icarus테마 댓글창 설정법</a>에 들어가면 _config파일만 수정해 적용하도록 나와있습니다.   </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">comment:</span><br><span class="line">    # Name of the comment plugin</span><br><span class="line">    type: disqus  </span><br><span class="line">    shortname: &lt;9번에서 기억한 shortname&gt;</span><br></pre></td></tr></table></figure>
+            <h1 id="RNN-timeseries-Many-to-One-다루기"><a href="#RNN-timeseries-Many-to-One-다루기" class="headerlink" title="RNN timeseries Many to One 다루기"></a>RNN timeseries Many to One 다루기</h1><h3 id="모두를-위한-딥러닝-파이토치-강의-참고"><a href="#모두를-위한-딥러닝-파이토치-강의-참고" class="headerlink" title="모두를 위한 딥러닝 - 파이토치 강의 참고"></a><a href="https://www.youtube.com/watch?v=7eldOrjQVi0&list=PLQ28Nx3M4JrhkqBVIXg-i5_CVVoS1UzAv">모두를 위한 딥러닝 - 파이토치</a> 강의 참고</h3><ul>
+<li><p>이전 포스트에서는 문장의 window 크기만큼을 입력받아 다음 문자를 예측하는 모델을 살펴보았다.</p>
+</li>
+<li><p>이번 포스트에서는 날마다의 주식 기록인 연속된 데이터를 입력받아 종가를 예측하는 모델을 만들어본다.</p>
+</li>
+<li><p>7일간의 데이터를 입력으로받아 종가를 예측하는 모델이므로 Many(7일) to One(마지막 종가) 모델이다.</p>
+</li>
+<li><p>주식의 <code>시작가, 최고가, 최저가, 거래량, 종가</code> 즉, 5개의 값을 input으로 이용하는데 output으로 원하는건 종가 하나이다.</p>
+</li>
+<li><p>따라서, hidden_dim을 1로 정한다면 RNN셀이 마지막 종가를 바로 예측한다고 생각할 수 있다.</p>
+</li>
+<li><p>하지만 5개의 변수를 하나의 hidden state로서 RNN셀이 유통하는것은 어려운 일이기 때문에 hidden_dim을 10으로 설정하고 마지막에 fully connected layer을 사용해 마지막 종가를 예측하는 모델을 만든다.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#-parameters---</span></span><br><span class="line">seq_length = <span class="number">7</span></span><br><span class="line">data_dim = <span class="number">5</span></span><br><span class="line">hidden_dim = <span class="number">10</span></span><br><span class="line">output_dim = <span class="number">1</span></span><br><span class="line">learning_rate = <span class="number">0.01</span></span><br><span class="line">iterations = <span class="number">500</span></span><br><span class="line"><span class="comment">#---------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 모델 생성</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Net</span><span class="params">(torch.nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, input_dim, hidden_dim, output_dim, layers)</span>:</span></span><br><span class="line">        super(Net, self).__init__()</span><br><span class="line">        self.rnn = torch.nn.LSTM(input_dim, hidden_dim, num_layers=layers, batch_first=<span class="literal">True</span>)</span><br><span class="line">        self.fc = torch.nn.Linear(hidden_dim, output_dim, bias=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        x, _status = self.rnn(x)</span><br><span class="line">		<span class="comment">#print(x.shape) --&gt; rnn셀을 통과한 x의 shape을 직접 확인해보자.</span></span><br><span class="line">        x = self.fc(x[:,<span class="number">-1</span>])</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line">		</span><br><span class="line">net = Net(data_dim, hidden_dim, output_dim, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
 
-<p>위와 같이 _config파일을 수정하고 적용을 시키고 테스트를 하기위해 서버를 실행시켰지만 터미널에서는 comment.shortname을 찾을 수 없다는 에러메시지였습니다.<br>여기서부터 장장 5시간의 삽질이 시작됐습니다.<br>저의 에디터에서는 저렇게 수정한것처럼 보였습니다…<br>하지만 다른 커뮤니티에 문의하기 위해 comment 아래 부분을 복사해서 메모장에 붙여넣기 해보니 실제로 입력되어있던 내용은</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">comment:</span><br><span class="line">    # Name of the comment plugin</span><br><span class="line">    type: disqus  </span><br><span class="line">    	shortname: &lt;shortname&gt;</span><br></pre></td></tr></table></figure>
-
-<p>였습니다. OMG…<br>comment.shortname을 찾을 수 없다는 에러메시지가 나오는게 당연한 상황이었습니다<br>저걸 찾기까지 무려 5시간이 걸리다니… 에디터에서는 바르게 “보이길래” 의심도 못했습니다.(역시 갓모장…)<br>결국 footer수정… disqus.ejs파일 수정…등등 삽질을 끝낼 수 있었습니다.</p>
-<p>저와같은 오류가 뜬다면 삽질을 막기위해 _config 문서를 수정하시고 메모장에 복사 붙여넣기를 해보세요!<br>결론적으로 _config.yml 파일의 comment 내용을 다음과 같이 수정하시면 올바르게 적용됩니다!</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">comment:</span><br><span class="line">    # Name of the comment plugin</span><br><span class="line">    type: disqus  </span><br><span class="line">    shortname: &lt;9번에서 기억한 shortname&gt;</span><br></pre></td></tr></table></figure>
-
-<p>disqus파일은 수정하지 않으셔도되고 위와같이 수정한 후</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server -p &lt;포트번호&gt; ## 로컬에서 확인하기</span><br></pre></td></tr></table></figure>
-
-<p>로컬에서 확인한 후 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>로 배포하시면 됩니다.</p>
+<ul>
+<li><p>LSTM셀을 정의할때 우리는 input_dim으로 <code>시작가, 최고가, 최저가, 거래량, 종가</code>인 5차원을 넣고 이를 <code>hidden_dim</code>이 10차원으로 유통한다.</p>
+</li>
+<li><p>이렇게 정의한 LSTM셀을 input data가 통과한 후 shape을 살펴보면 <code>(batch_size, seq_length, hidden_dim)</code>의 모양인것을 확인할 수 있다.</p>
+</li>
+<li><p>즉, 여기서는 LSTM의 output은 (batch_size, 7, 10)의 모양이며 우리가 원하는것은 7일의 output중 마지막 output data이다.</p>
+</li>
+<li><p>따라서 LSTM을 통과한 x의 마지막 output data를 fully connected layer에 넣어준다.</p>
+</li>
+<li><p>이를 통해 10차원의 hidden_dim으로 유통되던 데이터가 마지막 종가인 하나의 값으로 예측할 수 있게된다.</p>
+</li>
+</ul>
+<h1 id="Full-Code"><a href="#Full-Code" class="headerlink" title="Full Code"></a>Full Code</h1><p><a href="https://github.com/Already-Ready/pytorch_zero_to_all/blob/master/RNN_timeseries.py">Full Code</a></p>
 
         </div>
         
@@ -194,7 +197,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/github-io/" rel="tag">github.io</a>, <a class="has-link-grey -link" href="/tags/%EB%B8%94%EB%A1%9C%EA%B7%B8/" rel="tag">블로그</a>
+                    <a class="has-link-grey -link" href="/tags/Python/" rel="tag">Python</a>, <a class="has-link-grey -link" href="/tags/Pytorch/" rel="tag">Pytorch</a>
                 </div>
             </div>
         </div>
@@ -220,17 +223,10 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/01/03/%ED%83%9D%EC%8B%9C%EA%B8%B0%ED%95%98%ED%95%99-3053%EB%B2%88/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">택시기하학_3053번</span>
-            </a>
-        </div>
-        
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2020/01/01/%EB%B6%80%EB%85%80%ED%9A%8C%EC%9E%A5%EC%9D%B4%EB%90%A0%ED%85%8C%EC%95%BC-2775%EB%B2%88/">
-                <span class="level-item">부녀회장이될테야_2775번</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/07/05/Pytorch-RNN-long-sequence/">
+                <span class="level-item">Pytorch_RNN_long_sequence</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -246,8 +242,8 @@
         
 <script>
     var disqus_config = function () {
-        this.page.url = 'http://yoursite.com/2020/01/03/hexo%EB%B8%94%EB%A1%9C%EA%B7%B8-%EB%8C%93%EA%B8%80%EC%B0%BD%EB%A7%8C%EB%93%A4%EA%B8%B0-icarus%ED%85%8C%EB%A7%88/';
-        this.page.identifier = '2020/01/03/hexo블로그-댓글창만들기-icarus테마/';
+        this.page.url = 'http://yoursite.com/2020/07/09/Pytorch-RNN-timeseries-many-to-one/';
+        this.page.identifier = '2020/07/09/Pytorch-RNN-timeseries-many-to-one/';
     };
     (function() {
         var d = document, s = d.createElement('script');  
@@ -1108,7 +1104,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="hexo블로그_댓글창만들기_icarus테마" height="28">
+                    <img src="/images/logo.svg" alt="Pytorch_RNN_timeseries_many_to_one" height="28">
                 
                 </a>
                 <p class="is-size-7">
